@@ -1,0 +1,12 @@
+{
+  "prefer-const": "error",
+  "no-var": "error",
+  "eqeqeq": "error",
+  "no-plusplus": "error",
+  "operator-assignment": [
+    "error",
+    "never"
+  ],
+  "no-class-assign": "error",
+  "no-template-curly-in-string": "error"
+}
