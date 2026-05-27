@@ -129,3 +129,11 @@
 {"timestamp":"2026-05-26T11:09:59.638308-05:00","action":"move","task_id":19,"detail":"backlog -\u003e done"}
 {"timestamp":"2026-05-26T11:09:59.67412-05:00","action":"move","task_id":23,"detail":"backlog -\u003e done"}
 {"timestamp":"2026-05-26T11:21:38.817392-05:00","action":"move","task_id":17,"detail":"backlog -\u003e done"}
+{"timestamp":"2026-05-26T20:20:43.584735-05:00","action":"create","task_id":25,"detail":"v2 Python: AST mapper — Bedrock nodes to Python AST"}
+{"timestamp":"2026-05-26T20:20:52.963559-05:00","action":"create","task_id":26,"detail":"v2 Python: stdlib shim layer (map/filter/reduce, Promise, Object)"}
+{"timestamp":"2026-05-26T20:21:04.838227-05:00","action":"create","task_id":27,"detail":"v2 Python: CLI integration and end-to-end transpile command"}
+{"timestamp":"2026-05-26T20:21:16.527446-05:00","action":"create","task_id":28,"detail":"v2 Go: error propagation inference — which functions need (T, error) returns"}
+{"timestamp":"2026-05-26T20:21:29.687331-05:00","action":"create","task_id":29,"detail":"v2 Go: stdlib shim strategy — map/filter/reduce and Object operations"}
+{"timestamp":"2026-05-26T20:21:41.725156-05:00","action":"create","task_id":30,"detail":"v2 Go: AST mapper — Bedrock nodes to Go source"}
+{"timestamp":"2026-05-26T20:21:53.230605-05:00","action":"create","task_id":31,"detail":"v2 Go: CLI integration and end-to-end transpile command"}
+{"timestamp":"2026-05-26T20:33:59.856569-05:00","action":"move","task_id":24,"detail":"backlog -\u003e done"}

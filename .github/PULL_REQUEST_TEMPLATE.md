@@ -2,7 +2,7 @@
 <!-- What does this PR do and why? -->
 
 ## Kanban task
-<!-- Task ID and link, e.g. #13 or kanban-md show 13 -->
+<!-- Task ID, e.g. #13 -->
 
 ## Checklist
 - [ ] `bun run ci` passes

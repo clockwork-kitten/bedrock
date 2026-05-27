@@ -190,7 +190,6 @@ export const detectDoWhile: ViolationPass = function detectDoWhile(
 // ── ViolationPass: forEach → flag only ───────────────────────────────────
 
 const FOREACH_METHOD = "forEach";
-const PERMITTED_METHODS = ["map", "filter", "reduce"] as const;
 const FOREACH_MESSAGE =
   "array.forEach() is banned — rewrite as a for (let i = 0; i < array.length; i++) loop";
 
@@ -256,5 +255,3 @@ export const detectContinue: ViolationPass = function detectContinue(
   });
 };
 
-// Re-export permitted methods constant for reference
-export { PERMITTED_METHODS as PERMITTED_ARRAY_METHODS };

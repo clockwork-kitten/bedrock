@@ -4,7 +4,6 @@ export type {
   TransformPass,
   TransformResult,
   Violation,
-  ViolationCategory,
   ViolationCollector,
   ViolationPass,
 } from "./types.js";

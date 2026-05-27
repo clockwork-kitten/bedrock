@@ -9,7 +9,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "types": ["node"]
+    "types": ["node"],
+    "paths": {
+      "ast-types/lib/gen/kinds.js": ["./node_modules/@types/jscodeshift/node_modules/ast-types/lib/gen/kinds.d.ts"]
+    }
   },
   "include": ["src"],
   "exclude": ["src/__fixtures__"]

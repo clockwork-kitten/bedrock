@@ -1,5 +1,5 @@
-export type RuleCategory = "canonical" | "type-level" | "external-boundary";
-export type RulePrinciple = "explicitness" | "immutability" | "both";
+type RuleCategory = "canonical" | "type-level" | "external-boundary";
+type RulePrinciple = "explicitness" | "immutability" | "both";
 
 export type RuleEntry = {
   id: string;

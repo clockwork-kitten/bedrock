@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join, basename, extname } from "node:path";
 import { describe, it, expect } from "vitest";
 import { transform } from "../transformer/index.js";
-import type { TransformPass, ViolationPass } from "../transformer/index.js";
+import type { TransformPass } from "../transformer/index.js";
 
 const FIXTURES_ROOT = new URL("../__fixtures__", import.meta.url).pathname;
 
@@ -96,39 +96,3 @@ export function runFixtures(ruleName: string, passes: TransformPass[]): void {
   runFixturePairs(ruleName, pairs, passes);
 }
 
-export type ViolationFixtureOptions = {
-  passes?: TransformPass[];
-  violationPasses: ViolationPass[];
-};
-
-export function runViolationFixturePairs(
-  ruleName: string,
-  pairs: FixturePair[],
-  options: ViolationFixtureOptions,
-): void {
-  describe(`fixtures: ${ruleName}`, function () {
-    for (const pair of pairs) {
-      it(pair.name, function () {
-        const input = readFileSync(pair.inputPath, "utf8");
-        const expected = readFileSync(pair.outputPath, "utf8");
-        const parser = detectParser(basename(pair.inputPath));
-        const result = transform(input, {
-          parser,
-          passes: options.passes ?? [],
-          violationPasses: options.violationPasses,
-        });
-        expect(result.source.trim()).toBe(expected.trim());
-        return result.violations;
-      });
-    }
-  });
-}
-
-export function runViolationFixtures(
-  ruleName: string,
-  options: ViolationFixtureOptions,
-): void {
-  const ruleDir = join(FIXTURES_ROOT, ruleName);
-  const pairs = collectFixturePairs(ruleDir);
-  runViolationFixturePairs(ruleName, pairs, options);
-}

@@ -5,7 +5,7 @@ export type TransformPass = (
   j: jscodeshift.JSCodeshift,
 ) => void;
 
-export type ViolationCategory = "canonical" | "type-level" | "external-boundary";
+type ViolationCategory = "canonical" | "type-level" | "external-boundary";
 
 export type Violation = {
   line: number;

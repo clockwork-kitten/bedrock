@@ -20,17 +20,24 @@
   "scripts": {
     "build": "bun build src/cli/index.ts --outfile dist/cli.js --target bun && echo '#!/usr/bin/env bun' | cat - dist/cli.js > dist/cli.tmp.js && mv dist/cli.tmp.js dist/cli.js && chmod +x dist/cli.js",
     "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
+    "lint": "knip",
+    "check": "bun run typecheck && bun run lint",
+    "ci": "bun run check && bun run test:coverage",
     "bedrock": "bun src/cli/index.ts",
     "generate": "bun scripts/generate.ts",
     "release": "bunx bumpp && git push --tags"
   },
   "dependencies": {
+    "ast-types": "^0.14.2",
     "jscodeshift": "^17.3.0"
   },
   "devDependencies": {
     "@types/jscodeshift": "^17.3.0",
     "@types/node": "^25.9.1",
+    "@vitest/coverage-v8": "^4.1.7",
+    "knip": "^6.14.2",
     "typescript": "^6.0.3",
     "vitest": "^4.1.7"
   }
