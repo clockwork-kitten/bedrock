@@ -91,7 +91,10 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 function autoFixLabel(autoFixable: boolean): string {
-  return autoFixable ? "✅ yes" : "—";
+  if (autoFixable) {
+    return "✅ yes";
+  }
+  return "—";
 }
 
 function groupRulesBySection(entries: RuleEntry[]): Map<SectionName, RuleEntry[]> {
@@ -109,6 +112,19 @@ function groupRulesBySection(entries: RuleEntry[]): Map<SectionName, RuleEntry[]
     }
   }
   return grouped;
+}
+
+function renderSectionLines(
+  section: SectionName,
+  sectionRules: RuleEntry[] | undefined,
+): string[] {
+  if (sectionRules === undefined) {
+    return [];
+  }
+  if (sectionRules.length === 0) {
+    return [];
+  }
+  return [`## ${section}`, "", renderTable(sectionRules), ""];
 }
 
 function renderTable(entries: RuleEntry[]): string {
@@ -185,14 +201,10 @@ export function generateRulesMd(entries: RuleEntry[]): string {
   sections.push("");
 
   for (const section of SECTION_ORDER) {
-    const sectionRules = grouped.get(section);
-    if (sectionRules === undefined || sectionRules.length === 0) {
-      continue;
+    const sectionLines = renderSectionLines(section, grouped.get(section));
+    for (const line of sectionLines) {
+      sections.push(line);
     }
-    sections.push(`## ${section}`);
-    sections.push("");
-    sections.push(renderTable(sectionRules));
-    sections.push("");
   }
 
   return sections.join("\n");

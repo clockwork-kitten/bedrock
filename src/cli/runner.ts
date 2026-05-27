@@ -46,25 +46,29 @@ function isSupported(filePath: string): boolean {
   return SUPPORTED_EXTENSIONS.includes(extname(filePath));
 }
 
+function walkEntry(dir: string, entry: string, results: string[]): void {
+  const full = join(dir, entry);
+  let stat;
+  try {
+    stat = statSync(full);
+  } catch {
+    return;
+  }
+  if (stat.isDirectory()) {
+    const nested = walkDir(full);
+    for (const f of nested) {
+      results.push(f);
+    }
+  } else if (isSupported(full)) {
+    results.push(full);
+  }
+}
+
 function walkDir(dir: string): string[] {
   const results: string[] = [];
   const entries = readdirSync(dir);
   for (const entry of entries) {
-    const full = join(dir, entry);
-    let stat;
-    try {
-      stat = statSync(full);
-    } catch {
-      continue;
-    }
-    if (stat.isDirectory()) {
-      const nested = walkDir(full);
-      for (const f of nested) {
-        results.push(f);
-      }
-    } else if (isSupported(full)) {
-      results.push(full);
-    }
+    walkEntry(dir, entry, results);
   }
   return results;
 }
@@ -77,15 +81,17 @@ function globToRegex(pattern: string): RegExp {
   let regexStr = "";
   let i = 0;
   while (i < pattern.length) {
-    if (pattern[i] === "*" && pattern[i + 1] === "*") {
-      regexStr = regexStr + ".*";
-      i = i + 2;
-      if (pattern[i] === "/") {
+    if (pattern[i] === "*") {
+      if (pattern[i + 1] === "*") {
+        regexStr = regexStr + ".*";
+        i = i + 2;
+        if (pattern[i] === "/") {
+          i = i + 1;
+        }
+      } else {
+        regexStr = regexStr + "[^/]*";
         i = i + 1;
       }
-    } else if (pattern[i] === "*") {
-      regexStr = regexStr + "[^/]*";
-      i = i + 1;
     } else if (pattern[i] === "?") {
       regexStr = regexStr + "[^/]";
       i = i + 1;
@@ -101,7 +107,78 @@ function globToRegex(pattern: string): RegExp {
 }
 
 function isGlobPattern(pattern: string): boolean {
-  return pattern.includes("*") || pattern.includes("?");
+  if (pattern.includes("*")) {
+    return true;
+  }
+  if (pattern.includes("?")) {
+    return true;
+  }
+  return false;
+}
+
+function addFileIfNew(files: string[], f: string): void {
+  if (!files.includes(f)) {
+    files.push(f);
+  }
+}
+
+function resolveDirectPattern(pattern: string, files: string[]): void {
+  try {
+    const stat = statSync(pattern);
+    if (stat.isDirectory()) {
+      const found = walkDir(pattern);
+      for (const f of found) {
+        addFileIfNew(files, f);
+      }
+    } else if (isSupported(pattern)) {
+      addFileIfNew(files, pattern);
+    }
+  } catch {
+    // File not found — skip
+  }
+}
+
+function findBaseIndex(parts: string[]): number {
+  for (let i = 0; i < parts.length; i++) {
+    if (parts[i].includes("*")) {
+      return i;
+    }
+    if (parts[i].includes("?")) {
+      return i;
+    }
+  }
+  return parts.length;
+}
+
+function resolveGlobPattern(pattern: string, files: string[]): void {
+  const parts = pattern.split("/");
+  const baseIndex = findBaseIndex(parts);
+
+  let baseDir: string;
+  if (baseIndex === 0) {
+    baseDir = ".";
+  } else {
+    baseDir = parts.slice(0, baseIndex).join("/");
+  }
+  const regex = globToRegex(pattern);
+
+  let allFiles: string[];
+  try {
+    allFiles = walkDir(baseDir);
+  } catch {
+    return;
+  }
+
+  for (const f of allFiles) {
+    const normalizedF = f.replaceAll("\\", "/");
+    const normalizedPattern = pattern.replaceAll("\\", "/");
+    const testRegex = globToRegex(normalizedPattern);
+    if (testRegex.test(normalizedF)) {
+      addFileIfNew(files, f);
+    } else if (regex.test(f)) {
+      addFileIfNew(files, f);
+    }
+  }
 }
 
 export function resolvePatterns(patterns: string[]): string[] {
@@ -109,57 +186,9 @@ export function resolvePatterns(patterns: string[]): string[] {
 
   for (const pattern of patterns) {
     if (!isGlobPattern(pattern)) {
-      // Direct file or directory path
-      try {
-        const stat = statSync(pattern);
-        if (stat.isDirectory()) {
-          const found = walkDir(pattern);
-          for (const f of found) {
-            if (!files.includes(f)) {
-              files.push(f);
-            }
-          }
-        } else if (isSupported(pattern)) {
-          if (!files.includes(pattern)) {
-            files.push(pattern);
-          }
-        }
-      } catch {
-        // File not found — skip
-      }
-      continue;
-    }
-
-    // Glob pattern: find the base directory (non-glob prefix)
-    const parts = pattern.split("/");
-    let baseIndex = 0;
-    for (let i = 0; i < parts.length; i++) {
-      if (parts[i].includes("*") || parts[i].includes("?")) {
-        baseIndex = i;
-        break;
-      }
-      baseIndex = i + 1;
-    }
-
-    const baseDir = baseIndex === 0 ? "." : parts.slice(0, baseIndex).join("/");
-    const regex = globToRegex(pattern);
-
-    let allFiles: string[];
-    try {
-      allFiles = walkDir(baseDir);
-    } catch {
-      continue;
-    }
-
-    for (const f of allFiles) {
-      const normalizedF = f.replaceAll("\\", "/");
-      const normalizedPattern = pattern.replaceAll("\\", "/");
-      const testRegex = globToRegex(normalizedPattern);
-      if (testRegex.test(normalizedF) || regex.test(f)) {
-        if (!files.includes(f)) {
-          files.push(f);
-        }
-      }
+      resolveDirectPattern(pattern, files);
+    } else {
+      resolveGlobPattern(pattern, files);
     }
   }
 
@@ -171,13 +200,23 @@ export type RunResult = {
   output: string;
 };
 
+function detectParser(filePath: string): "ts" | "babel" {
+  if (filePath.endsWith(".ts")) {
+    return "ts";
+  }
+  if (filePath.endsWith(".tsx")) {
+    return "ts";
+  }
+  return "babel";
+}
+
 export function runFix(files: string[]): { changed: string[]; output: string } {
   const changed: string[] = [];
   const lines: string[] = [];
 
   for (const filePath of files) {
     const source = readFileSync(filePath, "utf-8");
-    const parser = filePath.endsWith(".ts") || filePath.endsWith(".tsx") ? "ts" : "babel";
+    const parser = detectParser(filePath);
     const result = transform(source, { parser, passes: ALL_TRANSFORM_PASSES });
 
     if (result.changed) {
@@ -224,7 +263,12 @@ export function runReport(
   });
 
   const output = reportOutput + "\n" + groundedLine;
-  const exitCode = hasViolations ? 1 : 0;
+  let exitCode: number;
+  if (hasViolations) {
+    exitCode = 1;
+  } else {
+    exitCode = 0;
+  }
 
   return { results, output, exitCode };
 }

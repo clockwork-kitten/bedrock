@@ -46,27 +46,41 @@ export function findOutputFile(
   return match;
 }
 
+function collectFixturePair(
+  ruleDir: string,
+  file: string,
+  files: string[],
+): FixturePair | undefined {
+  if (!isInputFile(file)) {
+    return undefined;
+  }
+  const fixtureName = fixtureNameFromInputFile(file);
+  const outputFile = findOutputFile(ruleDir, fixtureName, files);
+  return {
+    name: fixtureName,
+    inputPath: join(ruleDir, file),
+    outputPath: join(ruleDir, outputFile),
+  };
+}
+
 export function collectFixturePairs(ruleDir: string): FixturePair[] {
   const files = readdirSync(ruleDir);
   const pairs: FixturePair[] = [];
   for (const file of files) {
-    if (!isInputFile(file)) {
-      continue;
+    const pair = collectFixturePair(ruleDir, file, files);
+    if (pair !== undefined) {
+      pairs.push(pair);
     }
-    const fixtureName = fixtureNameFromInputFile(file);
-    const outputFile = findOutputFile(ruleDir, fixtureName, files);
-    pairs.push({
-      name: fixtureName,
-      inputPath: join(ruleDir, file),
-      outputPath: join(ruleDir, outputFile),
-    });
   }
   return pairs;
 }
 
 export function detectParser(filename: string): "ts" | "babel" {
   const ext = extname(filename);
-  if (ext === ".ts" || ext === ".tsx") {
+  if (ext === ".ts") {
+    return "ts";
+  }
+  if (ext === ".tsx") {
     return "ts";
   }
   return "babel";
