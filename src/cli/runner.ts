@@ -80,8 +80,9 @@ function walkDir(dir: string): string[] {
 function globToRegex(pattern: string): RegExp {
   let regexStr = "";
   let i = 0;
-  while (i < pattern.length) {
-    if (pattern[i] === "*") {
+  for (; i < pattern.length; ) {
+    const char = pattern[i];
+    if (char === "*") {
       if (pattern[i + 1] === "*") {
         regexStr = regexStr + ".*";
         i = i + 2;
@@ -92,14 +93,14 @@ function globToRegex(pattern: string): RegExp {
         regexStr = regexStr + "[^/]*";
         i = i + 1;
       }
-    } else if (pattern[i] === "?") {
+    } else if (char === "?") {
       regexStr = regexStr + "[^/]";
       i = i + 1;
-    } else if (".+^${}()|[]\\".includes(pattern[i] as string)) {
-      regexStr = regexStr + "\\" + pattern[i];
+    } else if (char !== undefined && ".+^${}()|[]\\".includes(char)) {
+      regexStr = regexStr + "\\" + char;
       i = i + 1;
     } else {
-      regexStr = regexStr + pattern[i];
+      regexStr = regexStr + char;
       i = i + 1;
     }
   }

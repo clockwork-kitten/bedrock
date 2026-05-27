@@ -46,6 +46,11 @@ export const detectTypeAssertion: ViolationPass = function detectTypeAssertion(
   collector: ViolationCollector,
 ): void {
   root.find(j.TSAsExpression).forEach(function (path) {
+    // `as const` is a TypeScript literal narrowing assertion, not a dangerous cast — permit it
+    const typeAnnotation = path.node.typeAnnotation;
+    if (j.TSTypeReference.check(typeAnnotation) && j.Identifier.check(typeAnnotation.typeName) && typeAnnotation.typeName.name === "const") {
+      return;
+    }
     const { line, column } = locOf(path.node);
     collector.add({ line, column, message: TYPE_ASSERTION_MESSAGE, category: TYPE_LEVEL_CATEGORY });
   });
