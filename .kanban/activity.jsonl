@@ -1,0 +1,131 @@
+{"timestamp":"2026-05-26T01:26:28.848143-05:00","action":"create","task_id":1,"detail":"Finalize rule set and resolve open questions"}
+{"timestamp":"2026-05-26T01:26:28.882154-05:00","action":"create","task_id":2,"detail":"Project scaffold: bun init, jscodeshift, tsconfig"}
+{"timestamp":"2026-05-26T01:26:28.916093-05:00","action":"create","task_id":3,"detail":"Transformer core: parse JS/TS to AST and output canonical form"}
+{"timestamp":"2026-05-26T01:26:28.949529-05:00","action":"create","task_id":4,"detail":"Rule: var/let → const"}
+{"timestamp":"2026-05-26T01:26:28.983459-05:00","action":"create","task_id":5,"detail":"Rule: == → ==="}
+{"timestamp":"2026-05-26T01:26:29.017617-05:00","action":"create","task_id":6,"detail":"Rule: async/await over .then()/.catch()"}
+{"timestamp":"2026-05-26T01:26:29.052587-05:00","action":"create","task_id":7,"detail":"Rule: for loops over forEach/for...of"}
+{"timestamp":"2026-05-26T01:26:29.086746-05:00","action":"create","task_id":8,"detail":"Rule: immutable array operations (push/pop/shift/splice)"}
+{"timestamp":"2026-05-26T01:26:29.121614-05:00","action":"create","task_id":9,"detail":"Rule: immutable object operations (direct assignment, delete)"}
+{"timestamp":"2026-05-26T01:26:29.156656-05:00","action":"create","task_id":10,"detail":"Rule: no arrow functions"}
+{"timestamp":"2026-05-26T01:26:29.191664-05:00","action":"create","task_id":11,"detail":"Rule: no ternary, no switch, no short-circuit control flow"}
+{"timestamp":"2026-05-26T01:26:29.226594-05:00","action":"create","task_id":12,"detail":"Rule: no shorthand operators (++, +=, etc)"}
+{"timestamp":"2026-05-26T01:26:29.262369-05:00","action":"create","task_id":13,"detail":"Rule: no classes, no this"}
+{"timestamp":"2026-05-26T01:26:29.297598-05:00","action":"create","task_id":14,"detail":"Rule: no template literals"}
+{"timestamp":"2026-05-26T01:26:29.333102-05:00","action":"create","task_id":15,"detail":"Reporter: violation listing with file/line output"}
+{"timestamp":"2026-05-26T01:26:29.368302-05:00","action":"create","task_id":16,"detail":"CLI: accept file/glob input, --fix and --report flags"}
+{"timestamp":"2026-05-26T01:26:29.404632-05:00","action":"create","task_id":17,"detail":"eslint-config-bedrock: generate/publish ESLint config artifact"}
+{"timestamp":"2026-05-26T01:26:29.439765-05:00","action":"create","task_id":18,"detail":"Test suite: fixture-based input/output tests for all rules"}
+{"timestamp":"2026-05-26T01:33:48.477141-05:00","action":"move","task_id":1,"detail":"todo -\u003e done"}
+{"timestamp":"2026-05-26T01:33:48.509373-05:00","action":"move","task_id":2,"detail":"backlog -\u003e todo"}
+{"timestamp":"2026-05-26T01:57:07.330515-05:00","action":"create","task_id":19,"detail":"Rule: TypeScript strict mode + no any/!/as/enum, type over interface, explicit return types"}
+{"timestamp":"2026-05-26T01:57:07.367553-05:00","action":"create","task_id":20,"detail":"Rule: array.sort() must have comparator + immutable sort"}
+{"timestamp":"2026-05-26T01:57:07.402736-05:00","action":"create","task_id":21,"detail":"Rule: no sparse arrays, no Array() constructor"}
+{"timestamp":"2026-05-26T01:57:07.438958-05:00","action":"create","task_id":22,"detail":"Rule: Object.hasOwn() over hasOwnProperty()"}
+{"timestamp":"2026-05-26T01:57:07.474538-05:00","action":"create","task_id":23,"detail":"Rule: no Promise.race(), no new Promise(), no unhandled rejections"}
+{"timestamp":"2026-05-26T01:57:07.509561-05:00","action":"create","task_id":24,"detail":"v2 spike: transpilation target design (Go/Rust/Python shim layer research)"}
+{"timestamp":"2026-05-26T02:08:46.063639-05:00","action":"claim","task_id":2,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:08:46.063845-05:00","action":"move","task_id":2,"detail":"todo -\u003e in-progress"}
+{"timestamp":"2026-05-26T02:17:34.114116-05:00","action":"edit","task_id":2,"detail":"Project scaffold: bun init, jscodeshift, tsconfig"}
+{"timestamp":"2026-05-26T02:18:20.250363-05:00","action":"move","task_id":2,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T02:18:20.250582-05:00","action":"handoff","task_id":2,"detail":"Project scaffold: bun init, jscodeshift, tsconfig"}
+{"timestamp":"2026-05-26T02:18:20.250791-05:00","action":"release","task_id":2,"detail":"Project scaffold: bun init, jscodeshift, tsconfig"}
+{"timestamp":"2026-05-26T02:18:34.14935-05:00","action":"move","task_id":2,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T02:18:34.186279-05:00","action":"claim","task_id":3,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:18:34.186503-05:00","action":"move","task_id":3,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T02:21:08.134134-05:00","action":"move","task_id":3,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T02:21:08.134359-05:00","action":"handoff","task_id":3,"detail":"Transformer core: parse JS/TS to AST and output canonical form"}
+{"timestamp":"2026-05-26T02:21:08.134511-05:00","action":"release","task_id":3,"detail":"Transformer core: parse JS/TS to AST and output canonical form"}
+{"timestamp":"2026-05-26T02:21:18.165842-05:00","action":"move","task_id":3,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T02:21:18.203022-05:00","action":"claim","task_id":18,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:21:18.203253-05:00","action":"move","task_id":18,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T02:22:12.440891-05:00","action":"edit","task_id":18,"detail":"Test suite: fixture-based input/output tests for all rules"}
+{"timestamp":"2026-05-26T02:25:16.727762-05:00","action":"move","task_id":18,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T02:25:16.728965-05:00","action":"handoff","task_id":18,"detail":"Test suite: fixture-based input/output tests for all rules"}
+{"timestamp":"2026-05-26T02:25:16.729093-05:00","action":"release","task_id":18,"detail":"Test suite: fixture-based input/output tests for all rules"}
+{"timestamp":"2026-05-26T02:25:34.577942-05:00","action":"move","task_id":18,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T02:25:34.616774-05:00","action":"claim","task_id":4,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:25:34.617019-05:00","action":"move","task_id":4,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T02:28:52.104839-05:00","action":"move","task_id":4,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T02:28:52.106241-05:00","action":"handoff","task_id":4,"detail":"Rule: var/let → const"}
+{"timestamp":"2026-05-26T02:28:52.106368-05:00","action":"release","task_id":4,"detail":"Rule: var/let → const"}
+{"timestamp":"2026-05-26T02:29:02.224221-05:00","action":"move","task_id":4,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T02:29:02.261307-05:00","action":"claim","task_id":5,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:29:02.261522-05:00","action":"move","task_id":5,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T02:29:47.638153-05:00","action":"edit","task_id":5,"detail":"Rule: == → ==="}
+{"timestamp":"2026-05-26T02:29:47.638457-05:00","action":"release","task_id":5,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:29:50.487328-05:00","action":"edit","task_id":5,"detail":"Rule: == → ==="}
+{"timestamp":"2026-05-26T02:29:50.487662-05:00","action":"claim","task_id":5,"detail":"incase-chowder"}
+{"timestamp":"2026-05-26T02:30:40.456047-05:00","action":"move","task_id":5,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T02:30:40.456312-05:00","action":"handoff","task_id":5,"detail":"Rule: == → ==="}
+{"timestamp":"2026-05-26T02:30:40.456623-05:00","action":"release","task_id":5,"detail":"Rule: == → ==="}
+{"timestamp":"2026-05-26T02:30:51.58054-05:00","action":"move","task_id":5,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T02:30:51.618621-05:00","action":"claim","task_id":6,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:30:51.618812-05:00","action":"move","task_id":6,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T02:33:57.442338-05:00","action":"move","task_id":6,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T02:33:57.442603-05:00","action":"handoff","task_id":6,"detail":"Rule: async/await over .then()/.catch()"}
+{"timestamp":"2026-05-26T02:33:57.442898-05:00","action":"release","task_id":6,"detail":"Rule: async/await over .then()/.catch()"}
+{"timestamp":"2026-05-26T02:34:14.988072-05:00","action":"move","task_id":6,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T02:34:15.025985-05:00","action":"claim","task_id":7,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:34:15.026295-05:00","action":"move","task_id":7,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T02:40:18.598721-05:00","action":"move","task_id":7,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T02:40:18.600332-05:00","action":"handoff","task_id":7,"detail":"Rule: for loops over forEach/for...of"}
+{"timestamp":"2026-05-26T02:40:18.600554-05:00","action":"release","task_id":7,"detail":"Rule: for loops over forEach/for...of"}
+{"timestamp":"2026-05-26T02:40:28.098208-05:00","action":"move","task_id":7,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T02:40:28.136051-05:00","action":"claim","task_id":8,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:40:28.136276-05:00","action":"move","task_id":8,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T02:45:37.152682-05:00","action":"move","task_id":8,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T02:45:37.153802-05:00","action":"handoff","task_id":8,"detail":"Rule: immutable array operations (push/pop/shift/splice)"}
+{"timestamp":"2026-05-26T02:45:37.153974-05:00","action":"release","task_id":8,"detail":"Rule: immutable array operations (push/pop/shift/splice)"}
+{"timestamp":"2026-05-26T02:45:52.445504-05:00","action":"move","task_id":8,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T02:45:52.484175-05:00","action":"claim","task_id":9,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:45:52.484426-05:00","action":"move","task_id":9,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T02:47:59.566934-05:00","action":"move","task_id":9,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T02:47:59.568407-05:00","action":"handoff","task_id":9,"detail":"Rule: immutable object operations (direct assignment, delete)"}
+{"timestamp":"2026-05-26T02:47:59.568567-05:00","action":"release","task_id":9,"detail":"Rule: immutable object operations (direct assignment, delete)"}
+{"timestamp":"2026-05-26T02:48:09.532421-05:00","action":"move","task_id":9,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T02:48:09.567953-05:00","action":"claim","task_id":10,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:48:09.568183-05:00","action":"move","task_id":10,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T02:52:03.520115-05:00","action":"edit","task_id":10,"detail":"Rule: no arrow functions"}
+{"timestamp":"2026-05-26T02:52:28.506421-05:00","action":"move","task_id":10,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T02:52:28.506617-05:00","action":"handoff","task_id":10,"detail":"Rule: no arrow functions"}
+{"timestamp":"2026-05-26T02:52:28.506916-05:00","action":"release","task_id":10,"detail":"Rule: no arrow functions"}
+{"timestamp":"2026-05-26T02:52:40.250094-05:00","action":"move","task_id":10,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T02:52:40.287938-05:00","action":"claim","task_id":11,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:52:40.288145-05:00","action":"move","task_id":11,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T02:53:07.776306-05:00","action":"edit","task_id":11,"detail":"Rule: no ternary, no switch, no short-circuit control flow"}
+{"timestamp":"2026-05-26T02:55:21.272373-05:00","action":"move","task_id":11,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T02:55:21.272564-05:00","action":"handoff","task_id":11,"detail":"Rule: no ternary, no switch, no short-circuit control flow"}
+{"timestamp":"2026-05-26T02:55:21.272749-05:00","action":"release","task_id":11,"detail":"Rule: no ternary, no switch, no short-circuit control flow"}
+{"timestamp":"2026-05-26T02:55:35.626793-05:00","action":"move","task_id":11,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T02:55:35.665323-05:00","action":"claim","task_id":12,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:55:35.665579-05:00","action":"move","task_id":12,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T02:58:24.147853-05:00","action":"move","task_id":12,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T02:58:24.149863-05:00","action":"handoff","task_id":12,"detail":"Rule: no shorthand operators (++, +=, etc)"}
+{"timestamp":"2026-05-26T02:58:24.150067-05:00","action":"release","task_id":12,"detail":"Rule: no shorthand operators (++, +=, etc)"}
+{"timestamp":"2026-05-26T02:58:35.094817-05:00","action":"move","task_id":12,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T02:58:35.135087-05:00","action":"claim","task_id":13,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T02:58:35.135323-05:00","action":"move","task_id":13,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T03:00:38.903408-05:00","action":"move","task_id":13,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T03:00:38.903956-05:00","action":"handoff","task_id":13,"detail":"Rule: no classes, no this"}
+{"timestamp":"2026-05-26T03:00:38.904134-05:00","action":"release","task_id":13,"detail":"Rule: no classes, no this"}
+{"timestamp":"2026-05-26T03:00:49.000266-05:00","action":"move","task_id":13,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T03:00:49.035286-05:00","action":"claim","task_id":14,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T03:00:49.035487-05:00","action":"move","task_id":14,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T03:01:20.186601-05:00","action":"edit","task_id":14,"detail":"Rule: no template literals"}
+{"timestamp":"2026-05-26T06:24:00.812045-05:00","action":"move","task_id":14,"detail":"in-progress -\u003e review"}
+{"timestamp":"2026-05-26T06:24:00.816204-05:00","action":"handoff","task_id":14,"detail":"Rule: no template literals"}
+{"timestamp":"2026-05-26T06:24:00.816765-05:00","action":"release","task_id":14,"detail":"Rule: no template literals"}
+{"timestamp":"2026-05-26T10:16:38.172728-05:00","action":"move","task_id":14,"detail":"review -\u003e done"}
+{"timestamp":"2026-05-26T10:17:03.960678-05:00","action":"move","task_id":20,"detail":"backlog -\u003e done"}
+{"timestamp":"2026-05-26T10:17:03.995554-05:00","action":"move","task_id":21,"detail":"backlog -\u003e done"}
+{"timestamp":"2026-05-26T10:17:04.029268-05:00","action":"move","task_id":22,"detail":"backlog -\u003e done"}
+{"timestamp":"2026-05-26T10:17:25.228723-05:00","action":"claim","task_id":15,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T10:17:25.228915-05:00","action":"move","task_id":15,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T11:05:26.479993-05:00","action":"move","task_id":15,"detail":"in-progress -\u003e done"}
+{"timestamp":"2026-05-26T11:05:26.517989-05:00","action":"claim","task_id":16,"detail":"unprim-freshen"}
+{"timestamp":"2026-05-26T11:05:26.518211-05:00","action":"move","task_id":16,"detail":"backlog -\u003e in-progress"}
+{"timestamp":"2026-05-26T11:09:51.170511-05:00","action":"move","task_id":16,"detail":"in-progress -\u003e done"}
+{"timestamp":"2026-05-26T11:09:59.638308-05:00","action":"move","task_id":19,"detail":"backlog -\u003e done"}
+{"timestamp":"2026-05-26T11:09:59.67412-05:00","action":"move","task_id":23,"detail":"backlog -\u003e done"}
+{"timestamp":"2026-05-26T11:21:38.817392-05:00","action":"move","task_id":17,"detail":"backlog -\u003e done"}

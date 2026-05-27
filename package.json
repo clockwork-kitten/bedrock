@@ -1,6 +1,22 @@
 {
   "name": "bedrock",
+  "version": "1.0.0",
+  "description": "A semantic normalizer for JavaScript and TypeScript — one canonical way to write any computation.",
   "type": "module",
+  "bin": {
+    "bedrock": "./src/cli/index.ts"
+  },
+  "keywords": [
+    "javascript",
+    "typescript",
+    "codemod",
+    "linter",
+    "transformer",
+    "ast",
+    "jscodeshift",
+    "normalizer",
+    "canonical"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
