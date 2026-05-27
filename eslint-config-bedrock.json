@@ -1,7 +1,10 @@
 {
   "prefer-const": "error",
   "no-var": "error",
-  "eqeqeq": "error",
+  "eqeqeq": [
+    "error",
+    "always"
+  ],
   "no-plusplus": "error",
   "operator-assignment": [
     "error",

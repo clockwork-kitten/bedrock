@@ -22,7 +22,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "bedrock": "bun src/cli/index.ts",
-    "generate": "bun scripts/generate.ts"
+    "generate": "bun scripts/generate.ts",
+    "release": "bunx bumpp && git push --tags"
   },
   "dependencies": {
     "jscodeshift": "^17.3.0"
