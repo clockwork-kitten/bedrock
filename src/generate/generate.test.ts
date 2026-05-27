@@ -89,7 +89,7 @@ describe("generateEslintConfig", function () {
   });
 
   it("includes eqeqeq rule", function () {
-    expect(config["eqeqeq"]).toBe("error");
+    expect(config["eqeqeq"]).toEqual(["error", "always"]);
   });
 
   it("includes no-plusplus rule", function () {

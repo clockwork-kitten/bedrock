@@ -1,0 +1,13 @@
+{
+  "name": "eslint-config-bedrock",
+  "version": "0.1.0",
+  "description": "ESLint flat config enforcing the Bedrock.js canonical subset",
+  "type": "module",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "keywords": ["eslint", "eslint-config", "bedrock"],
+  "peerDependencies": {
+    "eslint": ">=8.0.0"
+  },
+  "license": "MIT"
+}

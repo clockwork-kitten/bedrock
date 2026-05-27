@@ -1,9 +1,11 @@
 import type { RuleEntry } from "../rules/registry.js";
 
 const OPERATOR_ASSIGNMENT_NEVER = ["error", "never"] as const;
+const EQEQEQ_ALWAYS = ["error", "always"] as const;
 
 const ESLINT_RULE_OVERRIDES: Record<string, unknown> = {
   "operator-assignment": OPERATOR_ASSIGNMENT_NEVER,
+  "eqeqeq": EQEQEQ_ALWAYS,
 };
 
 export function generateEslintConfig(entries: RuleEntry[]): Record<string, unknown> {
