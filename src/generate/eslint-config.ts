@@ -8,15 +8,28 @@ const ESLINT_RULE_OVERRIDES: Record<string, unknown> = {
   "eqeqeq": EQEQEQ_ALWAYS,
 };
 
+function buildConfigEntry(
+  rule: RuleEntry,
+  config: Record<string, unknown>,
+): Record<string, unknown> {
+  if (rule.eslintRule === null) {
+    return config;
+  }
+  const override = ESLINT_RULE_OVERRIDES[rule.eslintRule];
+  let value: unknown;
+  if (override !== undefined) {
+    value = override;
+  } else {
+    value = "error";
+  }
+  return { ...config, [rule.eslintRule]: value };
+}
+
 export function generateEslintConfig(entries: RuleEntry[]): Record<string, unknown> {
-  const config: Record<string, unknown> = {};
+  let config: Record<string, unknown> = {};
 
   for (const rule of entries) {
-    if (rule.eslintRule === null) {
-      continue;
-    }
-    const override = ESLINT_RULE_OVERRIDES[rule.eslintRule];
-    config[rule.eslintRule] = override !== undefined ? override : "error";
+    config = buildConfigEntry(rule, config);
   }
 
   return config;

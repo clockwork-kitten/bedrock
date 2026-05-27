@@ -33,7 +33,14 @@ export function applyTransform(
 
   const collector = createViolationCollector();
 
-  for (const pass of options.violationPasses ?? []) {
+  let violationPasses = options.violationPasses;
+  if (violationPasses === null) {
+    violationPasses = [];
+  }
+  if (violationPasses === undefined) {
+    violationPasses = [];
+  }
+  for (const pass of violationPasses) {
     pass(root, j, collector);
   }
 

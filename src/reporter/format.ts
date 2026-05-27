@@ -4,7 +4,10 @@ const CATEGORY_WIDTH = 18;
 const RULE_WIDTH = 20;
 
 function padRight(str: string, width: number): string {
-  return str.length >= width ? str : str + " ".repeat(width - str.length);
+  if (str.length >= width) {
+    return str;
+  }
+  return str + " ".repeat(width - str.length);
 }
 
 function formatViolationLine(violation: AnnotatedViolation): string {
@@ -33,6 +36,19 @@ function countByCategory(violations: AnnotatedViolation[]): {
   return { canonical, typelevel, externalBoundary };
 }
 
+function formatResultLines(result: ReportResult): string[] {
+  if (result.violations.length === 0) {
+    return [];
+  }
+  const lines: string[] = [];
+  lines.push(result.filePath);
+  for (const violation of result.violations) {
+    lines.push(formatViolationLine(violation));
+  }
+  lines.push("");
+  return lines;
+}
+
 export function formatReport(results: ReportResult[]): string {
   const lines: string[] = [];
 
@@ -42,25 +58,33 @@ export function formatReport(results: ReportResult[]): string {
   let totalExternalBoundary = 0;
 
   for (const result of results) {
-    if (result.violations.length === 0) {
-      continue;
+    const resultLines = formatResultLines(result);
+    for (const line of resultLines) {
+      lines.push(line);
     }
-    lines.push(result.filePath);
-    for (const violation of result.violations) {
-      lines.push(formatViolationLine(violation));
-    }
-    lines.push("");
 
-    const counts = countByCategory(result.violations);
-    totalViolations = totalViolations + result.violations.length;
-    totalCanonical = totalCanonical + counts.canonical;
-    totalTypelevel = totalTypelevel + counts.typelevel;
-    totalExternalBoundary = totalExternalBoundary + counts.externalBoundary;
+    if (result.violations.length > 0) {
+      const counts = countByCategory(result.violations);
+      totalViolations = totalViolations + result.violations.length;
+      totalCanonical = totalCanonical + counts.canonical;
+      totalTypelevel = totalTypelevel + counts.typelevel;
+      totalExternalBoundary = totalExternalBoundary + counts.externalBoundary;
+    }
   }
 
   const fileCount = results.length;
-  const fileWord = fileCount === 1 ? "file" : "files";
-  const violationWord = totalViolations === 1 ? "violation" : "violations";
+  let fileWord: string;
+  if (fileCount === 1) {
+    fileWord = "file";
+  } else {
+    fileWord = "files";
+  }
+  let violationWord: string;
+  if (totalViolations === 1) {
+    violationWord = "violation";
+  } else {
+    violationWord = "violations";
+  }
   lines.push(
     `${fileCount} ${fileWord}, ${totalViolations} ${violationWord} (${totalCanonical} canonical, ${totalTypelevel} type-level, ${totalExternalBoundary} external-boundary)`,
   );

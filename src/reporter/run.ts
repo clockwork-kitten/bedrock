@@ -27,7 +27,14 @@ function createViolationCollector(): ViolationCollector {
 }
 
 export function runReport(filePath: string, source: string): ReportResult {
-  const parser = filePath.endsWith(".ts") || filePath.endsWith(".tsx") ? "ts" : "babel";
+  let parser: "ts" | "babel";
+  if (filePath.endsWith(".ts")) {
+    parser = "ts";
+  } else if (filePath.endsWith(".tsx")) {
+    parser = "ts";
+  } else {
+    parser = "babel";
+  }
   const j = jscodeshift.withParser(parser);
   const root = parseSource(source, parser);
 
