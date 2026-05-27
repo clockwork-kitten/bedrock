@@ -19,18 +19,20 @@ export const forOfToIndexed: TransformPass = function forOfToIndexed(
     const right = path.node.right;
     const body = path.node.body;
 
-    // Extract the element variable name if it's a simple `const item` declaration
-    let elementName: string | null = null;
+    // Extract the element binding — simple identifier or destructuring pattern
+    let elementBinding: jscodeshift.Identifier | jscodeshift.ObjectPattern | jscodeshift.ArrayPattern | null = null;
     if (
       j.VariableDeclaration.check(left) &&
       left.declarations.length === 1 &&
-      j.VariableDeclarator.check(left.declarations[0]) &&
-      j.Identifier.check(left.declarations[0].id)
+      j.VariableDeclarator.check(left.declarations[0])
     ) {
-      elementName = left.declarations[0].id.name;
+      const id = left.declarations[0].id;
+      if (j.Identifier.check(id) || j.ObjectPattern.check(id) || j.ArrayPattern.check(id)) {
+        elementBinding = id;
+      }
     }
 
-    // Build `let i = 0; i < array.length; i++`
+    // Build `let i = 0; i < array.length; i = i + 1`
     const init = j.variableDeclaration("let", [
       j.variableDeclarator(j.identifier(INDEX_VAR), j.literal(0)),
     ]);
@@ -39,26 +41,30 @@ export const forOfToIndexed: TransformPass = function forOfToIndexed(
       j.identifier(INDEX_VAR),
       j.memberExpression(right, j.identifier("length")),
     );
-    const update = j.updateExpression("++", j.identifier(INDEX_VAR), false);
+    const update = j.assignmentExpression(
+      "=",
+      j.identifier(INDEX_VAR),
+      j.binaryExpression("+", j.identifier(INDEX_VAR), j.literal(1)),
+    );
 
-    // Build the body: prepend `const item = array[i];` if we have a binding
+    // Build the body: prepend `const <binding> = array[i];` if we have a binding
     let newBody: StatementKind;
-    if (elementName !== null && j.BlockStatement.check(body)) {
+    if (elementBinding !== null && j.BlockStatement.check(body)) {
       const elementDecl = j.variableDeclaration("const", [
         j.variableDeclarator(
-          j.identifier(elementName),
+          elementBinding,
           j.memberExpression(right, j.identifier(INDEX_VAR), true),
         ),
       ]);
       newBody = j.blockStatement([elementDecl, ...body.body]);
-    } else if (elementName !== null) {
+    } else if (elementBinding !== null) {
       const elementDecl = j.variableDeclaration("const", [
         j.variableDeclarator(
-          j.identifier(elementName),
+          elementBinding,
           j.memberExpression(right, j.identifier(INDEX_VAR), true),
         ),
       ]);
-      newBody = j.blockStatement([elementDecl, j.blockStatement([body])]);
+      newBody = j.blockStatement([elementDecl, body]);
     } else {
       newBody = body;
     }
@@ -105,7 +111,7 @@ export const forInToIndexed: TransformPass = function forInToIndexed(
       ),
     ]);
 
-    // Build `let i = 0; i < keys.length; i++`
+    // Build `let i = 0; i < keys.length; i = i + 1`
     const init = j.variableDeclaration("let", [
       j.variableDeclarator(j.identifier(INDEX_VAR), j.literal(0)),
     ]);
@@ -114,7 +120,11 @@ export const forInToIndexed: TransformPass = function forInToIndexed(
       j.identifier(INDEX_VAR),
       j.memberExpression(j.identifier(KEYS_VAR), j.identifier("length")),
     );
-    const update = j.updateExpression("++", j.identifier(INDEX_VAR), false);
+    const update = j.assignmentExpression(
+      "=",
+      j.identifier(INDEX_VAR),
+      j.binaryExpression("+", j.identifier(INDEX_VAR), j.literal(1)),
+    );
 
     // Prepend `const key = keys[i];` to body
     let newBody: StatementKind;
@@ -233,7 +243,11 @@ export const transformForEach: TransformPass = function transformForEach(
         j.identifier(ITEM_INDEX_VAR),
         j.memberExpression(arrayNode, j.identifier("length")),
       );
-      const update = j.updateExpression("++", j.identifier(ITEM_INDEX_VAR), false);
+      const update = j.assignmentExpression(
+        "=",
+        j.identifier(ITEM_INDEX_VAR),
+        j.binaryExpression("+", j.identifier(ITEM_INDEX_VAR), j.literal(1)),
+      );
 
       const itemDecl = j.variableDeclaration("const", [
         j.variableDeclarator(
