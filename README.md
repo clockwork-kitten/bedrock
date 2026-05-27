@@ -129,3 +129,7 @@ v1 complete. Planned:
 
 - **v1.5** — publish `eslint-config-bedrock` as a standalone npm package
 - **v2** — transpilation to other languages (Go, Rust, Python); the Bedrock subset is intentionally designed for this
+
+## License
+
+MIT
