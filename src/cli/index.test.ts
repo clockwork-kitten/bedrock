@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { join } from "node:path";
+import { tmpdir } from "node:os";
 import { parseArgs } from "./args.js";
 import { resolvePatterns, runFix, runReport, run } from "./runner.js";
 
@@ -41,7 +42,7 @@ describe("parseArgs", function () {
 
 // ── Fixtures ──────────────────────────────────────────────────────────────
 
-const TEMP_DIR = "/var/folders/8g/c3q8m_q95klbx3gkzdxylk7c0000gn/T/opencode/cli-test";
+const TEMP_DIR = join(tmpdir(), "bedrock-cli-test");
 
 // var x = 1 — transformer auto-fixes to const
 const VAR_SOURCE = `var x = 1;\n`;
