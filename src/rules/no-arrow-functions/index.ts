@@ -1,4 +1,5 @@
 import type jscodeshift from "jscodeshift";
+import type { StatementKind, PatternKind } from "ast-types/lib/gen/kinds.js";
 import type {
   TransformPass,
   ViolationCollector,
@@ -61,6 +62,57 @@ export const arrowToFunctionExpression: TransformPass =
       const inferredName = inferNameFromParent(path, j);
       const replacement = arrowToFunction(path, j, inferredName);
       path.replace(replacement);
+    });
+  };
+
+// ── TransformPass: default parameters → explicit undefined check ──────────
+
+export const transformDefaultParams: TransformPass =
+  function transformDefaultParams(
+    root: jscodeshift.Collection,
+    j: jscodeshift.JSCodeshift,
+  ): void {
+    root.find(j.Function).forEach(function (path) {
+      const node = path.node;
+      if (!j.BlockStatement.check(node.body)) return;
+
+      const checks: StatementKind[] = [];
+      const newParams: PatternKind[] = [];
+
+      for (const param of node.params) {
+        if (j.AssignmentPattern.check(param)) {
+          const left = param.left;
+          const right = param.right;
+          if (!j.Identifier.check(left)) {
+            // Complex destructuring default — leave as-is
+            newParams.push(param);
+            continue;
+          }
+          // Strip the default from the param
+          newParams.push(left);
+          // Build: if (name === undefined) { name = default; }
+          const check = j.ifStatement(
+            j.binaryExpression(
+              "===",
+              j.identifier(left.name),
+              j.identifier("undefined"),
+            ),
+            j.blockStatement([
+              j.expressionStatement(
+                j.assignmentExpression("=", j.identifier(left.name), right),
+              ),
+            ]),
+          );
+          checks.push(check);
+        } else {
+          newParams.push(param);
+        }
+      }
+
+      if (checks.length === 0) return;
+
+      node.params = newParams;
+      node.body = j.blockStatement([...checks, ...(node.body.body as StatementKind[])]);
     });
   };
 

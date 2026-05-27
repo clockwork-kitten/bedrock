@@ -4,6 +4,7 @@ import { describe, it, expect } from "vitest";
 import { transform } from "../../transformer/index.js";
 import {
   arrowToFunctionExpression,
+  transformDefaultParams,
   detectDefaultParams,
   detectAsyncNoAwait,
 } from "./index.js";
@@ -71,6 +72,28 @@ describe("arrowToFunctionExpression", function () {
     });
     expect(result.source.trim()).toBe(expected.trim());
     expect(result.changed).toBe(true);
+  });
+});
+
+describe("transformDefaultParams", function () {
+  it("rewrites default parameters to explicit undefined checks", function () {
+    const input = readFixture("default-param-transform.input.ts");
+    const expected = readFixture("default-param-transform.output.ts");
+    const result = transform(input, {
+      parser: "ts",
+      passes: [transformDefaultParams],
+    });
+    expect(result.source.trim()).toBe(expected.trim());
+    expect(result.changed).toBe(true);
+  });
+
+  it("does not touch functions with no default params", function () {
+    const input = `function add(a: number, b: number): number { return a + b; }\n`;
+    const result = transform(input, {
+      parser: "ts",
+      passes: [transformDefaultParams],
+    });
+    expect(result.changed).toBe(false);
   });
 });
 

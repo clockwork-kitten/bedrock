@@ -6,7 +6,7 @@ import type { TransformPass } from "../transformer/index.js";
 import type { ReportResult } from "../reporter/index.js";
 import { varToConst } from "../rules/var-to-const/index.js";
 import { equalityToStrict } from "../rules/equality/index.js";
-import { forOfToIndexed, forInToIndexed, whileToFor } from "../rules/loops/index.js";
+import { forOfToIndexed, forInToIndexed, whileToFor, transformForEach } from "../rules/loops/index.js";
 import {
   transformPush,
   transformUnshift,
@@ -14,7 +14,7 @@ import {
   transformSparseArrays,
 } from "../rules/immutable-array/index.js";
 import { transformHasOwnProperty } from "../rules/immutable-object/index.js";
-import { arrowToFunctionExpression } from "../rules/no-arrow-functions/index.js";
+import { arrowToFunctionExpression, transformDefaultParams } from "../rules/no-arrow-functions/index.js";
 import {
   compoundAssignToExplicit,
   updateExpressionToExplicit,
@@ -27,12 +27,14 @@ const ALL_TRANSFORM_PASSES: TransformPass[] = [
   forOfToIndexed,
   forInToIndexed,
   whileToFor,
+  transformForEach,
   transformPush,
   transformUnshift,
   transformSort,
   transformSparseArrays,
   transformHasOwnProperty,
   arrowToFunctionExpression,
+  transformDefaultParams,
   compoundAssignToExplicit,
   updateExpressionToExplicit,
   rewriteTemplateLiterals,

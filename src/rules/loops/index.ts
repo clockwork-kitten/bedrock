@@ -187,6 +187,79 @@ export const detectDoWhile: ViolationPass = function detectDoWhile(
   });
 };
 
+// ── TransformPass: forEach → indexed for loop ────────────────────────────
+
+const FOREACH_METHOD_NAME = "forEach";
+const ITEM_INDEX_VAR = "i";
+
+export const transformForEach: TransformPass = function transformForEach(
+  root: jscodeshift.Collection,
+  j: jscodeshift.JSCodeshift,
+): void {
+  root
+    .find(j.ExpressionStatement, {
+      expression: { type: "CallExpression" },
+    })
+    .forEach(function (stmtPath) {
+      const expr = stmtPath.node.expression;
+      if (!j.CallExpression.check(expr)) return;
+      const callee = expr.callee;
+      if (!j.MemberExpression.check(callee)) return;
+      if (!j.Identifier.check(callee.property)) return;
+      if (callee.property.name !== FOREACH_METHOD_NAME) return;
+
+      const args = expr.arguments;
+      if (args.length < 1) return;
+      const callback = args[0];
+      if (!j.FunctionExpression.check(callback)) return;
+      if (!j.BlockStatement.check(callback.body)) return;
+      const params = callback.params;
+      if (params.length < 1) return;
+
+      const itemParam = params[0];
+      const indexParam = params.length >= 2 ? params[1] : null;
+      if (!j.Identifier.check(itemParam)) return;
+      if (indexParam !== null && !j.Identifier.check(indexParam)) return;
+
+      const arrayNode = callee.object;
+      const itemName = itemParam.name;
+      const indexName = indexParam !== null && j.Identifier.check(indexParam) ? indexParam.name : null;
+
+      const init = j.variableDeclaration("let", [
+        j.variableDeclarator(j.identifier(ITEM_INDEX_VAR), j.literal(0)),
+      ]);
+      const test = j.binaryExpression(
+        "<",
+        j.identifier(ITEM_INDEX_VAR),
+        j.memberExpression(arrayNode, j.identifier("length")),
+      );
+      const update = j.updateExpression("++", j.identifier(ITEM_INDEX_VAR), false);
+
+      const itemDecl = j.variableDeclaration("const", [
+        j.variableDeclarator(
+          j.identifier(itemName),
+          j.memberExpression(arrayNode, j.identifier(ITEM_INDEX_VAR), true),
+        ),
+      ]);
+
+      const preamble: StatementKind[] = [itemDecl];
+      if (indexName !== null) {
+        const indexDecl = j.variableDeclaration("const", [
+          j.variableDeclarator(
+            j.identifier(indexName),
+            j.identifier(ITEM_INDEX_VAR),
+          ),
+        ]);
+        preamble.push(indexDecl);
+      }
+
+      const newBody = j.blockStatement([...preamble, ...callback.body.body]);
+      const forStatement = j.forStatement(init, test, update, newBody);
+      // Replace the ExpressionStatement wrapper with the ForStatement
+      stmtPath.replace(forStatement);
+    });
+};
+
 // ── ViolationPass: forEach → flag only ───────────────────────────────────
 
 const FOREACH_METHOD = "forEach";
