@@ -70,6 +70,11 @@ export const detectLogicalAndExec: ViolationPass = function detectLogicalAndExec
   root
     .find(j.LogicalExpression, { operator: "&&" })
     .forEach(function (path) {
+      // Only flag `&&` when used as a standalone expression statement (i.e. `cond && doThing()`).
+      // Using `&&` inside an `if` / `while` / ternary condition as a compound boolean test is permitted.
+      if (!j.ExpressionStatement.check(path.parent.node)) {
+        return;
+      }
       const loc = path.node.loc;
       const line = loc !== null && loc !== undefined ? loc.start.line : 0;
       const column = loc !== null && loc !== undefined ? loc.start.column : 0;
