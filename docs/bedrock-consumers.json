@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-22T07:22:07.736Z",
-  "sourceFingerprint": "sha256:064780af448b18b1de5e9c0c2b8c90b2775729d47fdbee04db220f4aae0af481",
+  "generatedAt": "2026-11-22T07:54:59.636Z",
+  "sourceFingerprint": "sha256:28a0c31ab7e88565b5c097346b6512a3c0f39b28c6973e73d635bdfde26fcae8",
   "authorityIssue": "clockwork-kitten/studio-board#91",
   "observedAt": "2026-11-22",
   "boundedUniverse": "Default branches of all 21 clockwork-kitten organization repositories discoverable by authenticated GitHub code search, excluding the Bedrock source repository from consumer results, plus npm public registry lookups.",

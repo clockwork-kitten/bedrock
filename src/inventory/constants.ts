@@ -44,6 +44,12 @@ export const BEHAVIOR_CONTRACT_CATALOG: Record<string, string> = {
     "3603d1c5a18c5fd43d05666f077be9f665502d8b4898597b1ae8822b10532d76",
   "cli:declaration:src/cli/runner.ts:walkEntry":
     "2818e429d023efb07f2b0e44f4ea79ba6aa9f8ab4fb504355f234d6203477c98",
+  "cli:module:src/cli/args.ts":
+    "d401092bccd0c7006779a1b4c991bd477e24fd777058a139a93fb4130234e4a4",
+  "cli:module:src/cli/index.ts":
+    "bbe0cc68c6ee9b225be6948fe2b1dc12ebf88f4c986565ced2e40e3afbbc83c9",
+  "cli:module:src/cli/runner.ts":
+    "968ad66a1b7878c5deb81367d65c127f55091c1b00ddb3b164f03889ea3f6216",
   "cli:statement:src/cli/index.ts:0":
     "496849c3a4c5e9500881d56f1ef3f5f3bf4cd1bd7e56f5099a5c1f777d237476",
   "reporter:declaration:src/reporter/format.ts:CATEGORY_WIDTH":
@@ -70,6 +76,14 @@ export const BEHAVIOR_CONTRACT_CATALOG: Record<string, string> = {
     "2d2cfb8be2ef607856c5b5270f62b0df4b7753df753ffd03a364ba884097f5f2",
   "reporter:declaration:src/reporter/run.ts:runReport":
     "c5c876aa52788bcc5546ee267f5064a6f54dcefcf13b3b3d406bc44af7aca70c",
+  "reporter:module:src/reporter/format.ts":
+    "89a176df01595926398e04c0152b3ed12c7366e06a91260448a0a09732f8bddc",
+  "reporter:module:src/reporter/index.ts":
+    "fd7196ad5986bd71b54c40affb35d185a1845d38501908680211d8470b3c7dbb",
+  "reporter:module:src/reporter/rules.ts":
+    "d6523add277ae961567a87c252e77b32c3f52c3a34b4717f392313e047600ea7",
+  "reporter:module:src/reporter/run.ts":
+    "d200a0da1a7b6eee530e448873e5a06af300a6709e2fa6749be8c37631e55121",
 };
 
 type CandidateRule = {

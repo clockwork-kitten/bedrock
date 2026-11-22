@@ -1,3 +1,7 @@
+import { execFileSync } from "node:child_process";
+import { copyFileSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { dirname, join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { CONSUMER_SNAPSHOT } from "./constants.js";
 import {
@@ -7,6 +11,7 @@ import {
   buildFreezeDispositionDocument,
   classifySuppressionHit,
   collectSourceFacts,
+  discoverBehaviorSourceModules,
   discoverBehaviorSurfaces,
   validateConsumerEvidence,
 } from "./index.js";
@@ -26,8 +31,8 @@ describe("bedrock freeze inventory", function () {
       detectorWired: 35,
       detectorUnwired: 2,
       fixturePairs: 79,
-      reporterContracts: 12,
-      cliContracts: 21,
+      reporterContracts: 16,
+      cliContracts: 24,
       packageIdentities: 2,
       packageBins: 1,
       packageScripts: 12,
@@ -101,9 +106,11 @@ describe("bedrock freeze inventory", function () {
   it("rejects added or changed CLI and reporter behavior", function () {
     const source = "export function run(): number { return 0; }";
     const discovered = discoverBehaviorSurfaces(source, "src/cli/fixture.ts", "cli-contract");
-    const catalog = {
-      [discovered[0]!.id]: discovered[0]!.sourceSha256!,
-    };
+    const catalog = Object.fromEntries(
+      discovered.map(function (surface) {
+        return [surface.id, surface.sourceSha256 ?? ""];
+      }),
+    );
 
     expect(function () {
       assertBehaviorContractCatalog(
@@ -126,6 +133,67 @@ describe("bedrock freeze inventory", function () {
         catalog,
       );
     }).toThrow("unknown: cli:declaration:src/cli/fixture.ts:newlyAdded");
+  });
+
+  it("rejects a newly tracked production module with an unchanged ledger", function () {
+    const existingBehaviorSurfaces = facts.surfaces.filter(function (surface) {
+      return surface.kind === "cli-contract" || surface.kind === "reporter-contract";
+    });
+    const existingSourcePaths = Array.from(
+      new Set(
+        existingBehaviorSurfaces.map(function (surface) {
+          return surface.sourcePath;
+        }),
+      ),
+    );
+    const addedPath = "src/cli/new-command.ts";
+    const modules = discoverBehaviorSourceModules([
+      ...existingSourcePaths,
+      addedPath,
+      "src/cli/new-command.test.ts",
+      "src/__fixtures__/cli/new-command.ts",
+      "src/generated/cli.generated.ts",
+      "src/inventory/new-command.ts",
+    ]);
+
+    expect(modules.map(function (module) {
+      return module.sourcePath;
+    })).toContain(addedPath);
+    expect(modules).not.toContainEqual(
+      expect.objectContaining({ sourcePath: "src/cli/new-command.test.ts" }),
+    );
+
+    const isolatedRoot = mkdtempSync(join(tmpdir(), "bedrock-inventory-"));
+    try {
+      const trackedPaths = execFileSync("git", ["ls-files", "-z"], {
+        cwd: repoRoot,
+        encoding: "utf8",
+      })
+        .split("\0")
+        .filter(Boolean);
+      for (const path of trackedPaths) {
+        const destination = join(isolatedRoot, path);
+        mkdirSync(dirname(destination), { recursive: true });
+        copyFileSync(join(repoRoot, path), destination);
+      }
+      const addedModulePath = join(isolatedRoot, addedPath);
+      mkdirSync(dirname(addedModulePath), { recursive: true });
+      writeFileSync(
+        addedModulePath,
+        "export function execute(): number { return 0; }\n",
+        "utf8",
+      );
+      execFileSync("git", ["init", "--quiet"], { cwd: isolatedRoot });
+      execFileSync("git", ["add", "--all"], { cwd: isolatedRoot });
+
+      expect(function () {
+        collectSourceFacts(isolatedRoot);
+      }).toThrow(
+        "unknown: cli:declaration:src/cli/new-command.ts:execute, cli:module:src/cli/new-command.ts",
+      );
+    } finally {
+      rmSync(isolatedRoot, { recursive: true });
+    }
   });
 
   it("rejects duplicate, missing, and unknown disposition rows", function () {

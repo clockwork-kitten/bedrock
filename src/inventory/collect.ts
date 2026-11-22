@@ -15,15 +15,13 @@ const GENERATED_INVENTORY_PATHS = new Set([
   "docs/bedrock-disposition.json",
   "docs/bedrock-freeze.md",
 ]);
-const BEHAVIOR_SOURCE_PATHS = [
-  "src/cli/args.ts",
-  "src/cli/index.ts",
-  "src/cli/runner.ts",
-  "src/reporter/format.ts",
-  "src/reporter/index.ts",
-  "src/reporter/rules.ts",
-  "src/reporter/run.ts",
-] as const;
+const PRODUCTION_TYPESCRIPT_MODULE = /\.(?:cts|mts|ts|tsx)$/;
+
+type BehaviorSourceModule = {
+  sourcePath: string;
+  kind: "cli-contract" | "reporter-contract";
+};
+
 function sha256(contents: string | Buffer): string {
   return createHash("sha256").update(contents).digest("hex");
 }
@@ -211,6 +209,40 @@ function declarationName(statement: ts.Statement): string | undefined {
   return undefined;
 }
 
+export function discoverBehaviorSourceModules(paths: string[]): BehaviorSourceModule[] {
+  return paths
+    .filter(function (path) {
+      if (!path.startsWith("src/") || !PRODUCTION_TYPESCRIPT_MODULE.test(path)) {
+        return false;
+      }
+      if (
+        /(?:^|\/)(?:__fixtures__|fixtures)(?:\/|$)/.test(path) ||
+        /\.(?:spec|test)\.(?:cts|mts|ts|tsx)$/.test(path)
+      ) {
+        return false;
+      }
+      if (
+        path.startsWith("src/inventory/") ||
+        path.startsWith("src/generated/") ||
+        /\.generated\.(?:cts|mts|ts|tsx)$/.test(path)
+      ) {
+        return false;
+      }
+      return path.startsWith("src/cli/") || path.startsWith("src/reporter/");
+    })
+    .map(function (sourcePath) {
+      return {
+        sourcePath,
+        kind: sourcePath.startsWith("src/cli/")
+          ? ("cli-contract" as const)
+          : ("reporter-contract" as const),
+      };
+    })
+    .sort(function (a, b) {
+      return a.sourcePath.localeCompare(b.sourcePath);
+    });
+}
+
 export function discoverBehaviorSurfaces(
   source: string,
   sourcePath: string,
@@ -224,7 +256,14 @@ export function discoverBehaviorSurfaces(
     ts.ScriptKind.TS,
   );
   const prefix = kind === "cli-contract" ? "cli" : "reporter";
-  const rows: SurfaceFact[] = [];
+  const rows: SurfaceFact[] = [
+    {
+      id: prefix + ":module:" + sourcePath,
+      kind,
+      sourcePath,
+      sourceSha256: sha256(source),
+    },
+  ];
   let executableStatementIndex = 0;
   for (const statement of sourceFile.statements) {
     const name = declarationName(statement);
@@ -285,11 +324,8 @@ export function assertBehaviorContractCatalog(
   }
 }
 
-function collectBehaviorSurfaces(repoRoot: string): SurfaceFact[] {
-  const surfaces = BEHAVIOR_SOURCE_PATHS.flatMap(function (sourcePath) {
-    const kind = sourcePath.startsWith("src/cli/")
-      ? ("cli-contract" as const)
-      : ("reporter-contract" as const);
+function collectBehaviorSurfaces(repoRoot: string, paths: string[]): SurfaceFact[] {
+  const surfaces = discoverBehaviorSourceModules(paths).flatMap(function ({ sourcePath, kind }) {
     return discoverBehaviorSurfaces(
       readFileSync(join(repoRoot, sourcePath), "utf8"),
       sourcePath,
@@ -480,7 +516,7 @@ export function collectSourceFacts(repoRoot: string): SourceFacts {
     ).sort(),
     fixtureHashes: collectFixtureHashes(repoRoot),
     surfaces: [
-      ...collectBehaviorSurfaces(repoRoot),
+      ...collectBehaviorSurfaces(repoRoot, paths),
       ...collectPackageAndScriptSurfaces(repoRoot),
       ...collectWorkflowSurfaces(repoRoot),
     ].sort(function (a, b) {

@@ -10,8 +10,8 @@ The ledger is diagnostic-only evidence for a clean break. It creates no command,
 |---|---:|
 | Registry rule IDs | 53 |
 | Runtime reporter IDs | 9 |
-| Reporter contracts | 12 |
-| CLI contracts | 21 |
+| Reporter contracts | 16 |
+| CLI contracts | 24 |
 | Fixer exports | 16 |
 | Detector exports (wired/unwired) | 37 (35/2) |
 | Fixture pairs | 79 |

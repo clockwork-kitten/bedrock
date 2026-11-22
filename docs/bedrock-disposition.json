@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-22T07:22:07.736Z",
-  "sourceFingerprint": "sha256:064780af448b18b1de5e9c0c2b8c90b2775729d47fdbee04db220f4aae0af481",
+  "generatedAt": "2026-11-22T07:54:59.636Z",
+  "sourceFingerprint": "sha256:28a0c31ab7e88565b5c097346b6512a3c0f39b28c6973e73d635bdfde26fcae8",
   "authority": {
     "issue": "clockwork-kitten/studio-board#91",
     "requirementsIssue": "clockwork-kitten/studio-board#86",
@@ -16,8 +16,8 @@
     "detectorWired": 35,
     "detectorUnwired": 2,
     "fixturePairs": 79,
-    "reporterContracts": 12,
-    "cliContracts": 21,
+    "reporterContracts": 16,
+    "cliContracts": 24,
     "packageIdentities": 2,
     "packageBins": 1,
     "packageScripts": 12,
@@ -1607,6 +1607,36 @@
       "proposedCruxId": null
     },
     {
+      "id": "cli:module:src/cli/args.ts",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/args.ts",
+      "sourceSha256": "d401092bccd0c7006779a1b4c991bd477e24fd777058a139a93fb4130234e4a4",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:module:src/cli/index.ts",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/index.ts",
+      "sourceSha256": "bbe0cc68c6ee9b225be6948fe2b1dc12ebf88f4c986565ced2e40e3afbbc83c9",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:module:src/cli/runner.ts",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "968ad66a1b7878c5deb81367d65c127f55091c1b00ddb3b164f03889ea3f6216",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
       "id": "cli:statement:src/cli/index.ts:0",
       "kind": "cli-contract",
       "sourcePath": "src/cli/index.ts",
@@ -1899,6 +1929,46 @@
       "proposedCruxId": null
     },
     {
+      "id": "reporter:module:src/reporter/format.ts",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/format.ts",
+      "sourceSha256": "89a176df01595926398e04c0152b3ed12c7366e06a91260448a0a09732f8bddc",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:module:src/reporter/index.ts",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/index.ts",
+      "sourceSha256": "fd7196ad5986bd71b54c40affb35d185a1845d38501908680211d8470b3c7dbb",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:module:src/reporter/rules.ts",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/rules.ts",
+      "sourceSha256": "d6523add277ae961567a87c252e77b32c3f52c3a34b4717f392313e047600ea7",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:module:src/reporter/run.ts",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/run.ts",
+      "sourceSha256": "d200a0da1a7b6eee530e448873e5a06af300a6709e2fa6749be8c37631e55121",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
       "id": "script-file:scripts/check-bedrock-inventory.ts",
       "kind": "script-file",
       "sourcePath": "scripts/check-bedrock-inventory.ts",
@@ -2064,322 +2134,322 @@
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 373,
+      "line": 409,
       "term": "suppress",
       "text": "export function classifySuppressionHit(",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 375,
+      "line": 411,
       "term": "suppress",
       "text": "term: SuppressionHit[\"term\"],",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 377,
+      "line": 413,
       "term": "suppress",
       "text": "): SuppressionHit[\"classification\"] {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 380,
+      "line": 416,
       "term": "suppress",
       "text": "(/Suppression|suppression/.test(text) ||",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 387,
+      "line": 423,
       "term": "disable",
       "text": "/^\\s*[\"'`].*(?:disable|ignore|suppress)/i.test(text)));",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 387,
+      "line": 423,
       "term": "ignore",
       "text": "/^\\s*[\"'`].*(?:disable|ignore|suppress)/i.test(text)));",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 387,
+      "line": 423,
       "term": "suppress",
       "text": "/^\\s*[\"'`].*(?:disable|ignore|suppress)/i.test(text)));",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 391,
+      "line": 427,
       "term": "ignore",
       "text": "if (path === \"knip.json\" && term === \"ignore\" && text.includes('\"ignore\"')) {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 396,
+      "line": 432,
       "term": "ignore",
       "text": "term === \"ignore\" &&",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 397,
+      "line": 433,
       "term": "ignore",
       "text": "text.includes(\"violation can be ignored\")",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 403,
+      "line": 439,
       "term": "suppress",
       "text": "term === \"suppress\" &&",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 404,
+      "line": 440,
       "term": "suppress",
       "text": "text.includes(\"Suppress unused-variable lint\")",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 410,
+      "line": 446,
       "term": "suppress",
       "text": "term === \"suppress\" &&",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 411,
+      "line": 447,
       "term": "suppress",
       "text": "text.includes(\"rejects unknown suppression or consumer-query results\")",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 415,
+      "line": 451,
       "term": "suppress",
       "text": "throw new Error(\"Unclassified suppression search hit: \" + path + \": \" + text.trim());",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 418,
+      "line": 454,
       "term": "suppress",
       "text": "function collectSuppressionHits(repoRoot: string, paths: string[]): SuppressionHit[] {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 419,
+      "line": 455,
       "term": "suppress",
       "text": "const hits: SuppressionHit[] = [];",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 429,
+      "line": 465,
       "term": "suppress",
       "text": "const terms = new Set<SuppressionHit[\"term\"]>();",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 430,
+      "line": 466,
       "term": "suppress",
       "text": "for (const match of text.toLowerCase().matchAll(/suppress|ignore|disable/g)) {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 430,
+      "line": 466,
       "term": "ignore",
       "text": "for (const match of text.toLowerCase().matchAll(/suppress|ignore|disable/g)) {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 430,
+      "line": 466,
       "term": "disable",
       "text": "for (const match of text.toLowerCase().matchAll(/suppress|ignore|disable/g)) {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 431,
+      "line": 467,
       "term": "suppress",
       "text": "terms.add(match[0] as SuppressionHit[\"term\"]);",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 439,
+      "line": 475,
       "term": "suppress",
       "text": "classification: classifySuppressionHit(path, term, text),",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 489,
+      "line": 525,
       "term": "suppress",
       "text": "suppressionSearch: {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 491,
+      "line": 527,
       "term": "disable",
       "text": "terms: [\"disable\", \"ignore\", \"suppress\"],",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 491,
+      "line": 527,
       "term": "ignore",
       "text": "terms: [\"disable\", \"ignore\", \"suppress\"],",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 491,
+      "line": 527,
       "term": "suppress",
       "text": "terms: [\"disable\", \"ignore\", \"suppress\"],",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 494,
+      "line": 530,
       "term": "suppress",
       "text": "suppressionHits: collectSuppressionHits(repoRoot, paths),",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 8,
+      "line": 12,
       "term": "suppress",
       "text": "classifySuppressionHit,",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 38,
+      "line": 43,
       "term": "suppress",
       "text": "suppressionSearchHits: 70,",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 39,
+      "line": 44,
       "term": "suppress",
       "text": "suppressionMechanisms: 0,",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 185,
+      "line": 253,
       "term": "suppress",
       "text": "it(\"rejects unclassified repository-wide suppression drift\", function () {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 187,
+      "line": 255,
       "term": "suppress",
       "text": "classifySuppressionHit(",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 189,
+      "line": 257,
       "term": "ignore",
       "text": "\"ignore\",",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 190,
+      "line": 258,
       "term": "ignore",
       "text": "'  \"ignore\": [\"src/__fixtures__/**\"]',",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 194,
+      "line": 262,
       "term": "suppress",
       "text": "classifySuppressionHit(\"package.json\", \"disable\", '\"disable-bedrock\": true');",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 194,
+      "line": 262,
       "term": "disable",
       "text": "classifySuppressionHit(\"package.json\", \"disable\", '\"disable-bedrock\": true');",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 195,
+      "line": 263,
       "term": "suppress",
       "text": "}).toThrow(\"Unclassified suppression search hit\");",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 197,
+      "line": 265,
       "term": "suppress",
       "text": "classifySuppressionHit(",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 199,
+      "line": 267,
       "term": "suppress",
       "text": "\"suppress\",",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 200,
+      "line": 268,
       "term": "suppress",
       "text": "'import type { SuppressionHit } from \"./types.js\";',",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 204,
+      "line": 272,
       "term": "suppress",
       "text": "classifySuppressionHit(",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 206,
+      "line": 274,
       "term": "disable",
       "text": "\"disable\",",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 207,
+      "line": 275,
       "term": "disable",
       "text": "\"// eslint-disable security/detect-child-process\",",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 209,
+      "line": 277,
       "term": "suppress",
       "text": "}).toThrow(\"Unclassified suppression search hit\");",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 210,
+      "line": 278,
       "term": "suppress",
       "text": "expect(doc.denominators.suppressionMechanisms).toBe(0);",
       "classification": "scanner-implementation"

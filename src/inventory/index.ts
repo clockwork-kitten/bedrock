@@ -2,6 +2,7 @@ export {
   assertBehaviorContractCatalog,
   classifySuppressionHit,
   collectSourceFacts,
+  discoverBehaviorSourceModules,
   discoverBehaviorSurfaces,
 } from "./collect.js";
 export {
