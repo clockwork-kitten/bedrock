@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-22T07:12:13.164Z",
-  "sourceFingerprint": "sha256:c72fef5f94c22f48d0ba38a1dc6e3ca241ac95bca99cb56eba8c76e79740d697",
+  "generatedAt": "2026-11-22T07:20:56.025Z",
+  "sourceFingerprint": "sha256:187f7350171a0955e7b8d1f4e93ed1037e60fcee2be997462dc73ab36d14da37",
   "authority": {
     "issue": "clockwork-kitten/studio-board#91",
     "requirementsIssue": "clockwork-kitten/studio-board#86",
@@ -16,8 +16,8 @@
     "detectorWired": 35,
     "detectorUnwired": 2,
     "fixturePairs": 79,
-    "reporterContracts": 8,
-    "cliContracts": 19,
+    "reporterContracts": 12,
+    "cliContracts": 21,
     "packageIdentities": 2,
     "packageBins": 1,
     "packageScripts": 12,
@@ -25,7 +25,7 @@
     "generatedArtifacts": 3,
     "workflows": 2,
     "workflowJobs": 3,
-    "suppressionSearchHits": 58,
+    "suppressionSearchHits": 70,
     "suppressionMechanisms": 0
   },
   "mismatchEvidence": {
@@ -1407,171 +1407,210 @@
   ],
   "surfaces": [
     {
-      "id": "cli:default-report",
+      "id": "cli:declaration:src/cli/args.ts:FIX_FLAG",
       "kind": "cli-contract",
       "sourcePath": "src/cli/args.ts",
+      "sourceSha256": "77ca02f8b436047e1b67db9a0f8cfa15e93212ac4857580d0b52f6ad57557014",
       "disposition": "dropped",
       "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
-      "id": "cli:direct-file-or-directory",
-      "kind": "cli-contract",
-      "sourcePath": "src/cli/runner.ts",
-      "disposition": "dropped",
-      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli:extension:.js",
-      "kind": "cli-contract",
-      "sourcePath": "src/cli/runner.ts",
-      "disposition": "dropped",
-      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli:extension:.jsx",
-      "kind": "cli-contract",
-      "sourcePath": "src/cli/runner.ts",
-      "disposition": "dropped",
-      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli:extension:.ts",
-      "kind": "cli-contract",
-      "sourcePath": "src/cli/runner.ts",
-      "disposition": "dropped",
-      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli:extension:.tsx",
-      "kind": "cli-contract",
-      "sourcePath": "src/cli/runner.ts",
-      "disposition": "dropped",
-      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli:fix-and-report-composable",
+      "id": "cli:declaration:src/cli/args.ts:parseArgs",
       "kind": "cli-contract",
       "sourcePath": "src/cli/args.ts",
+      "sourceSha256": "1d3548fc04cda86d5ecd131d283da1bec81b80744e56177b9573fb8d81384e24",
       "disposition": "dropped",
       "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
-      "id": "cli:fix-mode",
-      "kind": "cli-contract",
-      "sourcePath": "src/cli/runner.ts",
-      "disposition": "dropped",
-      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli:flag:--fix",
+      "id": "cli:declaration:src/cli/args.ts:REPORT_FLAG",
       "kind": "cli-contract",
       "sourcePath": "src/cli/args.ts",
+      "sourceSha256": "e59f35f39f9c008cde43a336ab67bd5d8fd214f8da823456fe03598310a19196",
       "disposition": "dropped",
       "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
-      "id": "cli:flag:--report",
-      "kind": "cli-contract",
-      "sourcePath": "src/cli/args.ts",
-      "disposition": "dropped",
-      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli:glob-question",
-      "kind": "cli-contract",
-      "sourcePath": "src/cli/runner.ts",
-      "disposition": "dropped",
-      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli:glob-star",
-      "kind": "cli-contract",
-      "sourcePath": "src/cli/runner.ts",
-      "disposition": "dropped",
-      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli:javascript-parser",
-      "kind": "cli-contract",
-      "sourcePath": "src/cli/runner.ts",
-      "disposition": "dropped",
-      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli:no-matches-exit-0",
-      "kind": "cli-contract",
-      "sourcePath": "src/cli/runner.ts",
-      "disposition": "dropped",
-      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli:no-pattern-exit-1",
+      "id": "cli:declaration:src/cli/index.ts:main",
       "kind": "cli-contract",
       "sourcePath": "src/cli/index.ts",
+      "sourceSha256": "f06f9ecff3faaebf4617f9941084123e19d03f173cb43d67a717a4ee7c93190e",
       "disposition": "dropped",
       "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
-      "id": "cli:positional-patterns",
-      "kind": "cli-contract",
-      "sourcePath": "src/cli/args.ts",
-      "disposition": "dropped",
-      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli:report-mode",
+      "id": "cli:declaration:src/cli/runner.ts:addFileIfNew",
       "kind": "cli-contract",
       "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "c4bbdbec2ac0bc838e7420f8f28ee52f32a0118ebb29b90b8ef5feeb6b1aa4e3",
       "disposition": "dropped",
       "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
-      "id": "cli:result-exit-code",
+      "id": "cli:declaration:src/cli/runner.ts:ALL_TRANSFORM_PASSES",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "1d08c843056388d886953acce5a76482fecb1a66e0556317cc298fef6ed21ce6",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:detectParser",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "aac390c467e78ffc3699594b91ecdaafe153a498d3d650d75390f6d68aeba27b",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:findBaseIndex",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "86e1f939a835b72d37aefa234460db86ca2778e8a8b64f12dcb827bb33a73514",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:globToRegex",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "326f9732eadafdf56b1e1703525ebe5d164f9f998679d08ce9ef21f48237ffe1",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:isGlobPattern",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "a5c1b33ac4e3c5f4d46553696f9b446acd06fd9e71bb6d594776e13d656429a3",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:isSupported",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "af2e07a2d6f8acde2c2f046cccaa23616c08a367de9dea31fba2801088ce6812",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:resolveDirectPattern",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "3f585943d907438d0d75fc65aa68e47430065c4770d50adffc73c4009d5632d6",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:resolveGlobPattern",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "94f4e2ae06cc004dca816b0ef07e63165c3684fbc42f1192bbe77b6ed8b436c0",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:resolvePatterns",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "163c3a9168114fd4fbacc6cfd388998591802b0eb190b01853f94aebfeca5272",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:run",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "311d7a8d87ea82257a5ad5b2e80ad8bbd27679223ae0ee4a3988a13ba0d186fa",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:runFix",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "ad34ab7ff4c57dae5bbbc83933aa143082258ee3b2089234c95240cee82c1125",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:runReport",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "e2037ac76dde86d3e10fecc8c6bb558bc517ec89967b961a6578d2372849cc46",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:SUPPORTED_EXTENSIONS",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "27c92773118398e615df9df4c7497957850ce331144615a1a9e64369baf23b20",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:walkDir",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "3603d1c5a18c5fd43d05666f077be9f665502d8b4898597b1ae8822b10532d76",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:declaration:src/cli/runner.ts:walkEntry",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "2818e429d023efb07f2b0e44f4ea79ba6aa9f8ab4fb504355f234d6203477c98",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:statement:src/cli/index.ts:0",
       "kind": "cli-contract",
       "sourcePath": "src/cli/index.ts",
-      "disposition": "dropped",
-      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli:typescript-parser",
-      "kind": "cli-contract",
-      "sourcePath": "src/cli/runner.ts",
+      "sourceSha256": "496849c3a4c5e9500881d56f1ef3f5f3bf4cd1bd7e56f5099a5c1f777d237476",
       "disposition": "dropped",
       "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
       "proposedOwner": null,
@@ -1740,72 +1779,120 @@
       "proposedCruxId": null
     },
     {
-      "id": "reporter:category-counts",
+      "id": "reporter:declaration:src/reporter/format.ts:CATEGORY_WIDTH",
       "kind": "reporter-contract",
       "sourcePath": "src/reporter/format.ts",
+      "sourceSha256": "81b2da5c1ffe6c3c8346fe3668dd58997650c740e5f343da88359fc8c3245a90",
       "disposition": "dropped",
       "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
-      "id": "reporter:file-summary",
+      "id": "reporter:declaration:src/reporter/format.ts:countByCategory",
       "kind": "reporter-contract",
       "sourcePath": "src/reporter/format.ts",
+      "sourceSha256": "03ff19d83be72ab78ed066bde506b9ab0f92c6978016cf28e1290ed6b0851225",
       "disposition": "dropped",
       "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
-      "id": "reporter:grounded-semantics",
-      "kind": "reporter-contract",
-      "sourcePath": "src/reporter/run.ts",
-      "disposition": "dropped",
-      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "reporter:grounded-summary",
-      "kind": "reporter-contract",
-      "sourcePath": "src/cli/runner.ts",
-      "disposition": "dropped",
-      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "reporter:javascript-parser",
-      "kind": "reporter-contract",
-      "sourcePath": "src/reporter/run.ts",
-      "disposition": "dropped",
-      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "reporter:typescript-parser",
-      "kind": "reporter-contract",
-      "sourcePath": "src/reporter/run.ts",
-      "disposition": "dropped",
-      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "reporter:violation-exit-code",
-      "kind": "reporter-contract",
-      "sourcePath": "src/cli/runner.ts",
-      "disposition": "dropped",
-      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "reporter:violation-line",
+      "id": "reporter:declaration:src/reporter/format.ts:formatReport",
       "kind": "reporter-contract",
       "sourcePath": "src/reporter/format.ts",
+      "sourceSha256": "c6236ccb57da2dfa1c121146b8dcc274fad57bc7d4dc70c8a268a37a4f60ae67",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:declaration:src/reporter/format.ts:formatResultLines",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/format.ts",
+      "sourceSha256": "0e953e439b1d45f251b41b4497f0f9dd0b0a6605a620582d1c3a5cc9d5f9e074",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:declaration:src/reporter/format.ts:formatViolationLine",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/format.ts",
+      "sourceSha256": "6f288d66bb3a18785d8c174588e593b9afab84f54313ac253eba59cc748b109b",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:declaration:src/reporter/format.ts:padRight",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/format.ts",
+      "sourceSha256": "3828bb03fe656dd4ad74bbfe4309377e4ad67d69b1276025167454b492e34114",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:declaration:src/reporter/format.ts:RULE_WIDTH",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/format.ts",
+      "sourceSha256": "3b9b115045055f266016c9f0559ea9b119f0c6eb32ab14a1c2fb4b8ea03702c2",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:declaration:src/reporter/index.ts:formatReport",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/index.ts",
+      "sourceSha256": "d5981a244a82e6d5ed231276d47175cd8f1c306125b00423856503d5e1681a95",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:declaration:src/reporter/index.ts:reportFile",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/index.ts",
+      "sourceSha256": "33a2d17ac98f0e1e6f26f0d4c60d2d41c7d47c4ac44d8b9c38a90488214da8f6",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:declaration:src/reporter/rules.ts:violationPasses",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/rules.ts",
+      "sourceSha256": "6a59bc002a4b92cefa3edb3cf0ffa5cd82863905315c6eed23b83d3fdff37c3a",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:declaration:src/reporter/run.ts:createViolationCollector",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/run.ts",
+      "sourceSha256": "2d2cfb8be2ef607856c5b5270f62b0df4b7753df753ffd03a364ba884097f5f2",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:declaration:src/reporter/run.ts:runReport",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/run.ts",
+      "sourceSha256": "c5c876aa52788bcc5546ee267f5064a6f54dcefcf13b3b3d406bc44af7aca70c",
       "disposition": "dropped",
       "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
       "proposedOwner": null,
@@ -1900,9 +1987,9 @@
   "suppressionHits": [
     {
       "path": "README.md",
-      "line": 144,
+      "line": 147,
       "term": "suppress",
-      "text": "each source-derived surface, and rejects unknown suppression or consumer-query results. Permanent",
+      "text": "catalog, and rejects unknown suppression or consumer-query results. Permanent Crux IDs are",
       "classification": "narrative"
     },
     {
@@ -1914,378 +2001,462 @@
     },
     {
       "path": "src/inventory/build.ts",
-      "line": 247,
+      "line": 326,
       "term": "suppress",
       "text": "\"The ledger is diagnostic-only evidence for a clean break. It creates no command, package, rule-ID, suppression, or output compatibility promise.\",",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/build.ts",
-      "line": 282,
+      "line": 361,
       "term": "suppress",
       "text": "\"| Suppression search hits / mechanisms | \" +",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/build.ts",
-      "line": 283,
+      "line": 362,
       "term": "suppress",
       "text": "doc.denominators.suppressionSearchHits +",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/build.ts",
-      "line": 285,
+      "line": 364,
       "term": "suppress",
       "text": "doc.denominators.suppressionMechanisms +",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/build.ts",
-      "line": 393,
+      "line": 472,
       "term": "suppress",
       "text": "suppressionSearchHits: facts.suppressionHits.length,",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/build.ts",
-      "line": 394,
+      "line": 473,
       "term": "suppress",
       "text": "suppressionMechanisms: 0,",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/build.ts",
-      "line": 413,
+      "line": 492,
       "term": "suppress",
       "text": "suppressionSearch: facts.suppressionSearch,",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/build.ts",
-      "line": 414,
+      "line": 493,
       "term": "suppress",
       "text": "suppressionHits: facts.suppressionHits,",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 6,
+      "line": 8,
       "term": "suppress",
       "text": "import type { FixtureHash, SourceFacts, SuppressionHit, SurfaceFact } from \"./types.js\";",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 371,
+      "line": 373,
       "term": "suppress",
       "text": "export function classifySuppressionHit(",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 373,
+      "line": 375,
       "term": "suppress",
       "text": "term: SuppressionHit[\"term\"],",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 375,
+      "line": 377,
       "term": "suppress",
       "text": "): SuppressionHit[\"classification\"] {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 379,
+      "line": 380,
+      "term": "suppress",
+      "text": "(/Suppression|suppression/.test(text) ||",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 387,
+      "term": "disable",
+      "text": "/^\\s*[\"'`].*(?:disable|ignore|suppress)/i.test(text)));",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 387,
+      "term": "ignore",
+      "text": "/^\\s*[\"'`].*(?:disable|ignore|suppress)/i.test(text)));",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 387,
+      "term": "suppress",
+      "text": "/^\\s*[\"'`].*(?:disable|ignore|suppress)/i.test(text)));",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 391,
       "term": "ignore",
       "text": "if (path === \"knip.json\" && term === \"ignore\" && text.includes('\"ignore\"')) {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 384,
+      "line": 396,
       "term": "ignore",
       "text": "term === \"ignore\" &&",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 385,
+      "line": 397,
       "term": "ignore",
       "text": "text.includes(\"violation can be ignored\")",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 391,
+      "line": 403,
       "term": "suppress",
       "text": "term === \"suppress\" &&",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 392,
+      "line": 404,
       "term": "suppress",
       "text": "text.includes(\"Suppress unused-variable lint\")",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 398,
+      "line": 410,
       "term": "suppress",
       "text": "term === \"suppress\" &&",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 399,
+      "line": 411,
       "term": "suppress",
       "text": "text.includes(\"rejects unknown suppression or consumer-query results\")",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 403,
+      "line": 415,
       "term": "suppress",
       "text": "throw new Error(\"Unclassified suppression search hit: \" + path + \": \" + text.trim());",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 406,
+      "line": 418,
       "term": "suppress",
       "text": "function collectSuppressionHits(repoRoot: string, paths: string[]): SuppressionHit[] {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 407,
+      "line": 419,
       "term": "suppress",
       "text": "const hits: SuppressionHit[] = [];",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 417,
+      "line": 429,
       "term": "suppress",
       "text": "const terms = new Set<SuppressionHit[\"term\"]>();",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 418,
+      "line": 430,
       "term": "suppress",
       "text": "for (const match of text.toLowerCase().matchAll(/suppress|ignore|disable/g)) {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 418,
+      "line": 430,
       "term": "ignore",
       "text": "for (const match of text.toLowerCase().matchAll(/suppress|ignore|disable/g)) {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 418,
+      "line": 430,
       "term": "disable",
       "text": "for (const match of text.toLowerCase().matchAll(/suppress|ignore|disable/g)) {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 419,
+      "line": 431,
       "term": "suppress",
       "text": "terms.add(match[0] as SuppressionHit[\"term\"]);",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 427,
+      "line": 439,
       "term": "suppress",
       "text": "classification: classifySuppressionHit(path, term, text),",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 478,
+      "line": 489,
       "term": "suppress",
       "text": "suppressionSearch: {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 480,
+      "line": 491,
       "term": "disable",
       "text": "terms: [\"disable\", \"ignore\", \"suppress\"],",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 480,
+      "line": 491,
       "term": "ignore",
       "text": "terms: [\"disable\", \"ignore\", \"suppress\"],",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 480,
+      "line": 491,
       "term": "suppress",
       "text": "terms: [\"disable\", \"ignore\", \"suppress\"],",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/collect.ts",
-      "line": 483,
+      "line": 494,
       "term": "suppress",
       "text": "suppressionHits: collectSuppressionHits(repoRoot, paths),",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 7,
+      "line": 8,
       "term": "suppress",
       "text": "classifySuppressionHit,",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 36,
+      "line": 38,
       "term": "suppress",
-      "text": "suppressionSearchHits: 58,",
+      "text": "suppressionSearchHits: 70,",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 37,
+      "line": 39,
       "term": "suppress",
       "text": "suppressionMechanisms: 0,",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 142,
+      "line": 185,
       "term": "suppress",
       "text": "it(\"rejects unclassified repository-wide suppression drift\", function () {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 144,
+      "line": 187,
       "term": "suppress",
       "text": "classifySuppressionHit(",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 146,
+      "line": 189,
       "term": "ignore",
       "text": "\"ignore\",",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 147,
+      "line": 190,
       "term": "ignore",
       "text": "'  \"ignore\": [\"src/__fixtures__/**\"]',",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 151,
+      "line": 194,
       "term": "suppress",
       "text": "classifySuppressionHit(\"package.json\", \"disable\", '\"disable-bedrock\": true');",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 151,
+      "line": 194,
       "term": "disable",
       "text": "classifySuppressionHit(\"package.json\", \"disable\", '\"disable-bedrock\": true');",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/index.test.ts",
-      "line": 152,
+      "line": 195,
       "term": "suppress",
       "text": "}).toThrow(\"Unclassified suppression search hit\");",
       "classification": "scanner-implementation"
     },
     {
-      "path": "src/inventory/index.ts",
-      "line": 1,
+      "path": "src/inventory/index.test.ts",
+      "line": 197,
       "term": "suppress",
-      "text": "export { classifySuppressionHit, collectSourceFacts } from \"./collect.js\";",
+      "text": "classifySuppressionHit(",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 199,
+      "term": "suppress",
+      "text": "\"suppress\",",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 200,
+      "term": "suppress",
+      "text": "'import type { SuppressionHit } from \"./types.js\";',",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 204,
+      "term": "suppress",
+      "text": "classifySuppressionHit(",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 206,
+      "term": "disable",
+      "text": "\"disable\",",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 207,
+      "term": "disable",
+      "text": "\"// eslint-disable security/detect-child-process\",",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 209,
+      "term": "suppress",
+      "text": "}).toThrow(\"Unclassified suppression search hit\");",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 210,
+      "term": "suppress",
+      "text": "expect(doc.denominators.suppressionMechanisms).toBe(0);",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.ts",
+      "line": 3,
+      "term": "suppress",
+      "text": "classifySuppressionHit,",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/types.ts",
-      "line": 38,
+      "line": 40,
       "term": "suppress",
       "text": "export type SuppressionHit = {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/types.ts",
-      "line": 41,
+      "line": 43,
       "term": "disable",
       "text": "term: \"disable\" | \"ignore\" | \"suppress\";",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/types.ts",
-      "line": 41,
+      "line": 43,
       "term": "ignore",
       "text": "term: \"disable\" | \"ignore\" | \"suppress\";",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/types.ts",
-      "line": 41,
+      "line": 43,
       "term": "suppress",
       "text": "term: \"disable\" | \"ignore\" | \"suppress\";",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/types.ts",
-      "line": 79,
+      "line": 81,
       "term": "suppress",
       "text": "suppressionSearch: {",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/types.ts",
-      "line": 84,
+      "line": 86,
       "term": "suppress",
       "text": "suppressionHits: SuppressionHit[];",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/types.ts",
-      "line": 139,
+      "line": 153,
       "term": "suppress",
       "text": "suppressionSearchHits: number;",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/types.ts",
-      "line": 140,
+      "line": 154,
       "term": "suppress",
       "text": "suppressionMechanisms: number;",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/types.ts",
-      "line": 153,
+      "line": 167,
       "term": "suppress",
       "text": "suppressionSearch: SourceFacts[\"suppressionSearch\"];",
       "classification": "scanner-implementation"
     },
     {
       "path": "src/inventory/types.ts",
-      "line": 154,
+      "line": 168,
       "term": "suppress",
       "text": "suppressionHits: SuppressionHit[];",
       "classification": "scanner-implementation"

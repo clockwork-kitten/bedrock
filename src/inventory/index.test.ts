@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { CONSUMER_SNAPSHOT } from "./constants.js";
 import {
+  assertBehaviorContractCatalog,
   assertExactDispositionCoverage,
   assertSourceFingerprint,
   buildFreezeDispositionDocument,
   classifySuppressionHit,
   collectSourceFacts,
+  discoverBehaviorSurfaces,
   validateConsumerEvidence,
 } from "./index.js";
 import type { ConsumerEvidence, SourceFacts } from "./types.js";
@@ -24,8 +26,8 @@ describe("bedrock freeze inventory", function () {
       detectorWired: 35,
       detectorUnwired: 2,
       fixturePairs: 79,
-      reporterContracts: 8,
-      cliContracts: 19,
+      reporterContracts: 12,
+      cliContracts: 21,
       packageIdentities: 2,
       packageBins: 1,
       packageScripts: 12,
@@ -33,7 +35,7 @@ describe("bedrock freeze inventory", function () {
       generatedArtifacts: 3,
       workflows: 2,
       workflowJobs: 3,
-      suppressionSearchHits: 58,
+      suppressionSearchHits: 70,
       suppressionMechanisms: 0,
     });
     expect(doc.surfaces).toHaveLength(
@@ -96,6 +98,36 @@ describe("bedrock freeze inventory", function () {
     }).toThrow("Missing fixer disposition mapping for: unknownFixer");
   });
 
+  it("rejects added or changed CLI and reporter behavior", function () {
+    const source = "export function run(): number { return 0; }";
+    const discovered = discoverBehaviorSurfaces(source, "src/cli/fixture.ts", "cli-contract");
+    const catalog = {
+      [discovered[0]!.id]: discovered[0]!.sourceSha256!,
+    };
+
+    expect(function () {
+      assertBehaviorContractCatalog(
+        discoverBehaviorSurfaces(
+          "export function run(): number { if (true) { return 1; } return 0; }",
+          "src/cli/fixture.ts",
+          "cli-contract",
+        ),
+        catalog,
+      );
+    }).toThrow("changed: cli:declaration:src/cli/fixture.ts:run");
+
+    expect(function () {
+      assertBehaviorContractCatalog(
+        discoverBehaviorSurfaces(
+          source + "\nexport function newlyAdded(): void {}",
+          "src/cli/fixture.ts",
+          "cli-contract",
+        ),
+        catalog,
+      );
+    }).toThrow("unknown: cli:declaration:src/cli/fixture.ts:newlyAdded");
+  });
+
   it("rejects duplicate, missing, and unknown disposition rows", function () {
     expect(function () {
       assertExactDispositionCoverage(["a", "b"], [{ id: "a" }, { id: "a" }, { id: "c" }], "Test");
@@ -123,10 +155,21 @@ describe("bedrock freeze inventory", function () {
     }).toThrow("unknown query");
 
     const stale = structuredClone(CONSUMER_SNAPSHOT) as ConsumerEvidence;
-    stale.results[0] = { ...stale.results[0]!, revision: "stale" };
+    stale.repositoryRevisions["clockwork-kitten/standards"] = "stale";
+    stale.results = stale.results.map(function (result) {
+      return result.repository === "clockwork-kitten/standards"
+        ? { ...result, revision: "stale" }
+        : result;
+    });
     expect(function () {
       validateConsumerEvidence(stale);
-    }).toThrow("stale or missing revision");
+    }).toThrow("do not match pinned default-branch heads");
+
+    const missing = structuredClone(CONSUMER_SNAPSHOT) as ConsumerEvidence;
+    missing.results.shift();
+    expect(function () {
+      validateConsumerEvidence(missing);
+    }).toThrow("do not match pinned query evidence");
 
     const unclassified = structuredClone(CONSUMER_SNAPSHOT) as ConsumerEvidence;
     const firstResult = unclassified.results[0]!;
@@ -150,6 +193,21 @@ describe("bedrock freeze inventory", function () {
     expect(function () {
       classifySuppressionHit("package.json", "disable", '"disable-bedrock": true');
     }).toThrow("Unclassified suppression search hit");
+    expect(
+      classifySuppressionHit(
+        "src/inventory/collect.ts",
+        "suppress",
+        'import type { SuppressionHit } from "./types.js";',
+      ),
+    ).toBe("scanner-implementation");
+    expect(function () {
+      classifySuppressionHit(
+        "src/inventory/escape.ts",
+        "disable",
+        "// eslint-disable security/detect-child-process",
+      );
+    }).toThrow("Unclassified suppression search hit");
+    expect(doc.denominators.suppressionMechanisms).toBe(0);
   });
 
   it("limits downstream slices to S/M/L only", function () {

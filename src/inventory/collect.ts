@@ -2,7 +2,9 @@ import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
+import ts from "typescript";
 import { rules } from "../rules/registry.js";
+import { BEHAVIOR_CONTRACT_CATALOG } from "./constants.js";
 import type { FixtureHash, SourceFacts, SuppressionHit, SurfaceFact } from "./types.js";
 
 const RULES_DIR = "src/rules";
@@ -13,6 +15,15 @@ const GENERATED_INVENTORY_PATHS = new Set([
   "docs/bedrock-disposition.json",
   "docs/bedrock-freeze.md",
 ]);
+const BEHAVIOR_SOURCE_PATHS = [
+  "src/cli/args.ts",
+  "src/cli/index.ts",
+  "src/cli/runner.ts",
+  "src/reporter/format.ts",
+  "src/reporter/index.ts",
+  "src/reporter/rules.ts",
+  "src/reporter/run.ts",
+] as const;
 function sha256(contents: string | Buffer): string {
   return createHash("sha256").update(contents).digest("hex");
 }
@@ -183,121 +194,112 @@ function parseWorkflowJobs(workflowContents: string): string[] {
   return jobs;
 }
 
-function requireSourceMarkers(
+function declarationName(statement: ts.Statement): string | undefined {
+  if (ts.isFunctionDeclaration(statement) && statement.name !== undefined) {
+    return statement.name.text;
+  }
+  if (ts.isVariableStatement(statement) && statement.declarationList.declarations.length === 1) {
+    const declaration = statement.declarationList.declarations[0];
+    if (
+      declaration !== undefined &&
+      ts.isIdentifier(declaration.name) &&
+      declaration.initializer !== undefined
+    ) {
+      return declaration.name.text;
+    }
+  }
+  return undefined;
+}
+
+export function discoverBehaviorSurfaces(
   source: string,
   sourcePath: string,
-  rows: Array<{ id: string; marker: string }>,
-  kind: SurfaceFact["kind"],
+  kind: "cli-contract" | "reporter-contract",
 ): SurfaceFact[] {
-  return rows.map(function (row) {
-    if (!source.includes(row.marker)) {
-      throw new Error("Missing source marker for " + row.id + " in " + sourcePath);
+  const sourceFile = ts.createSourceFile(
+    sourcePath,
+    source,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TS,
+  );
+  const prefix = kind === "cli-contract" ? "cli" : "reporter";
+  const rows: SurfaceFact[] = [];
+  let executableStatementIndex = 0;
+  for (const statement of sourceFile.statements) {
+    const name = declarationName(statement);
+    if (name !== undefined) {
+      const declarationSource = source.slice(statement.getStart(sourceFile), statement.end);
+      rows.push({
+        id: prefix + ":declaration:" + sourcePath + ":" + name,
+        kind,
+        sourcePath,
+        sourceSha256: sha256(declarationSource),
+      });
+    } else if (ts.isExpressionStatement(statement)) {
+      const statementSource = source.slice(statement.getStart(sourceFile), statement.end);
+      rows.push({
+        id: prefix + ":statement:" + sourcePath + ":" + executableStatementIndex,
+        kind,
+        sourcePath,
+        sourceSha256: sha256(statementSource),
+      });
+      executableStatementIndex += 1;
     }
-    return { id: row.id, kind, sourcePath };
-  });
-}
-
-function collectReporterSurfaces(repoRoot: string): SurfaceFact[] {
-  const formatPath = "src/reporter/format.ts";
-  const runPath = "src/reporter/run.ts";
-  const cliRunnerPath = "src/cli/runner.ts";
-  return [
-    ...requireSourceMarkers(
-      readFileSync(join(repoRoot, formatPath), "utf8"),
-      formatPath,
-      [
-        { id: "reporter:violation-line", marker: "violation.message" },
-        { id: "reporter:category-counts", marker: "external-boundary)" },
-        { id: "reporter:file-summary", marker: "${fileCount} ${fileWord}" },
-      ],
-      "reporter-contract",
-    ),
-    ...requireSourceMarkers(
-      readFileSync(join(repoRoot, runPath), "utf8"),
-      runPath,
-      [
-        { id: "reporter:typescript-parser", marker: 'parser = "ts"' },
-        { id: "reporter:javascript-parser", marker: 'parser = "babel"' },
-        { id: "reporter:grounded-semantics", marker: 'v.category !== "external-boundary"' },
-      ],
-      "reporter-contract",
-    ),
-    ...requireSourceMarkers(
-      readFileSync(join(repoRoot, cliRunnerPath), "utf8"),
-      cliRunnerPath,
-      [
-        { id: "reporter:grounded-summary", marker: "file(s) grounded" },
-        { id: "reporter:violation-exit-code", marker: "if (hasViolations)" },
-      ],
-      "reporter-contract",
-    ),
-  ];
-}
-
-function collectCliSurfaces(repoRoot: string): SurfaceFact[] {
-  const argsPath = "src/cli/args.ts";
-  const indexPath = "src/cli/index.ts";
-  const runnerPath = "src/cli/runner.ts";
-  const argsSource = readFileSync(join(repoRoot, argsPath), "utf8");
-  const runnerSource = readFileSync(join(repoRoot, runnerPath), "utf8");
-  const flagRows = Array.from(argsSource.matchAll(/const \w+_FLAG = "(--[^"]+)";/g), function (match) {
-    return {
-      id: "cli:flag:" + match[1],
-      kind: "cli-contract" as const,
-      sourcePath: argsPath,
-    };
-  });
-  const extensionsBody = runnerSource.match(
-    /const SUPPORTED_EXTENSIONS = \[(?<body>[^\]]+)\]/,
-  )?.groups?.body;
-  if (extensionsBody === undefined) {
-    throw new Error("Unable to parse SUPPORTED_EXTENSIONS");
   }
-  const extensionRows = Array.from(extensionsBody.matchAll(/"([^"]+)"/g), function (match) {
-    return {
-      id: "cli:extension:" + match[1],
-      kind: "cli-contract" as const,
-      sourcePath: runnerPath,
-    };
+  return rows;
+}
+
+export function assertBehaviorContractCatalog(
+  discovered: SurfaceFact[],
+  catalog: Record<string, string>,
+): void {
+  const discoveredById = new Map(
+    discovered.map(function (surface) {
+      return [surface.id, surface.sourceSha256 ?? ""];
+    }),
+  );
+  const missing = Object.keys(catalog).filter(function (id) {
+    return !discoveredById.has(id);
   });
-  return [
-    ...flagRows,
-    ...extensionRows,
-    ...requireSourceMarkers(
-      argsSource,
-      argsPath,
-      [
-        { id: "cli:default-report", marker: "effectiveReport = true" },
-        { id: "cli:fix-and-report-composable", marker: "fix: effectiveFix, report: effectiveReport" },
-        { id: "cli:positional-patterns", marker: "patterns.push(arg)" },
-      ],
-      "cli-contract",
-    ),
-    ...requireSourceMarkers(
-      readFileSync(join(repoRoot, indexPath), "utf8"),
-      indexPath,
-      [
-        { id: "cli:no-pattern-exit-1", marker: "process.exit(1)" },
-        { id: "cli:result-exit-code", marker: "process.exit(result.exitCode)" },
-      ],
-      "cli-contract",
-    ),
-    ...requireSourceMarkers(
-      runnerSource,
-      runnerPath,
-      [
-        { id: "cli:direct-file-or-directory", marker: "resolveDirectPattern" },
-        { id: "cli:glob-star", marker: 'pattern.includes("*")' },
-        { id: "cli:glob-question", marker: 'pattern.includes("?")' },
-        { id: "cli:no-matches-exit-0", marker: '"No files matched the given patterns."' },
-        { id: "cli:fix-mode", marker: "runFix(files)" },
-        { id: "cli:report-mode", marker: "runReport(files)" },
-        { id: "cli:typescript-parser", marker: 'return "ts"' },
-        { id: "cli:javascript-parser", marker: 'return "babel"' },
-      ],
-      "cli-contract",
-    ),
-  ];
+  const unknown = [...discoveredById.keys()].filter(function (id) {
+    return catalog[id] === undefined;
+  });
+  const changed = [...discoveredById].filter(function ([id, hash]) {
+    return catalog[id] !== undefined && catalog[id] !== hash;
+  });
+  if (missing.length > 0 || unknown.length > 0 || changed.length > 0) {
+    throw new Error(
+      "Behavior contract catalog drift; missing: " +
+        missing.sort().join(", ") +
+        "; unknown: " +
+        unknown.sort().join(", ") +
+        "; changed: " +
+        changed
+          .map(function ([id]) {
+            return id;
+          })
+          .sort()
+          .join(", "),
+    );
+  }
+}
+
+function collectBehaviorSurfaces(repoRoot: string): SurfaceFact[] {
+  const surfaces = BEHAVIOR_SOURCE_PATHS.flatMap(function (sourcePath) {
+    const kind = sourcePath.startsWith("src/cli/")
+      ? ("cli-contract" as const)
+      : ("reporter-contract" as const);
+    return discoverBehaviorSurfaces(
+      readFileSync(join(repoRoot, sourcePath), "utf8"),
+      sourcePath,
+      kind,
+    );
+  }).sort(function (a, b) {
+    return a.id.localeCompare(b.id);
+  });
+  assertBehaviorContractCatalog(surfaces, BEHAVIOR_CONTRACT_CATALOG);
+  return surfaces;
 }
 
 function collectPackageAndScriptSurfaces(repoRoot: string): SurfaceFact[] {
@@ -373,7 +375,17 @@ export function classifySuppressionHit(
   term: SuppressionHit["term"],
   text: string,
 ): SuppressionHit["classification"] {
-  if (path.startsWith("src/inventory/") || path.endsWith("-inventory.ts")) {
+  const scannerReference =
+    path.startsWith("src/inventory/") &&
+    (/Suppression|suppression/.test(text) ||
+      (path === "src/inventory/collect.ts" &&
+        /scannerReference|text\.includes|matchAll|path\.endsWith|term ===|terms:|\.test\(text\)/.test(
+          text,
+        )) ||
+      (path === "src/inventory/types.ts" && /term:/.test(text)) ||
+      (path.endsWith(".test.ts") &&
+        /^\s*["'`].*(?:disable|ignore|suppress)/i.test(text)));
+  if (scannerReference) {
     return "scanner-implementation";
   }
   if (path === "knip.json" && term === "ignore" && text.includes('"ignore"')) {
@@ -468,8 +480,7 @@ export function collectSourceFacts(repoRoot: string): SourceFacts {
     ).sort(),
     fixtureHashes: collectFixtureHashes(repoRoot),
     surfaces: [
-      ...collectReporterSurfaces(repoRoot),
-      ...collectCliSurfaces(repoRoot),
+      ...collectBehaviorSurfaces(repoRoot),
       ...collectPackageAndScriptSurfaces(repoRoot),
       ...collectWorkflowSurfaces(repoRoot),
     ].sort(function (a, b) {

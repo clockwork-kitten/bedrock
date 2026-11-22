@@ -1,4 +1,9 @@
-export { classifySuppressionHit, collectSourceFacts } from "./collect.js";
+export {
+  assertBehaviorContractCatalog,
+  classifySuppressionHit,
+  collectSourceFacts,
+  discoverBehaviorSurfaces,
+} from "./collect.js";
 export {
   assertExactDispositionCoverage,
   assertSourceFingerprint,

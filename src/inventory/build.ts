@@ -5,8 +5,10 @@ import {
   FIXER_TO_RULE_IDS,
   resolveRuleDisposition,
 } from "./constants.js";
+import { PINNED_CONSUMER_EVIDENCE } from "./consumer-evidence.js";
 import type {
   ConsumerEvidence,
+  ConsumerEvidenceCapture,
   FreezeDispositionDocument,
   InventoryRow,
   SourceFacts,
@@ -68,12 +70,64 @@ export function assertSourceFingerprint(
   }
 }
 
-export function validateConsumerEvidence(evidence: ConsumerEvidence): void {
+export function validateConsumerEvidence(
+  evidence: ConsumerEvidence,
+  capture: ConsumerEvidenceCapture = PINNED_CONSUMER_EVIDENCE,
+): void {
   const queryIds = evidence.queries.map(function (query) {
     return query.id;
   });
   if (new Set(queryIds).size !== queryIds.length) {
     throw new Error("Duplicate consumer query IDs");
+  }
+  if (evidence.observedAt !== capture.capturedAt) {
+    throw new Error("Consumer evidence capture date does not match pinned evidence");
+  }
+  if (JSON.stringify(evidence.organizationCounts) !== JSON.stringify(capture.organizationCounts)) {
+    throw new Error("Consumer organization counts do not match pinned evidence");
+  }
+  const captureQueries = new Map(
+    capture.queries.map(function (query) {
+      return [query.id, query];
+    }),
+  );
+  const missingQueries = capture.queries.filter(function (query) {
+    return !queryIds.includes(query.id);
+  });
+  const unknownQueries = evidence.queries.filter(function (query) {
+    return !captureQueries.has(query.id);
+  });
+  if (missingQueries.length > 0 || unknownQueries.length > 0) {
+    throw new Error(
+      "Consumer query set does not match pinned evidence; missing: " +
+        missingQueries
+          .map(function (query) {
+            return query.id;
+          })
+          .join(", ") +
+        "; unknown: " +
+        unknownQueries
+          .map(function (query) {
+            return query.id;
+          })
+          .join(", "),
+    );
+  }
+  for (const query of evidence.queries) {
+    if (captureQueries.get(query.id)?.command !== query.command) {
+      throw new Error("Consumer query command does not match pinned evidence: " + query.id);
+    }
+  }
+  const pinnedRevisionEntries = Object.entries(capture.repositoryHeads).map(
+    function ([repository, head]) {
+      return [repository, head.revision] as const;
+    },
+  );
+  if (
+    JSON.stringify(Object.entries(evidence.repositoryRevisions).sort()) !==
+    JSON.stringify(pinnedRevisionEntries.sort())
+  ) {
+    throw new Error("Consumer repository revisions do not match pinned default-branch heads");
   }
   const seen = new Set<string>();
   for (const result of evidence.results) {
@@ -92,10 +146,14 @@ export function validateConsumerEvidence(evidence: ConsumerEvidence): void {
           result.path,
       );
     }
-    const revision = evidence.repositoryRevisions[result.repository];
-    if (revision === undefined || revision !== result.revision) {
+    const revision = capture.repositoryHeads[result.repository]?.revision;
+    if (
+      revision === undefined ||
+      revision !== result.revision ||
+      evidence.repositoryRevisions[result.repository] !== revision
+    ) {
       throw new Error(
-        "Consumer result has stale or missing revision: " +
+        "Consumer result does not match pinned default-branch revision: " +
           result.repository +
           ":" +
           result.path,
@@ -106,6 +164,27 @@ export function validateConsumerEvidence(evidence: ConsumerEvidence): void {
       throw new Error("Duplicate consumer query result: " + key.replaceAll("\0", ":"));
     }
     seen.add(key);
+  }
+  for (const query of capture.queries) {
+    const expected = query.results
+      .map(function (result) {
+        return query.id + "\0" + result.repository + "\0" + result.path;
+      })
+      .sort();
+    const actual = evidence.results
+      .filter(function (result) {
+        return result.queryId === query.id;
+      })
+      .map(function (result) {
+        return result.queryId + "\0" + result.repository + "\0" + result.path;
+      })
+      .sort();
+    if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+      throw new Error("Consumer results do not match pinned query evidence: " + query.id);
+    }
+  }
+  if (JSON.stringify(evidence.npmQueries) !== JSON.stringify(capture.npmQueries)) {
+    throw new Error("Consumer npm results do not match pinned evidence");
   }
 }
 

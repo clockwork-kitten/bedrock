@@ -14,6 +14,7 @@ export type InventoryRow = {
   id: string;
   kind: string;
   sourcePath: string;
+  sourceSha256?: string;
   disposition: "candidate-pending-96" | "dropped" | "none";
   rationale: string;
   proposedOwner: string | null;
@@ -33,6 +34,7 @@ export type SurfaceFact = {
     | "workflow"
     | "workflow-job";
   sourcePath: string;
+  sourceSha256?: string;
 };
 
 export type SuppressionHit = {
@@ -107,6 +109,18 @@ export type ConsumerEvidence = {
     result: Record<string, unknown>;
   }>;
   limitations: string;
+};
+
+export type ConsumerEvidenceCapture = {
+  capturedAt: string;
+  organizationCounts: ConsumerEvidence["organizationCounts"];
+  queries: Array<{
+    id: string;
+    command: string;
+    results: Array<{ repository: string; path: string }>;
+  }>;
+  repositoryHeads: Record<string, { defaultBranch: string; revision: string }>;
+  npmQueries: ConsumerEvidence["npmQueries"];
 };
 
 export type FreezeDispositionDocument = {

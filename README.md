@@ -140,10 +140,13 @@ Bedrock retirement work tracks a repo-local, reproducible inventory in:
 - `docs/bedrock-consumers.json` (bounded downstream consumer query results pinned to repository revisions)
 - `docs/bedrock-freeze.md` (human summary)
 
-The checker fingerprints all non-generated tracked source, requires exact disposition coverage for
-each source-derived surface, and rejects unknown suppression or consumer-query results. Permanent
-Crux IDs are explicitly deferred to `clockwork-kitten/studio-board#96`; this ledger records only
-non-ID target concepts until that authority assigns IDs.
+The independently captured query paths and default-branch revisions are pinned in
+`src/inventory/consumer-evidence.ts`; CI reconciles the generated consumer ledger against that
+capture without network access. The checker also fingerprints all non-generated tracked source,
+requires every executable CLI/reporter declaration to match the explicit behavior-contract
+catalog, and rejects unknown suppression or consumer-query results. Permanent Crux IDs are
+explicitly deferred to `clockwork-kitten/studio-board#96`; this ledger records only non-ID target
+concepts until that authority assigns IDs.
 
 ## License
 
