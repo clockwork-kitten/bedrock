@@ -137,10 +137,13 @@ v1 complete. Planned:
 Bedrock retirement work tracks a repo-local, reproducible inventory in:
 
 - `docs/bedrock-disposition.json` (authoritative machine-readable ledger)
-- `docs/bedrock-consumers.json` (bounded downstream consumer snapshot)
+- `docs/bedrock-consumers.json` (bounded downstream consumer query results pinned to repository revisions)
 - `docs/bedrock-freeze.md` (human summary)
 
-Permanent Crux IDs and owner assignments are explicitly deferred to `clockwork-kitten/studio-board#96`.
+The checker fingerprints all non-generated tracked source, requires exact disposition coverage for
+each source-derived surface, and rejects unknown suppression or consumer-query results. Permanent
+Crux IDs are explicitly deferred to `clockwork-kitten/studio-board#96`; this ledger records only
+non-ID target concepts until that authority assigns IDs.
 
 ## License
 

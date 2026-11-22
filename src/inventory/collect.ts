@@ -1,55 +1,76 @@
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { rules } from "../rules/registry.js";
-import type { FixtureHash, SourceFacts } from "./types.js";
+import type { FixtureHash, SourceFacts, SuppressionHit, SurfaceFact } from "./types.js";
 
 const RULES_DIR = "src/rules";
 const FIXTURES_DIR = "src/__fixtures__";
 const WORKFLOWS_DIR = ".github/workflows";
-
-function sha256(contents: string): string {
-  const hash = createHash("sha256");
-  hash.update(contents, "utf8");
-  return hash.digest("hex");
+const GENERATED_INVENTORY_PATHS = new Set([
+  "docs/bedrock-consumers.json",
+  "docs/bedrock-disposition.json",
+  "docs/bedrock-freeze.md",
+]);
+function sha256(contents: string | Buffer): string {
+  return createHash("sha256").update(contents).digest("hex");
 }
 
 function walkFiles(rootDir: string): string[] {
-  const items = readdirSync(rootDir);
   const results: string[] = [];
-  for (const item of items) {
+  for (const item of readdirSync(rootDir)) {
     const itemPath = join(rootDir, item);
-    const stat = statSync(itemPath);
-    if (stat.isDirectory()) {
-      for (const nested of walkFiles(itemPath)) {
-        results.push(nested);
-      }
-      continue;
+    if (statSync(itemPath).isDirectory()) {
+      results.push(...walkFiles(itemPath));
+    } else {
+      results.push(itemPath);
     }
-    results.push(itemPath);
   }
   return results;
 }
 
+function trackedPaths(repoRoot: string): string[] {
+  return execFileSync("git", ["ls-files", "-z"], {
+    cwd: repoRoot,
+    encoding: "utf8",
+  })
+    .split("\0")
+    .filter(function (path) {
+      return path.length > 0;
+    })
+    .sort();
+}
+
+function collectSourceFingerprint(repoRoot: string, paths: string[]): string {
+  const hash = createHash("sha256");
+  for (const path of paths) {
+    if (GENERATED_INVENTORY_PATHS.has(path)) {
+      continue;
+    }
+    hash.update(path);
+    hash.update("\0");
+    hash.update(readFileSync(join(repoRoot, path)));
+    hash.update("\0");
+  }
+  return "sha256:" + hash.digest("hex");
+}
+
 function extractSymbolList(source: string, marker: "TransformPass" | "ViolationPass"): string[] {
   const regex = new RegExp("export const\\s+(\\w+):\\s+" + marker, "g");
-  const symbols: string[] = [];
-  for (const match of source.matchAll(regex)) {
+  return Array.from(source.matchAll(regex), function (match) {
     const symbol = match[1];
-    if (symbol !== undefined) {
-      symbols.push(symbol);
+    if (symbol === undefined) {
+      throw new Error("Unable to parse exported " + marker + " symbol");
     }
-  }
-  return symbols;
+    return symbol;
+  });
 }
 
 function extractCliWiredFixers(repoRoot: string): string[] {
-  const runnerPath = join(repoRoot, "src/cli/runner.ts");
-  const source = readFileSync(runnerPath, "utf8");
-  const blockMatch = source.match(
-    /const ALL_TRANSFORM_PASSES:[^=]+=\s*\[(?<body>[\s\S]*?)\];/,
-  );
-  const body = blockMatch?.groups?.body;
+  const source = readFileSync(join(repoRoot, "src/cli/runner.ts"), "utf8");
+  const body = source.match(/const ALL_TRANSFORM_PASSES:[^=]+=\s*\[(?<body>[\s\S]*?)\];/)?.groups
+    ?.body;
   if (body === undefined) {
     throw new Error("Unable to parse ALL_TRANSFORM_PASSES from src/cli/runner.ts");
   }
@@ -58,181 +79,365 @@ function extractCliWiredFixers(repoRoot: string): string[] {
     .map(function (entry) {
       return entry.trim();
     })
-    .filter(function (entry) {
-      return entry.length > 0;
-    });
+    .filter(Boolean);
 }
 
 function extractReporterWiring(repoRoot: string): Array<{ symbol: string; reporterId: string }> {
-  const rulesPath = join(repoRoot, "src/reporter/rules.ts");
-  const source = readFileSync(rulesPath, "utf8");
-  const regex = /\{\s*ruleName:\s*"([^"]+)",\s*pass:\s*(\w+)\s*\}/g;
-  const rows: Array<{ symbol: string; reporterId: string }> = [];
-  for (const match of source.matchAll(regex)) {
-    const reporterId = match[1];
-    const symbol = match[2];
-    if (reporterId !== undefined && symbol !== undefined) {
-      rows.push({ symbol, reporterId });
-    }
-  }
-  return rows;
+  const source = readFileSync(join(repoRoot, "src/reporter/rules.ts"), "utf8");
+  return Array.from(
+    source.matchAll(/\{\s*ruleName:\s*"([^"]+)",\s*pass:\s*(\w+)\s*\}/g),
+    function (match) {
+      const reporterId = match[1];
+      const symbol = match[2];
+      if (reporterId === undefined || symbol === undefined) {
+        throw new Error("Unable to parse reporter wiring");
+      }
+      return { symbol, reporterId };
+    },
+  );
 }
 
 function collectRuleModuleSymbols(
   repoRoot: string,
 ): { transformSymbols: string[]; detectorSymbols: string[] } {
-  const rulesRoot = join(repoRoot, RULES_DIR);
-  const moduleDirs = readdirSync(rulesRoot);
   const transforms: string[] = [];
   const detectors: string[] = [];
-
-  for (const moduleDir of moduleDirs) {
-    const indexPath = join(rulesRoot, moduleDir, "index.ts");
-    let source: string;
-    try {
-      source = readFileSync(indexPath, "utf8");
-    } catch {
+  for (const moduleDir of readdirSync(join(repoRoot, RULES_DIR))) {
+    const indexPath = join(repoRoot, RULES_DIR, moduleDir, "index.ts");
+    if (!statSync(join(repoRoot, RULES_DIR, moduleDir)).isDirectory()) {
       continue;
     }
-    for (const symbol of extractSymbolList(source, "TransformPass")) {
-      transforms.push(symbol);
-    }
-    for (const symbol of extractSymbolList(source, "ViolationPass")) {
-      detectors.push(symbol);
+    try {
+      const source = readFileSync(indexPath, "utf8");
+      transforms.push(...extractSymbolList(source, "TransformPass"));
+      detectors.push(...extractSymbolList(source, "ViolationPass"));
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+        throw error;
+      }
     }
   }
-
-  transforms.sort();
-  detectors.sort();
-  return { transformSymbols: transforms, detectorSymbols: detectors };
+  return { transformSymbols: transforms.sort(), detectorSymbols: detectors.sort() };
 }
 
 function collectFixtureHashes(repoRoot: string): FixtureHash[] {
   const fixturesRoot = join(repoRoot, FIXTURES_DIR);
-  const allFixtureFiles = walkFiles(fixturesRoot).filter(function (path) {
+  const fixtureFiles = walkFiles(fixturesRoot).filter(function (path) {
     return path.includes(".input.") || path.includes(".output.");
   });
-  const inputFiles = allFixtureFiles.filter(function (path) {
+  const inputFiles = fixtureFiles.filter(function (path) {
     return path.includes(".input.");
   });
-  inputFiles.sort();
-
-  const pairs: FixtureHash[] = [];
-  for (const inputPath of inputFiles) {
+  const outputFiles = fixtureFiles.filter(function (path) {
+    return path.includes(".output.");
+  });
+  const expectedOutputs = new Set(
+    inputFiles.map(function (path) {
+      return path.replace(".input.", ".output.");
+    }),
+  );
+  const missingOutputs = [...expectedOutputs].filter(function (path) {
+    return !outputFiles.includes(path);
+  });
+  const orphanOutputs = outputFiles.filter(function (path) {
+    return !expectedOutputs.has(path);
+  });
+  if (missingOutputs.length > 0 || orphanOutputs.length > 0) {
+    throw new Error(
+      "Unmatched fixture halves; missing outputs: " +
+        missingOutputs.join(", ") +
+        "; orphan outputs: " +
+        orphanOutputs.join(", "),
+    );
+  }
+  return inputFiles.sort().map(function (inputPath) {
     const outputPath = inputPath.replace(".input.", ".output.");
-    const inputSource = readFileSync(inputPath, "utf8");
-    const outputSource = readFileSync(outputPath, "utf8");
-    pairs.push({
+    return {
       fixtureId: relative(fixturesRoot, inputPath).replace(".input.", "."),
       inputPath: relative(repoRoot, inputPath),
       outputPath: relative(repoRoot, outputPath),
-      inputSha256: sha256(inputSource),
-      outputSha256: sha256(outputSource),
-    });
-  }
-
-  return pairs;
-}
-
-function parseWorkflowJobs(workflowContents: string): string[] {
-  const lines = workflowContents.split("\n");
-  const jobs: string[] = [];
-  let inJobs = false;
-
-  for (const line of lines) {
-    if (line.startsWith("jobs:")) {
-      inJobs = true;
-      continue;
-    }
-
-    if (!inJobs) {
-      continue;
-    }
-
-    const match = line.match(/^  ([a-zA-Z0-9_-]+):\s*$/);
-    if (match !== null) {
-      jobs.push(match[1]);
-      continue;
-    }
-
-    if (!line.startsWith("  ") && line.trim().length > 0) {
-      break;
-    }
-  }
-
-  return jobs;
-}
-
-function collectWorkflows(repoRoot: string): Array<{ path: string; jobs: string[] }> {
-  const workflowsRoot = join(repoRoot, WORKFLOWS_DIR);
-  const workflowFiles = readdirSync(workflowsRoot).filter(function (name) {
-    return name.endsWith(".yml");
-  });
-  workflowFiles.sort();
-
-  return workflowFiles.map(function (filename) {
-    const fullPath = join(workflowsRoot, filename);
-    const source = readFileSync(fullPath, "utf8");
-    return {
-      path: relative(repoRoot, fullPath),
-      jobs: parseWorkflowJobs(source),
+      inputSha256: sha256(readFileSync(inputPath)),
+      outputSha256: sha256(readFileSync(outputPath)),
     };
   });
 }
 
-function collectSuppressionMechanisms(repoRoot: string): number {
-  const sourceFiles = walkFiles(join(repoRoot, "src"))
-    .filter(function (path) {
-      return path.endsWith(".ts") && !path.endsWith(".test.ts") && !path.includes("/inventory/");
-    });
-
-  const suppressionSyntaxTokens = ["bedrock-disable", "bedrock-enable", "eslint-disable"];
-  for (const sourcePath of sourceFiles) {
-    const source = readFileSync(sourcePath, "utf8");
-    for (const token of suppressionSyntaxTokens) {
-      if (source.includes(token)) {
-        return 1;
-      }
+function parseWorkflowJobs(workflowContents: string): string[] {
+  const jobs: string[] = [];
+  let inJobs = false;
+  for (const line of workflowContents.split("\n")) {
+    if (line.startsWith("jobs:")) {
+      inJobs = true;
+      continue;
+    }
+    if (!inJobs) {
+      continue;
+    }
+    const match = line.match(/^  ([a-zA-Z0-9_-]+):\s*$/);
+    if (match?.[1] !== undefined) {
+      jobs.push(match[1]);
+    } else if (!line.startsWith("  ") && line.trim().length > 0) {
+      break;
     }
   }
-  return 0;
+  return jobs;
 }
 
-function collectSuppressionNarrativeMentions(repoRoot: string): number {
-  const source = walkFiles(join(repoRoot, "src"))
-    .filter(function (path) {
-      return path.endsWith(".ts") && !path.includes("/inventory/");
-    })
-    .map(function (path) {
-      return readFileSync(path, "utf8");
-    })
-    .join("\n");
-
-  return source.includes("ignored") ? 1 : 0;
+function requireSourceMarkers(
+  source: string,
+  sourcePath: string,
+  rows: Array<{ id: string; marker: string }>,
+  kind: SurfaceFact["kind"],
+): SurfaceFact[] {
+  return rows.map(function (row) {
+    if (!source.includes(row.marker)) {
+      throw new Error("Missing source marker for " + row.id + " in " + sourcePath);
+    }
+    return { id: row.id, kind, sourcePath };
+  });
 }
 
-export function collectSourceFacts(repoRoot: string, revision: string): SourceFacts {
-  const packageJson = JSON.parse(readFileSync(join(repoRoot, "package.json"), "utf8")) as {
-    scripts: Record<string, string>;
-  };
-  const generatedArtifacts = [
+function collectReporterSurfaces(repoRoot: string): SurfaceFact[] {
+  const formatPath = "src/reporter/format.ts";
+  const runPath = "src/reporter/run.ts";
+  const cliRunnerPath = "src/cli/runner.ts";
+  return [
+    ...requireSourceMarkers(
+      readFileSync(join(repoRoot, formatPath), "utf8"),
+      formatPath,
+      [
+        { id: "reporter:violation-line", marker: "violation.message" },
+        { id: "reporter:category-counts", marker: "external-boundary)" },
+        { id: "reporter:file-summary", marker: "${fileCount} ${fileWord}" },
+      ],
+      "reporter-contract",
+    ),
+    ...requireSourceMarkers(
+      readFileSync(join(repoRoot, runPath), "utf8"),
+      runPath,
+      [
+        { id: "reporter:typescript-parser", marker: 'parser = "ts"' },
+        { id: "reporter:javascript-parser", marker: 'parser = "babel"' },
+        { id: "reporter:grounded-semantics", marker: 'v.category !== "external-boundary"' },
+      ],
+      "reporter-contract",
+    ),
+    ...requireSourceMarkers(
+      readFileSync(join(repoRoot, cliRunnerPath), "utf8"),
+      cliRunnerPath,
+      [
+        { id: "reporter:grounded-summary", marker: "file(s) grounded" },
+        { id: "reporter:violation-exit-code", marker: "if (hasViolations)" },
+      ],
+      "reporter-contract",
+    ),
+  ];
+}
+
+function collectCliSurfaces(repoRoot: string): SurfaceFact[] {
+  const argsPath = "src/cli/args.ts";
+  const indexPath = "src/cli/index.ts";
+  const runnerPath = "src/cli/runner.ts";
+  const argsSource = readFileSync(join(repoRoot, argsPath), "utf8");
+  const runnerSource = readFileSync(join(repoRoot, runnerPath), "utf8");
+  const flagRows = Array.from(argsSource.matchAll(/const \w+_FLAG = "(--[^"]+)";/g), function (match) {
+    return {
+      id: "cli:flag:" + match[1],
+      kind: "cli-contract" as const,
+      sourcePath: argsPath,
+    };
+  });
+  const extensionsBody = runnerSource.match(
+    /const SUPPORTED_EXTENSIONS = \[(?<body>[^\]]+)\]/,
+  )?.groups?.body;
+  if (extensionsBody === undefined) {
+    throw new Error("Unable to parse SUPPORTED_EXTENSIONS");
+  }
+  const extensionRows = Array.from(extensionsBody.matchAll(/"([^"]+)"/g), function (match) {
+    return {
+      id: "cli:extension:" + match[1],
+      kind: "cli-contract" as const,
+      sourcePath: runnerPath,
+    };
+  });
+  return [
+    ...flagRows,
+    ...extensionRows,
+    ...requireSourceMarkers(
+      argsSource,
+      argsPath,
+      [
+        { id: "cli:default-report", marker: "effectiveReport = true" },
+        { id: "cli:fix-and-report-composable", marker: "fix: effectiveFix, report: effectiveReport" },
+        { id: "cli:positional-patterns", marker: "patterns.push(arg)" },
+      ],
+      "cli-contract",
+    ),
+    ...requireSourceMarkers(
+      readFileSync(join(repoRoot, indexPath), "utf8"),
+      indexPath,
+      [
+        { id: "cli:no-pattern-exit-1", marker: "process.exit(1)" },
+        { id: "cli:result-exit-code", marker: "process.exit(result.exitCode)" },
+      ],
+      "cli-contract",
+    ),
+    ...requireSourceMarkers(
+      runnerSource,
+      runnerPath,
+      [
+        { id: "cli:direct-file-or-directory", marker: "resolveDirectPattern" },
+        { id: "cli:glob-star", marker: 'pattern.includes("*")' },
+        { id: "cli:glob-question", marker: 'pattern.includes("?")' },
+        { id: "cli:no-matches-exit-0", marker: '"No files matched the given patterns."' },
+        { id: "cli:fix-mode", marker: "runFix(files)" },
+        { id: "cli:report-mode", marker: "runReport(files)" },
+        { id: "cli:typescript-parser", marker: 'return "ts"' },
+        { id: "cli:javascript-parser", marker: 'return "babel"' },
+      ],
+      "cli-contract",
+    ),
+  ];
+}
+
+function collectPackageAndScriptSurfaces(repoRoot: string): SurfaceFact[] {
+  const packagePaths = ["package.json", "packages/eslint-config-bedrock/package.json"];
+  const rows: SurfaceFact[] = [];
+  for (const packagePath of packagePaths) {
+    const packageJson = JSON.parse(readFileSync(join(repoRoot, packagePath), "utf8")) as {
+      name: string;
+      bin?: Record<string, string>;
+      scripts?: Record<string, string>;
+    };
+    rows.push({
+      id: "package:" + packageJson.name,
+      kind: "package-identity",
+      sourcePath: packagePath,
+    });
+    for (const binName of Object.keys(packageJson.bin ?? {}).sort()) {
+      rows.push({
+        id: "package-bin:" + packageJson.name + ":" + binName,
+        kind: "package-bin",
+        sourcePath: packagePath,
+      });
+    }
+    for (const scriptName of Object.keys(packageJson.scripts ?? {}).sort()) {
+      rows.push({
+        id: "package-script:" + packageJson.name + ":" + scriptName,
+        kind: "package-script",
+        sourcePath: packagePath,
+      });
+    }
+  }
+  for (const filename of readdirSync(join(repoRoot, "scripts")).filter(function (name) {
+    return name.endsWith(".ts");
+  }).sort()) {
+    rows.push({
+      id: "script-file:scripts/" + filename,
+      kind: "script-file",
+      sourcePath: "scripts/" + filename,
+    });
+  }
+  for (const path of [
     "RULES.md",
     "eslint-config-bedrock.json",
     "packages/eslint-config-bedrock/index.js",
-  ];
+  ]) {
+    rows.push({ id: "generated-artifact:" + path, kind: "config-artifact", sourcePath: path });
+  }
+  return rows;
+}
 
+function collectWorkflowSurfaces(repoRoot: string): SurfaceFact[] {
+  const rows: SurfaceFact[] = [];
+  for (const filename of readdirSync(join(repoRoot, WORKFLOWS_DIR))
+    .filter(function (name) {
+      return name.endsWith(".yml") || name.endsWith(".yaml");
+    })
+    .sort()) {
+    const path = WORKFLOWS_DIR + "/" + filename;
+    rows.push({ id: "workflow:" + path, kind: "workflow", sourcePath: path });
+    for (const job of parseWorkflowJobs(readFileSync(join(repoRoot, path), "utf8"))) {
+      rows.push({
+        id: "workflow-job:" + path + ":" + job,
+        kind: "workflow-job",
+        sourcePath: path,
+      });
+    }
+  }
+  return rows;
+}
+
+export function classifySuppressionHit(
+  path: string,
+  term: SuppressionHit["term"],
+  text: string,
+): SuppressionHit["classification"] {
+  if (path.startsWith("src/inventory/") || path.endsWith("-inventory.ts")) {
+    return "scanner-implementation";
+  }
+  if (path === "knip.json" && term === "ignore" && text.includes('"ignore"')) {
+    return "external-tool-config";
+  }
+  if (
+    path === "src/rules/immutable-object/index.ts" &&
+    term === "ignore" &&
+    text.includes("violation can be ignored")
+  ) {
+    return "narrative";
+  }
+  if (
+    path === "src/testing/fixture-runner.test.ts" &&
+    term === "suppress" &&
+    text.includes("Suppress unused-variable lint")
+  ) {
+    return "narrative";
+  }
+  if (
+    path === "README.md" &&
+    term === "suppress" &&
+    text.includes("rejects unknown suppression or consumer-query results")
+  ) {
+    return "narrative";
+  }
+  throw new Error("Unclassified suppression search hit: " + path + ": " + text.trim());
+}
+
+function collectSuppressionHits(repoRoot: string, paths: string[]): SuppressionHit[] {
+  const hits: SuppressionHit[] = [];
+  for (const path of paths) {
+    if (GENERATED_INVENTORY_PATHS.has(path)) {
+      continue;
+    }
+    const buffer = readFileSync(join(repoRoot, path));
+    if (buffer.includes(0)) {
+      continue;
+    }
+    for (const [index, text] of buffer.toString("utf8").split("\n").entries()) {
+      const terms = new Set<SuppressionHit["term"]>();
+      for (const match of text.toLowerCase().matchAll(/suppress|ignore|disable/g)) {
+        terms.add(match[0] as SuppressionHit["term"]);
+      }
+      for (const term of terms) {
+        hits.push({
+          path,
+          line: index + 1,
+          term,
+          text: text.trim(),
+          classification: classifySuppressionHit(path, term, text),
+        });
+      }
+    }
+  }
+  return hits;
+}
+
+export function collectSourceFacts(repoRoot: string): SourceFacts {
+  const paths = trackedPaths(repoRoot);
   const moduleSymbols = collectRuleModuleSymbols(repoRoot);
   const wiredInReporter = extractReporterWiring(repoRoot);
-  const reporterIds = Array.from(
-    new Set(
-      wiredInReporter.map(function (row) {
-        return row.reporterId;
-      }),
-    ),
-  ).sort();
-
   return {
-    revision,
+    sourceFingerprint: collectSourceFingerprint(repoRoot, paths),
     rules: {
       ids: rules.map(function (rule) {
         return rule.id;
@@ -254,16 +459,27 @@ export function collectSourceFacts(repoRoot: string, revision: string): SourceFa
       exported: moduleSymbols.detectorSymbols,
       wiredInReporter,
     },
-    reporterIds,
+    reporterIds: Array.from(
+      new Set(
+        wiredInReporter.map(function (row) {
+          return row.reporterId;
+        }),
+      ),
+    ).sort(),
     fixtureHashes: collectFixtureHashes(repoRoot),
-    packageScripts: Object.keys(packageJson.scripts)
-      .filter(function (scriptName) {
-        return !scriptName.startsWith("inventory:");
-      })
-      .sort(),
-    generatedArtifacts,
-    workflows: collectWorkflows(repoRoot),
-    suppressionMechanismsCount: collectSuppressionMechanisms(repoRoot),
-    suppressionNarrativeMentionsCount: collectSuppressionNarrativeMentions(repoRoot),
+    surfaces: [
+      ...collectReporterSurfaces(repoRoot),
+      ...collectCliSurfaces(repoRoot),
+      ...collectPackageAndScriptSurfaces(repoRoot),
+      ...collectWorkflowSurfaces(repoRoot),
+    ].sort(function (a, b) {
+      return a.id.localeCompare(b.id);
+    }),
+    suppressionSearch: {
+      scope: "all git-tracked textual files",
+      terms: ["disable", "ignore", "suppress"],
+      excludedPaths: [...GENERATED_INVENTORY_PATHS].sort(),
+    },
+    suppressionHits: collectSuppressionHits(repoRoot, paths),
   };
 }

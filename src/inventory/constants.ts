@@ -1,57 +1,57 @@
-import type { DownstreamSlice, RuleDisposition } from "./types.js";
+import type { ConsumerEvidence, DownstreamSlice, RuleDisposition } from "./types.js";
 
 const AUTHORITY_ISSUE = "clockwork-kitten/studio-board#91";
 const PENDING_96 = "pending clockwork-kitten/studio-board#96";
 
 type CandidateRule = {
   legacyRuleId: string;
-  proposedCruxId: string;
+  targetConcept: string;
   rationale: string;
 };
 
 const CANDIDATE_RULES: CandidateRule[] = [
-  { legacyRuleId: "var-to-const", proposedCruxId: "crux/code/prefer-const", rationale: PENDING_96 },
-  { legacyRuleId: "no-var", proposedCruxId: "crux/code/no-var", rationale: PENDING_96 },
-  { legacyRuleId: "equality", proposedCruxId: "crux/code/strict-equality", rationale: PENDING_96 },
-  { legacyRuleId: "no-any", proposedCruxId: "crux/typing/no-explicit-any", rationale: PENDING_96 },
+  { legacyRuleId: "var-to-const", targetConcept: "prefer const declarations", rationale: PENDING_96 },
+  { legacyRuleId: "no-var", targetConcept: "disallow var declarations", rationale: PENDING_96 },
+  { legacyRuleId: "equality", targetConcept: "require strict equality", rationale: PENDING_96 },
+  { legacyRuleId: "no-any", targetConcept: "disallow explicit any", rationale: PENDING_96 },
   {
     legacyRuleId: "no-non-null-assertion",
-    proposedCruxId: "crux/typing/no-non-null-assertion",
+    targetConcept: "disallow non-null assertions",
     rationale: PENDING_96,
   },
   {
     legacyRuleId: "no-bare-catch",
-    proposedCruxId: "crux/typing/use-unknown-in-catch-callback-variable",
+    targetConcept: "use unknown for catch variables",
     rationale: PENDING_96,
   },
   {
     legacyRuleId: "no-namespace",
-    proposedCruxId: "crux/typing/no-namespace",
+    targetConcept: "disallow TypeScript namespaces",
     rationale: PENDING_96,
   },
   {
     legacyRuleId: "require-return-type",
-    proposedCruxId: "crux/typing/explicit-function-return-type",
+    targetConcept: "require explicit function return types",
     rationale: PENDING_96,
   },
   {
     legacyRuleId: "no-sparse-arrays",
-    proposedCruxId: "crux/code/no-sparse-arrays",
+    targetConcept: "disallow sparse arrays",
     rationale: PENDING_96,
   },
   {
     legacyRuleId: "no-array-constructor",
-    proposedCruxId: "crux/code/no-array-constructor",
+    targetConcept: "disallow Array constructors",
     rationale: PENDING_96,
   },
   {
     legacyRuleId: "no-has-own-property",
-    proposedCruxId: "crux/code/prefer-object-has-own",
+    targetConcept: "prefer Object.hasOwn",
     rationale: PENDING_96,
   },
   {
     legacyRuleId: "no-mutating-sort",
-    proposedCruxId: "crux/code/prefer-to-sorted",
+    targetConcept: "prefer non-mutating array sorting",
     rationale: PENDING_96,
   },
 ];
@@ -108,18 +108,6 @@ const DROPPED_RULES: Record<string, string> = {
   "no-new-promise": DROP_RATIONALES.asyncTypeBreadth,
   "no-unhandled-rejection": DROP_RATIONALES.asyncTypeBreadth,
 };
-
-export const REPORTER_IDS = [
-  "async-await",
-  "immutable-array",
-  "immutable-object",
-  "loops",
-  "no-arrow-functions",
-  "no-classes",
-  "no-shortcircuit-control",
-  "promise-rules",
-  "typescript-strict",
-] as const;
 
 export const FIXER_TO_RULE_IDS: Record<string, string[]> = {
   varToConst: ["var-to-const", "no-var"],
@@ -180,44 +168,6 @@ export const DETECTOR_TO_RULE_IDS: Record<string, string[]> = {
   detectTaggedTemplateLiterals: ["no-template-literals"],
 };
 
-export const SURFACE_ROWS = [
-  {
-    id: "reporter-contract",
-    kind: "reporter-contract",
-    disposition: "dropped" as const,
-    rationale:
-      "Dropped: Bedrock text rendering and grounded semantics are replaced by canonical Crux/Crucible/Conform output contracts (#134).",
-  },
-  {
-    id: "cli-contract",
-    kind: "cli-contract",
-    disposition: "dropped" as const,
-    rationale:
-      "Dropped: bedrock CLI flags/globs/output are retired; no command alias or compatibility mode is introduced (#86/#87).",
-  },
-  {
-    id: "config-packages",
-    kind: "config-contract",
-    disposition: "dropped" as const,
-    rationale:
-      "Dropped: eslint-config-bedrock identity and generated config are retired in favor of Crucible-owned bundles (#134).",
-  },
-  {
-    id: "workflow-release",
-    kind: "workflow",
-    disposition: "dropped" as const,
-    rationale:
-      "Dropped: Bedrock-specific release/publish workflow ownership ends during retirement cutover (#135).",
-  },
-  {
-    id: "suppression-surface:none",
-    kind: "suppression",
-    disposition: "none" as const,
-    rationale:
-      "Verified: no Bedrock suppression mechanism exists; no suppression alias or compatibility behavior is required.",
-  },
-] as const;
-
 export const DOWNSTREAM_SLICES: DownstreamSlice[] = [
   {
     id: "studio-board#91",
@@ -263,56 +213,135 @@ export const DOWNSTREAM_SLICES: DownstreamSlice[] = [
   },
 ];
 
-export const CONSUMER_SNAPSHOT = {
+const REVISIONS = {
+  "clockwork-kitten/bedrock": "f3f93c9f52be3738005a5c018acf031e4e456b7d",
+  "clockwork-kitten/canon": "7162ec763a9e99fbe4ef047e6ffb7fcfb5a8e18c",
+  "clockwork-kitten/incubator": "b10e487fc4b8f16e8227f022ab380efd3c6401ed",
+  "clockwork-kitten/ops": "7be4f6d33edd65e88d01e60d28c29bb7ee0e7285",
+  "clockwork-kitten/standards": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+} as const;
+
+const BEDROCK_QUERY_RESULTS = [
+  ["clockwork-kitten/standards", "README.md", "reference-only"],
+  ["clockwork-kitten/standards", "ROADMAP.md", "reference-only"],
+  ["clockwork-kitten/standards", "llms.txt", "reference-only"],
+  ["clockwork-kitten/standards", "docs/STANDARDS-ARCHITECTURE.md", "reference-only"],
+  ["clockwork-kitten/standards", "packages/conform/README.md", "reference-only"],
+  ["clockwork-kitten/standards", "packages/conform/configs/eslint.base.js", "functional-consumer"],
+  ["clockwork-kitten/standards", "packages/conform/src/index.ts", "reference-only"],
+  ["clockwork-kitten/standards", "packages/conform/src/code/run.ts", "functional-consumer"],
+  ["clockwork-kitten/standards", "packages/conform/src/code/run.test.ts", "regression-evidence"],
+  ["clockwork-kitten/standards", "packages/conform/src/config/resolve.ts", "functional-consumer"],
+  ["clockwork-kitten/standards", "packages/conform/src/config/resolve.test.ts", "regression-evidence"],
+  ["clockwork-kitten/standards", "packages/conform/src/config/types.ts", "functional-consumer"],
+  ["clockwork-kitten/canon", "README.md", "reference-only"],
+  ["clockwork-kitten/incubator", "docs/game-stack-decision.md", "reference-only"],
+  ["clockwork-kitten/ops", "docs/DECISIONS.md", "reference-only"],
+  ["clockwork-kitten/ops", "docs/OPS-ROADMAP.md", "reference-only"],
+  ["clockwork-kitten/ops", "docs/identity.md", "reference-only"],
+  ["clockwork-kitten/ops", "docs/oss-policy.md", "reference-only"],
+] as const;
+
+function consumerDisposition(repository: string): string {
+  return repository === "clockwork-kitten/standards"
+    ? "migrate all functional and documentary references via studio-board#131"
+    : "reference-only; no cutover issue required";
+}
+
+export const CONSUMER_SNAPSHOT: ConsumerEvidence = {
   observedAt: "2026-11-22",
   boundedUniverse:
-    "clockwork-kitten org repositories discoverable via authenticated GitHub code search plus npm public registry lookups",
+    "Default branches of all 21 clockwork-kitten organization repositories discoverable by authenticated GitHub code search, excluding the Bedrock source repository from consumer results, plus npm public registry lookups.",
   organizationCounts: {
     repositories: 21,
     private: 15,
     public: 6,
   },
-  repositories: [
+  queries: [
     {
-      repository: "clockwork-kitten/standards",
-      classification: "functional-consumer",
-      disposition: "migrate via studio-board#131",
-      evidence:
-        "packages/conform/src/code/run.ts wires bedrock command and --fix/--report args; config exposes code.bedrock",
+      id: "bedrock",
+      command:
+        "gh search code 'bedrock -repo:clockwork-kitten/bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
     },
     {
-      repository: "clockwork-kitten/canon",
-      classification: "reference-only",
-      disposition: "no cutover issue required",
-      evidence: "README mention only; no invocation/import/dependency",
+      id: "eslint-config-bedrock",
+      command:
+        "gh search code 'eslint-config-bedrock -repo:clockwork-kitten/bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
     },
     {
-      repository: "clockwork-kitten/incubator",
-      classification: "reference-only",
-      disposition: "no cutover issue required",
-      evidence: "docs mention only; no invocation/import/dependency",
+      id: "code.bedrock",
+      command:
+        "gh search code 'code.bedrock -repo:clockwork-kitten/bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
     },
     {
-      repository: "clockwork-kitten/ops",
-      classification: "reference-only",
-      disposition: "no cutover issue required",
-      evidence: "markdown mentions only; no invocation/import/dependency",
+      id: "bedrock --report",
+      command:
+        "gh search code '\"bedrock --report\" -repo:clockwork-kitten/bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
+    },
+    {
+      id: "bedrock --fix",
+      command:
+        "gh search code '\"bedrock --fix\" -repo:clockwork-kitten/bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
     },
   ],
-  npm: {
-    bedrock: "unrelated third-party package",
-    eslintConfigBedrock: "404 not found",
-  },
+  repositoryRevisions: REVISIONS,
+  results: [
+    ...BEDROCK_QUERY_RESULTS.map(function ([repository, path, classification]) {
+      return {
+        queryId: "bedrock",
+        repository,
+        revision: REVISIONS[repository],
+        path,
+        classification,
+        disposition: consumerDisposition(repository),
+      };
+    }),
+    ...[
+      ["code.bedrock", "README.md", "reference-only"],
+      ["code.bedrock", "ROADMAP.md", "reference-only"],
+      ["code.bedrock", "packages/conform/src/config/resolve.ts", "functional-consumer"],
+      ["bedrock --report", "ROADMAP.md", "reference-only"],
+      ["bedrock --report", "packages/conform/configs/eslint.base.js", "reference-only"],
+      ["bedrock --fix", "ROADMAP.md", "reference-only"],
+      ["bedrock --fix", "packages/conform/configs/eslint.base.js", "reference-only"],
+    ].map(function ([queryId, path, classification]) {
+      return {
+        queryId,
+        repository: "clockwork-kitten/standards",
+        revision: REVISIONS["clockwork-kitten/standards"],
+        path,
+        classification: classification as
+          | "functional-consumer"
+          | "reference-only"
+          | "regression-evidence",
+        disposition: consumerDisposition("clockwork-kitten/standards"),
+      };
+    }),
+  ],
+  npmQueries: [
+    {
+      command: "npm view bedrock name version repository dist-tags --json",
+      result: {
+        name: "bedrock",
+        version: "4.5.1",
+        repository: {
+          type: "git",
+          url: "git+https://github.com/digitalbazaar/bedrock.git",
+        },
+        "dist-tags": { latest: "4.5.1" },
+        classification: "unrelated third-party package",
+      },
+    },
+    {
+      command: "npm view eslint-config-bedrock name version repository dist-tags --json",
+      result: {
+        error: "E404",
+        classification: "package not found in public registry",
+      },
+    },
+  ],
   limitations:
     "Does not prove external/private forks, unindexed blobs, deleted branches, or local clones outside bounded search.",
-  reproductionCommands: [
-    "gh api --method GET orgs/clockwork-kitten/repos -f per_page=100 --paginate",
-    "gh search code 'bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
-    "gh search code 'eslint-config-bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
-    "gh search code 'code.bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
-    "npm view bedrock name version repository dist-tags --json",
-    "npm view eslint-config-bedrock name version repository dist-tags --json",
-  ],
 };
 
 export function resolveRuleDisposition(ruleId: string): RuleDisposition {
@@ -325,8 +354,9 @@ export function resolveRuleDisposition(ruleId: string): RuleDisposition {
       legacyRuleId: ruleId,
       disposition: "candidate-pending-96",
       rationale: candidate.rationale,
+      targetConcept: candidate.targetConcept,
       proposedOwner: "crucible",
-      proposedCruxId: candidate.proposedCruxId + " (" + PENDING_96 + ")",
+      proposedCruxId: null,
       authorityIssue: AUTHORITY_ISSUE,
     };
   }
@@ -340,9 +370,9 @@ export function resolveRuleDisposition(ruleId: string): RuleDisposition {
     legacyRuleId: ruleId,
     disposition: "dropped",
     rationale,
+    targetConcept: null,
     proposedOwner: null,
     proposedCruxId: null,
     authorityIssue: AUTHORITY_ISSUE,
   };
 }
-

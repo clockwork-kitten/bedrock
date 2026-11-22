@@ -1,54 +1,271 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-11-22T05:55:24.264Z",
-  "sourceRevision": "7a5a21fabda932f91ad36d79dd643ab7d067314b",
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-22T07:12:13.164Z",
+  "sourceFingerprint": "sha256:c72fef5f94c22f48d0ba38a1dc6e3ca241ac95bca99cb56eba8c76e79740d697",
   "authorityIssue": "clockwork-kitten/studio-board#91",
   "observedAt": "2026-11-22",
-  "boundedUniverse": "clockwork-kitten org repositories discoverable via authenticated GitHub code search plus npm public registry lookups",
+  "boundedUniverse": "Default branches of all 21 clockwork-kitten organization repositories discoverable by authenticated GitHub code search, excluding the Bedrock source repository from consumer results, plus npm public registry lookups.",
   "organizationCounts": {
     "repositories": 21,
     "private": 15,
     "public": 6
   },
-  "repositories": [
+  "queries": [
     {
-      "repository": "clockwork-kitten/standards",
-      "classification": "functional-consumer",
-      "disposition": "migrate via studio-board#131",
-      "evidence": "packages/conform/src/code/run.ts wires bedrock command and --fix/--report args; config exposes code.bedrock"
+      "id": "bedrock",
+      "command": "gh search code 'bedrock -repo:clockwork-kitten/bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url"
     },
     {
-      "repository": "clockwork-kitten/canon",
-      "classification": "reference-only",
-      "disposition": "no cutover issue required",
-      "evidence": "README mention only; no invocation/import/dependency"
+      "id": "eslint-config-bedrock",
+      "command": "gh search code 'eslint-config-bedrock -repo:clockwork-kitten/bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url"
     },
     {
-      "repository": "clockwork-kitten/incubator",
-      "classification": "reference-only",
-      "disposition": "no cutover issue required",
-      "evidence": "docs mention only; no invocation/import/dependency"
+      "id": "code.bedrock",
+      "command": "gh search code 'code.bedrock -repo:clockwork-kitten/bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url"
     },
     {
-      "repository": "clockwork-kitten/ops",
-      "classification": "reference-only",
-      "disposition": "no cutover issue required",
-      "evidence": "markdown mentions only; no invocation/import/dependency"
+      "id": "bedrock --report",
+      "command": "gh search code '\"bedrock --report\" -repo:clockwork-kitten/bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url"
+    },
+    {
+      "id": "bedrock --fix",
+      "command": "gh search code '\"bedrock --fix\" -repo:clockwork-kitten/bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url"
     }
   ],
-  "npm": {
-    "bedrock": "unrelated third-party package",
-    "eslintConfigBedrock": "404 not found"
+  "repositoryRevisions": {
+    "clockwork-kitten/bedrock": "f3f93c9f52be3738005a5c018acf031e4e456b7d",
+    "clockwork-kitten/canon": "7162ec763a9e99fbe4ef047e6ffb7fcfb5a8e18c",
+    "clockwork-kitten/incubator": "b10e487fc4b8f16e8227f022ab380efd3c6401ed",
+    "clockwork-kitten/ops": "7be4f6d33edd65e88d01e60d28c29bb7ee0e7285",
+    "clockwork-kitten/standards": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5"
   },
-  "limitations": "Does not prove external/private forks, unindexed blobs, deleted branches, or local clones outside bounded search.",
-  "reproductionCommands": [
-    "gh api --method GET orgs/clockwork-kitten/repos -f per_page=100 --paginate",
-    "gh search code 'bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
-    "gh search code 'eslint-config-bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
-    "gh search code 'code.bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
-    "npm view bedrock name version repository dist-tags --json",
-    "npm view eslint-config-bedrock name version repository dist-tags --json"
+  "results": [
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "README.md",
+      "classification": "reference-only",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "ROADMAP.md",
+      "classification": "reference-only",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "llms.txt",
+      "classification": "reference-only",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "docs/STANDARDS-ARCHITECTURE.md",
+      "classification": "reference-only",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "packages/conform/README.md",
+      "classification": "reference-only",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "packages/conform/configs/eslint.base.js",
+      "classification": "functional-consumer",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "packages/conform/src/index.ts",
+      "classification": "reference-only",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "packages/conform/src/code/run.ts",
+      "classification": "functional-consumer",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "packages/conform/src/code/run.test.ts",
+      "classification": "regression-evidence",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "packages/conform/src/config/resolve.ts",
+      "classification": "functional-consumer",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "packages/conform/src/config/resolve.test.ts",
+      "classification": "regression-evidence",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "packages/conform/src/config/types.ts",
+      "classification": "functional-consumer",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/canon",
+      "revision": "7162ec763a9e99fbe4ef047e6ffb7fcfb5a8e18c",
+      "path": "README.md",
+      "classification": "reference-only",
+      "disposition": "reference-only; no cutover issue required"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/incubator",
+      "revision": "b10e487fc4b8f16e8227f022ab380efd3c6401ed",
+      "path": "docs/game-stack-decision.md",
+      "classification": "reference-only",
+      "disposition": "reference-only; no cutover issue required"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/ops",
+      "revision": "7be4f6d33edd65e88d01e60d28c29bb7ee0e7285",
+      "path": "docs/DECISIONS.md",
+      "classification": "reference-only",
+      "disposition": "reference-only; no cutover issue required"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/ops",
+      "revision": "7be4f6d33edd65e88d01e60d28c29bb7ee0e7285",
+      "path": "docs/OPS-ROADMAP.md",
+      "classification": "reference-only",
+      "disposition": "reference-only; no cutover issue required"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/ops",
+      "revision": "7be4f6d33edd65e88d01e60d28c29bb7ee0e7285",
+      "path": "docs/identity.md",
+      "classification": "reference-only",
+      "disposition": "reference-only; no cutover issue required"
+    },
+    {
+      "queryId": "bedrock",
+      "repository": "clockwork-kitten/ops",
+      "revision": "7be4f6d33edd65e88d01e60d28c29bb7ee0e7285",
+      "path": "docs/oss-policy.md",
+      "classification": "reference-only",
+      "disposition": "reference-only; no cutover issue required"
+    },
+    {
+      "queryId": "code.bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "README.md",
+      "classification": "reference-only",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "code.bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "ROADMAP.md",
+      "classification": "reference-only",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "code.bedrock",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "packages/conform/src/config/resolve.ts",
+      "classification": "functional-consumer",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock --report",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "ROADMAP.md",
+      "classification": "reference-only",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock --report",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "packages/conform/configs/eslint.base.js",
+      "classification": "reference-only",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock --fix",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "ROADMAP.md",
+      "classification": "reference-only",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    },
+    {
+      "queryId": "bedrock --fix",
+      "repository": "clockwork-kitten/standards",
+      "revision": "50f290ddce8984ace6f9c7a5e161242f9ee4b0e5",
+      "path": "packages/conform/configs/eslint.base.js",
+      "classification": "reference-only",
+      "disposition": "migrate all functional and documentary references via studio-board#131"
+    }
   ],
+  "npmQueries": [
+    {
+      "command": "npm view bedrock name version repository dist-tags --json",
+      "result": {
+        "name": "bedrock",
+        "version": "4.5.1",
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/digitalbazaar/bedrock.git"
+        },
+        "dist-tags": {
+          "latest": "4.5.1"
+        },
+        "classification": "unrelated third-party package"
+      }
+    },
+    {
+      "command": "npm view eslint-config-bedrock name version repository dist-tags --json",
+      "result": {
+        "error": "E404",
+        "classification": "package not found in public registry"
+      }
+    }
+  ],
+  "limitations": "Does not prove external/private forks, unindexed blobs, deleted branches, or local clones outside bounded search.",
   "downstreamSlices": [
     {
       "id": "studio-board#91",

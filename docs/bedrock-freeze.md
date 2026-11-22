@@ -2,19 +2,24 @@
 
 Authoritative source: `docs/bedrock-disposition.json` + `docs/bedrock-consumers.json`.
 
+The ledger is diagnostic-only evidence for a clean break. It creates no command, package, rule-ID, suppression, or output compatibility promise.
+
 ## Denominators
 
 | Surface | Count |
 |---|---:|
 | Registry rule IDs | 53 |
 | Runtime reporter IDs | 9 |
+| Reporter contracts | 8 |
+| CLI contracts | 19 |
 | Fixer exports | 16 |
 | Detector exports (wired/unwired) | 37 (35/2) |
 | Fixture pairs | 79 |
-| Package scripts | 10 |
-| Generated artifacts | 3 |
+| Package identities / bins | 2 / 1 |
+| Package scripts / script files | 12 / 3 |
+| Generated config artifacts | 3 |
 | Workflows (jobs) | 2 (3) |
-| Suppression mechanisms | 0 |
+| Suppression search hits / mechanisms | 58 / 0 |
 
 ## Registry-vs-wired fixer mismatch
 
@@ -43,4 +48,4 @@ bun run inventory:check
 
 ## Consumer discovery bounds
 
-clockwork-kitten org repositories discoverable via authenticated GitHub code search plus npm public registry lookups
+Default branches of all 21 clockwork-kitten organization repositories discoverable by authenticated GitHub code search, excluding the Bedrock source repository from consumer results, plus npm public registry lookups.

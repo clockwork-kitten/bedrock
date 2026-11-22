@@ -3,23 +3,121 @@ import {
   DETECTOR_TO_RULE_IDS,
   DOWNSTREAM_SLICES,
   FIXER_TO_RULE_IDS,
-  REPORTER_IDS,
-  SURFACE_ROWS,
   resolveRuleDisposition,
 } from "./constants.js";
-import type { FreezeDispositionDocument, InventoryRow, SourceFacts } from "./types.js";
+import type {
+  ConsumerEvidence,
+  FreezeDispositionDocument,
+  InventoryRow,
+  SourceFacts,
+  SurfaceFact,
+} from "./types.js";
 
 function sortUnique(values: string[]): string[] {
   return Array.from(new Set(values)).sort();
 }
 
+export function assertExactDispositionCoverage(
+  sourceIds: string[],
+  rows: Array<{ id: string }>,
+  label: string,
+): void {
+  const duplicateSourceIds = sourceIds.filter(function (id, index) {
+    return sourceIds.indexOf(id) !== index;
+  });
+  const rowIds = rows.map(function (row) {
+    return row.id;
+  });
+  const duplicateRowIds = rowIds.filter(function (id, index) {
+    return rowIds.indexOf(id) !== index;
+  });
+  const missing = sourceIds.filter(function (id) {
+    return !rowIds.includes(id);
+  });
+  const unknown = rowIds.filter(function (id) {
+    return !sourceIds.includes(id);
+  });
+  if (
+    duplicateSourceIds.length > 0 ||
+    duplicateRowIds.length > 0 ||
+    missing.length > 0 ||
+    unknown.length > 0
+  ) {
+    throw new Error(
+      label +
+        " disposition coverage mismatch; duplicate source: " +
+        sortUnique(duplicateSourceIds).join(", ") +
+        "; duplicate rows: " +
+        sortUnique(duplicateRowIds).join(", ") +
+        "; missing: " +
+        missing.join(", ") +
+        "; unknown: " +
+        unknown.join(", "),
+    );
+  }
+}
+
+export function assertSourceFingerprint(
+  expected: string,
+  actual: string,
+): void {
+  if (expected !== actual) {
+    throw new Error(
+      "Stale source fingerprint: evidence records " + expected + " but source is " + actual,
+    );
+  }
+}
+
+export function validateConsumerEvidence(evidence: ConsumerEvidence): void {
+  const queryIds = evidence.queries.map(function (query) {
+    return query.id;
+  });
+  if (new Set(queryIds).size !== queryIds.length) {
+    throw new Error("Duplicate consumer query IDs");
+  }
+  const seen = new Set<string>();
+  for (const result of evidence.results) {
+    if (!queryIds.includes(result.queryId)) {
+      throw new Error("Consumer result has unknown query: " + result.queryId);
+    }
+    if (
+      result.classification !== "functional-consumer" &&
+      result.classification !== "reference-only" &&
+      result.classification !== "regression-evidence"
+    ) {
+      throw new Error(
+        "Consumer result is unclassified: " +
+          result.repository +
+          ":" +
+          result.path,
+      );
+    }
+    const revision = evidence.repositoryRevisions[result.repository];
+    if (revision === undefined || revision !== result.revision) {
+      throw new Error(
+        "Consumer result has stale or missing revision: " +
+          result.repository +
+          ":" +
+          result.path,
+      );
+    }
+    const key = result.queryId + "\0" + result.repository + "\0" + result.path;
+    if (seen.has(key)) {
+      throw new Error("Duplicate consumer query result: " + key.replaceAll("\0", ":"));
+    }
+    seen.add(key);
+  }
+}
+
 function buildRuleFixerMap(wiredFixers: string[]): Map<string, string[]> {
   const map = new Map<string, string[]>();
   for (const fixerSymbol of wiredFixers) {
-    const rules = FIXER_TO_RULE_IDS[fixerSymbol] ?? [];
-    for (const ruleId of rules) {
-      const current = map.get(ruleId) ?? [];
-      map.set(ruleId, sortUnique([...current, fixerSymbol]));
+    const ruleIds = FIXER_TO_RULE_IDS[fixerSymbol];
+    if (ruleIds === undefined) {
+      throw new Error("Missing fixer disposition mapping for: " + fixerSymbol);
+    }
+    for (const ruleId of ruleIds) {
+      map.set(ruleId, sortUnique([...(map.get(ruleId) ?? []), fixerSymbol]));
     }
   }
   return map;
@@ -27,7 +125,10 @@ function buildRuleFixerMap(wiredFixers: string[]): Map<string, string[]> {
 
 function buildFixerRows(facts: SourceFacts): InventoryRow[] {
   return facts.fixers.exported.map(function (symbol) {
-    const ruleIds = FIXER_TO_RULE_IDS[symbol] ?? [];
+    const ruleIds = FIXER_TO_RULE_IDS[symbol];
+    if (ruleIds === undefined) {
+      throw new Error("Missing fixer disposition mapping for: " + symbol);
+    }
     const inheritedDisposition = ruleIds.some(function (ruleId) {
       return resolveRuleDisposition(ruleId).disposition === "candidate-pending-96";
     })
@@ -36,38 +137,45 @@ function buildFixerRows(facts: SourceFacts): InventoryRow[] {
     return {
       id: symbol,
       kind: "fixer",
+      sourcePath: "src/rules/**/index.ts",
       disposition: inheritedDisposition,
       rationale:
-        "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+        "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       proposedOwner: inheritedDisposition === "candidate-pending-96" ? "crucible" : null,
       proposedCruxId: null,
     };
   });
 }
 
-function buildDetectorRows(facts: SourceFacts): Array<InventoryRow & { reporterIds: string[]; wiredInReporter: boolean }> {
+function buildDetectorRows(
+  facts: SourceFacts,
+): Array<InventoryRow & { reporterIds: string[]; wiredInReporter: boolean }> {
   const wiringBySymbol = new Map<string, string[]>();
   for (const row of facts.detectors.wiredInReporter) {
-    const current = wiringBySymbol.get(row.symbol) ?? [];
-    wiringBySymbol.set(row.symbol, sortUnique([...current, row.reporterId]));
+    wiringBySymbol.set(
+      row.symbol,
+      sortUnique([...(wiringBySymbol.get(row.symbol) ?? []), row.reporterId]),
+    );
   }
-
   return facts.detectors.exported.map(function (symbol) {
+    const ruleIds = DETECTOR_TO_RULE_IDS[symbol];
+    if (ruleIds === undefined) {
+      throw new Error("Missing detector disposition mapping for: " + symbol);
+    }
     const reporterIds = wiringBySymbol.get(symbol) ?? [];
-    const ruleIds = DETECTOR_TO_RULE_IDS[symbol] ?? [];
     const inheritedDisposition = ruleIds.some(function (ruleId) {
       return resolveRuleDisposition(ruleId).disposition === "candidate-pending-96";
     })
       ? "candidate-pending-96"
       : "dropped";
     const wiredInReporter = reporterIds.length > 0;
-
     return {
       id: symbol,
       kind: "detector",
+      sourcePath: "src/rules/**/index.ts",
       disposition: inheritedDisposition,
       rationale: wiredInReporter
-        ? "Detector inherits disposition of mapped legacy rule IDs."
+        ? "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved."
         : "Dropped-unreachable: exported detector is not wired in reporter pass registration.",
       proposedOwner: inheritedDisposition === "candidate-pending-96" ? "crucible" : null,
       proposedCruxId: null,
@@ -77,48 +185,76 @@ function buildDetectorRows(facts: SourceFacts): Array<InventoryRow & { reporterI
   });
 }
 
-function buildReporterRows(): InventoryRow[] {
-  return REPORTER_IDS.map(function (id) {
+function buildReporterRows(facts: SourceFacts): InventoryRow[] {
+  return facts.reporterIds.map(function (id) {
     return {
       id,
       kind: "reporter-id",
+      sourcePath: "src/reporter/rules.ts",
       disposition: "dropped",
-      rationale: "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      rationale:
+        "Diagnostic-only evidence: coarse Bedrock reporter ID is retired and is not preserved as an alias in the clean break.",
       proposedOwner: null,
       proposedCruxId: null,
     };
   });
 }
 
-function buildSurfaceRows(): InventoryRow[] {
-  return SURFACE_ROWS.map(function (row) {
+function surfaceRationale(surface: SurfaceFact): string {
+  switch (surface.kind) {
+    case "reporter-contract":
+      return "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.";
+    case "cli-contract":
+      return "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.";
+    case "config-artifact":
+    case "package-bin":
+    case "package-identity":
+      return "Dropped in the clean break: Bedrock package/config identity is retired in favor of Crucible-owned bundles under #134.";
+    case "package-script":
+    case "script-file":
+    case "workflow":
+    case "workflow-job":
+      return "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.";
+    default:
+      throw new Error("Missing surface disposition mapping for: " + (surface as SurfaceFact).kind);
+  }
+}
+
+function buildSurfaceRows(facts: SourceFacts): InventoryRow[] {
+  return facts.surfaces.map(function (surface) {
     return {
-      id: row.id,
-      kind: row.kind,
-      disposition: row.disposition,
-      rationale: row.rationale,
+      ...surface,
+      disposition: "dropped",
+      rationale: surfaceRationale(surface),
       proposedOwner: null,
       proposedCruxId: null,
     };
   });
+}
+
+function countSurfaces(facts: SourceFacts, kind: SurfaceFact["kind"]): number {
+  return facts.surfaces.filter(function (surface) {
+    return surface.kind === kind;
+  }).length;
 }
 
 function formatMarkdown(doc: FreezeDispositionDocument): string {
-  const lines: string[] = [];
-  lines.push("# Bedrock T0 Freeze Inventory");
-  lines.push("");
-  lines.push(
+  const lines = [
+    "# Bedrock T0 Freeze Inventory",
+    "",
     "Authoritative source: `docs/bedrock-disposition.json` + `docs/bedrock-consumers.json`.",
-  );
-  lines.push("");
-  lines.push("## Denominators");
-  lines.push("");
-  lines.push("| Surface | Count |");
-  lines.push("|---|---:|");
-  lines.push("| Registry rule IDs | " + doc.denominators.registryRuleIds + " |");
-  lines.push("| Runtime reporter IDs | " + doc.denominators.reporterIds + " |");
-  lines.push("| Fixer exports | " + doc.denominators.fixerExports + " |");
-  lines.push(
+    "",
+    "The ledger is diagnostic-only evidence for a clean break. It creates no command, package, rule-ID, suppression, or output compatibility promise.",
+    "",
+    "## Denominators",
+    "",
+    "| Surface | Count |",
+    "|---|---:|",
+    "| Registry rule IDs | " + doc.denominators.registryRuleIds + " |",
+    "| Runtime reporter IDs | " + doc.denominators.reporterIds + " |",
+    "| Reporter contracts | " + doc.denominators.reporterContracts + " |",
+    "| CLI contracts | " + doc.denominators.cliContracts + " |",
+    "| Fixer exports | " + doc.denominators.fixerExports + " |",
     "| Detector exports (wired/unwired) | " +
       doc.denominators.detectorExports +
       " (" +
@@ -126,50 +262,61 @@ function formatMarkdown(doc: FreezeDispositionDocument): string {
       "/" +
       doc.denominators.detectorUnwired +
       ") |",
-  );
-  lines.push("| Fixture pairs | " + doc.denominators.fixturePairs + " |");
-  lines.push("| Package scripts | " + doc.denominators.packageScripts + " |");
-  lines.push("| Generated artifacts | " + doc.denominators.generatedArtifacts + " |");
-  lines.push(
-    "| Workflows (jobs) | " + doc.denominators.workflows + " (" + doc.denominators.workflowJobs + ") |",
-  );
-  lines.push("| Suppression mechanisms | " + doc.denominators.suppressions + " |");
-  lines.push("");
-  lines.push("## Registry-vs-wired fixer mismatch");
-  lines.push("");
-  lines.push("- Declared auto-fixable IDs: " + doc.mismatchEvidence.declaredAutoFixableRuleIds.length);
-  lines.push(
+    "| Fixture pairs | " + doc.denominators.fixturePairs + " |",
+    "| Package identities / bins | " +
+      doc.denominators.packageIdentities +
+      " / " +
+      doc.denominators.packageBins +
+      " |",
+    "| Package scripts / script files | " +
+      doc.denominators.packageScripts +
+      " / " +
+      doc.denominators.scriptFiles +
+      " |",
+    "| Generated config artifacts | " + doc.denominators.generatedArtifacts + " |",
+    "| Workflows (jobs) | " +
+      doc.denominators.workflows +
+      " (" +
+      doc.denominators.workflowJobs +
+      ") |",
+    "| Suppression search hits / mechanisms | " +
+      doc.denominators.suppressionSearchHits +
+      " / " +
+      doc.denominators.suppressionMechanisms +
+      " |",
+    "",
+    "## Registry-vs-wired fixer mismatch",
+    "",
+    "- Declared auto-fixable IDs: " + doc.mismatchEvidence.declaredAutoFixableRuleIds.length,
     "- Wired fixer symbols: " + doc.mismatchEvidence.wiredFixerSymbols.length,
-  );
-  lines.push(
     "- Wired fixer rule IDs not declared auto-fixable: " +
       doc.mismatchEvidence.wiredFixerRuleIdsNotDeclaredAutoFixable.join(", "),
-  );
-  lines.push(
     "- Declared auto-fixable IDs without wired fixer: " +
       doc.mismatchEvidence.declaredAutoFixableRuleIdsWithoutWiredFixer.join(", "),
-  );
-  lines.push("");
-  lines.push("## Downstream slices (S/M/L only)");
-  lines.push("");
-  lines.push("| Slice | Repo | Size | Status |");
-  lines.push("|---|---|---|---|");
+    "",
+    "## Downstream slices (S/M/L only)",
+    "",
+    "| Slice | Repo | Size | Status |",
+    "|---|---|---|---|",
+  ];
   for (const slice of doc.downstreamSlices) {
     lines.push(
       "| " + slice.id + " | " + slice.repository + " | " + slice.size + " | " + slice.status + " |",
     );
   }
-  lines.push("");
-  lines.push("## Reproduction commands");
-  lines.push("");
-  lines.push("```sh");
-  lines.push("bun run inventory:generate");
-  lines.push("bun run inventory:check");
-  lines.push("```");
-  lines.push("");
-  lines.push("## Consumer discovery bounds");
-  lines.push("");
-  lines.push(CONSUMER_SNAPSHOT.boundedUniverse);
+  lines.push(
+    "",
+    "## Reproduction commands",
+    "",
+    "```sh",
+    "bun run inventory:generate",
+    "bun run inventory:check",
+    "```",
+    "",
+    "## Consumer discovery bounds",
+    "",
+    CONSUMER_SNAPSHOT.boundedUniverse,
+  );
   return lines.join("\n") + "\n";
 }
 
@@ -177,19 +324,11 @@ export function buildFreezeDispositionDocument(
   facts: SourceFacts,
   generatedAt: string,
 ): FreezeDispositionDocument {
-  const missingReporter = REPORTER_IDS.filter(function (id) {
-    return !facts.reporterIds.includes(id);
-  });
-  if (missingReporter.length > 0) {
-    throw new Error("Missing reporter IDs from source wiring: " + missingReporter.join(", "));
-  }
-
   const ruleFixerMap = buildRuleFixerMap(facts.fixers.wiredInCli);
   const ruleRows = facts.rules.ids
     .map(function (ruleId) {
-      const disposition = resolveRuleDisposition(ruleId);
       return {
-        ...disposition,
+        ...resolveRuleDisposition(ruleId),
         declaredAutoFixable: facts.rules.declaredAutoFixable.includes(ruleId),
         fixerSymbols: ruleFixerMap.get(ruleId) ?? [],
       };
@@ -197,34 +336,37 @@ export function buildFreezeDispositionDocument(
     .sort(function (a, b) {
       return a.legacyRuleId.localeCompare(b.legacyRuleId);
     });
-
+  const reporterRows = buildReporterRows(facts);
+  const fixerRows = buildFixerRows(facts);
+  const detectorRows = buildDetectorRows(facts);
+  const surfaceRows = buildSurfaceRows(facts);
+  assertExactDispositionCoverage(facts.rules.ids, ruleRows.map(function (row) {
+    return { id: row.legacyRuleId };
+  }), "Rule");
+  assertExactDispositionCoverage(facts.reporterIds, reporterRows, "Reporter ID");
+  assertExactDispositionCoverage(facts.fixers.exported, fixerRows, "Fixer");
+  assertExactDispositionCoverage(facts.detectors.exported, detectorRows, "Detector");
+  assertExactDispositionCoverage(
+    facts.surfaces.map(function (surface) {
+      return surface.id;
+    }),
+    surfaceRows,
+    "Surface",
+  );
   const fixerRuleIds = sortUnique(
     facts.fixers.wiredInCli.flatMap(function (symbol) {
       return FIXER_TO_RULE_IDS[symbol] ?? [];
     }),
   );
-  const wiredFixerRuleIdsNotDeclaredAutoFixable = fixerRuleIds.filter(function (ruleId) {
-    return !facts.rules.declaredAutoFixable.includes(ruleId);
-  });
-  const declaredAutoFixableRuleIdsWithoutWiredFixer = facts.rules.declaredAutoFixable.filter(function (
-    ruleId,
-  ) {
-    return !fixerRuleIds.includes(ruleId);
-  });
-
-  const workflowJobCount = facts.workflows.reduce(function (sum, workflow) {
-    return sum + workflow.jobs.length;
-  }, 0);
   const wiredDetectorSymbols = sortUnique(
     facts.detectors.wiredInReporter.map(function (row) {
       return row.symbol;
     }),
   );
-
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     generatedAt,
-    sourceRevision: facts.revision,
+    sourceFingerprint: facts.sourceFingerprint,
     authority: {
       issue: "clockwork-kitten/studio-board#91",
       requirementsIssue: "clockwork-kitten/studio-board#86",
@@ -239,33 +381,50 @@ export function buildFreezeDispositionDocument(
       detectorWired: wiredDetectorSymbols.length,
       detectorUnwired: facts.detectors.exported.length - wiredDetectorSymbols.length,
       fixturePairs: facts.fixtureHashes.length,
-      packageScripts: facts.packageScripts.length,
-      generatedArtifacts: facts.generatedArtifacts.length,
-      workflows: facts.workflows.length,
-      workflowJobs: workflowJobCount,
-      suppressions: facts.suppressionMechanismsCount,
+      reporterContracts: countSurfaces(facts, "reporter-contract"),
+      cliContracts: countSurfaces(facts, "cli-contract"),
+      packageIdentities: countSurfaces(facts, "package-identity"),
+      packageBins: countSurfaces(facts, "package-bin"),
+      packageScripts: countSurfaces(facts, "package-script"),
+      scriptFiles: countSurfaces(facts, "script-file"),
+      generatedArtifacts: countSurfaces(facts, "config-artifact"),
+      workflows: countSurfaces(facts, "workflow"),
+      workflowJobs: countSurfaces(facts, "workflow-job"),
+      suppressionSearchHits: facts.suppressionHits.length,
+      suppressionMechanisms: 0,
     },
     mismatchEvidence: {
       declaredAutoFixableRuleIds: facts.rules.declaredAutoFixable,
       wiredFixerSymbols: facts.fixers.wiredInCli,
-      wiredFixerRuleIdsNotDeclaredAutoFixable,
-      declaredAutoFixableRuleIdsWithoutWiredFixer,
+      wiredFixerRuleIdsNotDeclaredAutoFixable: fixerRuleIds.filter(function (ruleId) {
+        return !facts.rules.declaredAutoFixable.includes(ruleId);
+      }),
+      declaredAutoFixableRuleIdsWithoutWiredFixer: facts.rules.declaredAutoFixable.filter(function (
+        ruleId,
+      ) {
+        return !fixerRuleIds.includes(ruleId);
+      }),
     },
     rules: ruleRows,
-    reporterIds: buildReporterRows(),
-    fixers: buildFixerRows(facts),
-    detectors: buildDetectorRows(facts),
-    surfaces: buildSurfaceRows(),
+    reporterIds: reporterRows,
+    fixers: fixerRows,
+    detectors: detectorRows,
+    surfaces: surfaceRows,
+    suppressionSearch: facts.suppressionSearch,
+    suppressionHits: facts.suppressionHits,
     downstreamSlices: DOWNSTREAM_SLICES,
     fixtureHashes: facts.fixtureHashes,
   };
 }
 
-export function buildConsumerDocument(disposition: FreezeDispositionDocument): Record<string, unknown> {
+export function buildConsumerDocument(
+  disposition: FreezeDispositionDocument,
+): Record<string, unknown> {
+  validateConsumerEvidence(CONSUMER_SNAPSHOT);
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     generatedAt: disposition.generatedAt,
-    sourceRevision: disposition.sourceRevision,
+    sourceFingerprint: disposition.sourceFingerprint,
     authorityIssue: disposition.authority.issue,
     ...CONSUMER_SNAPSHOT,
     downstreamSlices: disposition.downstreamSlices,
@@ -275,4 +434,3 @@ export function buildConsumerDocument(disposition: FreezeDispositionDocument): R
 export function buildFreezeMarkdown(disposition: FreezeDispositionDocument): string {
   return formatMarkdown(disposition);
 }
-

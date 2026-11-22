@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-11-22T05:55:24.264Z",
-  "sourceRevision": "7a5a21fabda932f91ad36d79dd643ab7d067314b",
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-22T07:12:13.164Z",
+  "sourceFingerprint": "sha256:c72fef5f94c22f48d0ba38a1dc6e3ca241ac95bca99cb56eba8c76e79740d697",
   "authority": {
     "issue": "clockwork-kitten/studio-board#91",
     "requirementsIssue": "clockwork-kitten/studio-board#86",
@@ -16,11 +16,17 @@
     "detectorWired": 35,
     "detectorUnwired": 2,
     "fixturePairs": 79,
-    "packageScripts": 10,
+    "reporterContracts": 8,
+    "cliContracts": 19,
+    "packageIdentities": 2,
+    "packageBins": 1,
+    "packageScripts": 12,
+    "scriptFiles": 3,
     "generatedArtifacts": 3,
     "workflows": 2,
     "workflowJobs": 3,
-    "suppressions": 0
+    "suppressionSearchHits": 58,
+    "suppressionMechanisms": 0
   },
   "mismatchEvidence": {
     "declaredAutoFixableRuleIds": [
@@ -75,8 +81,9 @@
       "legacyRuleId": "equality",
       "disposition": "candidate-pending-96",
       "rationale": "pending clockwork-kitten/studio-board#96",
+      "targetConcept": "require strict equality",
       "proposedOwner": "crucible",
-      "proposedCruxId": "crux/code/strict-equality (pending clockwork-kitten/studio-board#96)",
+      "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
       "declaredAutoFixable": true,
       "fixerSymbols": [
@@ -87,8 +94,9 @@
       "legacyRuleId": "no-any",
       "disposition": "candidate-pending-96",
       "rationale": "pending clockwork-kitten/studio-board#96",
+      "targetConcept": "disallow explicit any",
       "proposedOwner": "crucible",
-      "proposedCruxId": "crux/typing/no-explicit-any (pending clockwork-kitten/studio-board#96)",
+      "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
       "declaredAutoFixable": false,
       "fixerSymbols": []
@@ -97,8 +105,9 @@
       "legacyRuleId": "no-array-constructor",
       "disposition": "candidate-pending-96",
       "rationale": "pending clockwork-kitten/studio-board#96",
+      "targetConcept": "disallow Array constructors",
       "proposedOwner": "crucible",
-      "proposedCruxId": "crux/code/no-array-constructor (pending clockwork-kitten/studio-board#96)",
+      "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
       "declaredAutoFixable": false,
       "fixerSymbols": []
@@ -107,6 +116,7 @@
       "legacyRuleId": "no-array-index-assign",
       "disposition": "dropped",
       "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -117,6 +127,7 @@
       "legacyRuleId": "no-array-pop",
       "disposition": "dropped",
       "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -127,6 +138,7 @@
       "legacyRuleId": "no-array-push",
       "disposition": "dropped",
       "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -139,6 +151,7 @@
       "legacyRuleId": "no-array-shift",
       "disposition": "dropped",
       "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -149,6 +162,7 @@
       "legacyRuleId": "no-array-splice",
       "disposition": "dropped",
       "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -159,6 +173,7 @@
       "legacyRuleId": "no-array-unshift",
       "disposition": "dropped",
       "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -171,6 +186,7 @@
       "legacyRuleId": "no-arrow-functions",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -183,6 +199,7 @@
       "legacyRuleId": "no-async-without-await",
       "disposition": "dropped",
       "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -193,8 +210,9 @@
       "legacyRuleId": "no-bare-catch",
       "disposition": "candidate-pending-96",
       "rationale": "pending clockwork-kitten/studio-board#96",
+      "targetConcept": "use unknown for catch variables",
       "proposedOwner": "crucible",
-      "proposedCruxId": "crux/typing/use-unknown-in-catch-callback-variable (pending clockwork-kitten/studio-board#96)",
+      "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
       "declaredAutoFixable": false,
       "fixerSymbols": []
@@ -203,6 +221,7 @@
       "legacyRuleId": "no-break",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -213,6 +232,7 @@
       "legacyRuleId": "no-classes",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -223,6 +243,7 @@
       "legacyRuleId": "no-continue",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -233,6 +254,7 @@
       "legacyRuleId": "no-default-parameters",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -245,6 +267,7 @@
       "legacyRuleId": "no-delete",
       "disposition": "dropped",
       "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -255,6 +278,7 @@
       "legacyRuleId": "no-do-while",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -265,6 +289,7 @@
       "legacyRuleId": "no-enum",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -275,6 +300,7 @@
       "legacyRuleId": "no-for-each",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -287,6 +313,7 @@
       "legacyRuleId": "no-for-in",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -299,6 +326,7 @@
       "legacyRuleId": "no-for-of",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -311,6 +339,7 @@
       "legacyRuleId": "no-general-destructuring",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -321,8 +350,9 @@
       "legacyRuleId": "no-has-own-property",
       "disposition": "candidate-pending-96",
       "rationale": "pending clockwork-kitten/studio-board#96",
+      "targetConcept": "prefer Object.hasOwn",
       "proposedOwner": "crucible",
-      "proposedCruxId": "crux/code/prefer-object-has-own (pending clockwork-kitten/studio-board#96)",
+      "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
       "declaredAutoFixable": false,
       "fixerSymbols": [
@@ -333,6 +363,7 @@
       "legacyRuleId": "no-increment",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -345,6 +376,7 @@
       "legacyRuleId": "no-interface",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -355,6 +387,7 @@
       "legacyRuleId": "no-labeled-statements",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -365,6 +398,7 @@
       "legacyRuleId": "no-logical-and-execution",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -375,6 +409,7 @@
       "legacyRuleId": "no-logical-or-default",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -385,8 +420,9 @@
       "legacyRuleId": "no-mutating-sort",
       "disposition": "candidate-pending-96",
       "rationale": "pending clockwork-kitten/studio-board#96",
+      "targetConcept": "prefer non-mutating array sorting",
       "proposedOwner": "crucible",
-      "proposedCruxId": "crux/code/prefer-to-sorted (pending clockwork-kitten/studio-board#96)",
+      "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
       "declaredAutoFixable": false,
       "fixerSymbols": [
@@ -397,8 +433,9 @@
       "legacyRuleId": "no-namespace",
       "disposition": "candidate-pending-96",
       "rationale": "pending clockwork-kitten/studio-board#96",
+      "targetConcept": "disallow TypeScript namespaces",
       "proposedOwner": "crucible",
-      "proposedCruxId": "crux/typing/no-namespace (pending clockwork-kitten/studio-board#96)",
+      "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
       "declaredAutoFixable": false,
       "fixerSymbols": []
@@ -407,6 +444,7 @@
       "legacyRuleId": "no-new-promise",
       "disposition": "dropped",
       "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -417,8 +455,9 @@
       "legacyRuleId": "no-non-null-assertion",
       "disposition": "candidate-pending-96",
       "rationale": "pending clockwork-kitten/studio-board#96",
+      "targetConcept": "disallow non-null assertions",
       "proposedOwner": "crucible",
-      "proposedCruxId": "crux/typing/no-non-null-assertion (pending clockwork-kitten/studio-board#96)",
+      "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
       "declaredAutoFixable": false,
       "fixerSymbols": []
@@ -427,6 +466,7 @@
       "legacyRuleId": "no-nullish-coalescing",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -437,6 +477,7 @@
       "legacyRuleId": "no-optional-chaining",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -447,6 +488,7 @@
       "legacyRuleId": "no-promise-any",
       "disposition": "dropped",
       "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -457,6 +499,7 @@
       "legacyRuleId": "no-promise-race",
       "disposition": "dropped",
       "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -467,6 +510,7 @@
       "legacyRuleId": "no-promise-then",
       "disposition": "dropped",
       "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -477,6 +521,7 @@
       "legacyRuleId": "no-property-assign",
       "disposition": "dropped",
       "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -487,6 +532,7 @@
       "legacyRuleId": "no-shorthand-operators",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -499,6 +545,7 @@
       "legacyRuleId": "no-sort-without-comparator",
       "disposition": "dropped",
       "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -511,8 +558,9 @@
       "legacyRuleId": "no-sparse-arrays",
       "disposition": "candidate-pending-96",
       "rationale": "pending clockwork-kitten/studio-board#96",
+      "targetConcept": "disallow sparse arrays",
       "proposedOwner": "crucible",
-      "proposedCruxId": "crux/code/no-sparse-arrays (pending clockwork-kitten/studio-board#96)",
+      "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
       "declaredAutoFixable": false,
       "fixerSymbols": [
@@ -523,6 +571,7 @@
       "legacyRuleId": "no-spread-args",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -533,6 +582,7 @@
       "legacyRuleId": "no-switch",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -543,6 +593,7 @@
       "legacyRuleId": "no-template-literals",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -555,6 +606,7 @@
       "legacyRuleId": "no-ternary",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -565,6 +617,7 @@
       "legacyRuleId": "no-this",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -575,6 +628,7 @@
       "legacyRuleId": "no-type-assertion",
       "disposition": "dropped",
       "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -585,6 +639,7 @@
       "legacyRuleId": "no-unhandled-rejection",
       "disposition": "dropped",
       "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -595,8 +650,9 @@
       "legacyRuleId": "no-var",
       "disposition": "candidate-pending-96",
       "rationale": "pending clockwork-kitten/studio-board#96",
+      "targetConcept": "disallow var declarations",
       "proposedOwner": "crucible",
-      "proposedCruxId": "crux/code/no-var (pending clockwork-kitten/studio-board#96)",
+      "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
       "declaredAutoFixable": true,
       "fixerSymbols": [
@@ -607,6 +663,7 @@
       "legacyRuleId": "no-while",
       "disposition": "dropped",
       "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "targetConcept": null,
       "proposedOwner": null,
       "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
@@ -619,8 +676,9 @@
       "legacyRuleId": "require-return-type",
       "disposition": "candidate-pending-96",
       "rationale": "pending clockwork-kitten/studio-board#96",
+      "targetConcept": "require explicit function return types",
       "proposedOwner": "crucible",
-      "proposedCruxId": "crux/typing/explicit-function-return-type (pending clockwork-kitten/studio-board#96)",
+      "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
       "declaredAutoFixable": false,
       "fixerSymbols": []
@@ -629,8 +687,9 @@
       "legacyRuleId": "var-to-const",
       "disposition": "candidate-pending-96",
       "rationale": "pending clockwork-kitten/studio-board#96",
+      "targetConcept": "prefer const declarations",
       "proposedOwner": "crucible",
-      "proposedCruxId": "crux/code/prefer-const (pending clockwork-kitten/studio-board#96)",
+      "proposedCruxId": null,
       "authorityIssue": "clockwork-kitten/studio-board#91",
       "declaredAutoFixable": true,
       "fixerSymbols": [
@@ -642,72 +701,81 @@
     {
       "id": "async-await",
       "kind": "reporter-id",
+      "sourcePath": "src/reporter/rules.ts",
       "disposition": "dropped",
-      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "rationale": "Diagnostic-only evidence: coarse Bedrock reporter ID is retired and is not preserved as an alias in the clean break.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "immutable-array",
       "kind": "reporter-id",
+      "sourcePath": "src/reporter/rules.ts",
       "disposition": "dropped",
-      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "rationale": "Diagnostic-only evidence: coarse Bedrock reporter ID is retired and is not preserved as an alias in the clean break.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "immutable-object",
       "kind": "reporter-id",
+      "sourcePath": "src/reporter/rules.ts",
       "disposition": "dropped",
-      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "rationale": "Diagnostic-only evidence: coarse Bedrock reporter ID is retired and is not preserved as an alias in the clean break.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "loops",
       "kind": "reporter-id",
+      "sourcePath": "src/reporter/rules.ts",
       "disposition": "dropped",
-      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "rationale": "Diagnostic-only evidence: coarse Bedrock reporter ID is retired and is not preserved as an alias in the clean break.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "no-arrow-functions",
       "kind": "reporter-id",
+      "sourcePath": "src/reporter/rules.ts",
       "disposition": "dropped",
-      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "rationale": "Diagnostic-only evidence: coarse Bedrock reporter ID is retired and is not preserved as an alias in the clean break.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "no-classes",
       "kind": "reporter-id",
+      "sourcePath": "src/reporter/rules.ts",
       "disposition": "dropped",
-      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "rationale": "Diagnostic-only evidence: coarse Bedrock reporter ID is retired and is not preserved as an alias in the clean break.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "no-shortcircuit-control",
       "kind": "reporter-id",
+      "sourcePath": "src/reporter/rules.ts",
       "disposition": "dropped",
-      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "rationale": "Diagnostic-only evidence: coarse Bedrock reporter ID is retired and is not preserved as an alias in the clean break.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "promise-rules",
       "kind": "reporter-id",
+      "sourcePath": "src/reporter/rules.ts",
       "disposition": "dropped",
-      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "rationale": "Diagnostic-only evidence: coarse Bedrock reporter ID is retired and is not preserved as an alias in the clean break.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "typescript-strict",
       "kind": "reporter-id",
+      "sourcePath": "src/reporter/rules.ts",
       "disposition": "dropped",
-      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "rationale": "Diagnostic-only evidence: coarse Bedrock reporter ID is retired and is not preserved as an alias in the clean break.",
       "proposedOwner": null,
       "proposedCruxId": null
     }
@@ -716,128 +784,144 @@
     {
       "id": "arrowToFunctionExpression",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "compoundAssignToExplicit",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "equalityToStrict",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "candidate-pending-96",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": "crucible",
       "proposedCruxId": null
     },
     {
       "id": "forInToIndexed",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "forOfToIndexed",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "rewriteTemplateLiterals",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "transformDefaultParams",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "transformForEach",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "transformHasOwnProperty",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "candidate-pending-96",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": "crucible",
       "proposedCruxId": null
     },
     {
       "id": "transformPush",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "transformSort",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "candidate-pending-96",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": "crucible",
       "proposedCruxId": null
     },
     {
       "id": "transformSparseArrays",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "candidate-pending-96",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": "crucible",
       "proposedCruxId": null
     },
     {
       "id": "transformUnshift",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "updateExpressionToExplicit",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
       "id": "varToConst",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "candidate-pending-96",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": "crucible",
       "proposedCruxId": null
     },
     {
       "id": "whileToFor",
       "kind": "fixer",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "rationale": "Bedrock AST fixer is retired; approved concepts are reimplemented under Crucible ownership (#133), without compatibility aliases.",
       "proposedOwner": null,
       "proposedCruxId": null
     }
@@ -846,8 +930,9 @@
     {
       "id": "detectAnyType",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "candidate-pending-96",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": "crucible",
       "proposedCruxId": null,
       "reporterIds": [
@@ -858,8 +943,9 @@
     {
       "id": "detectArrayConstructor",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "candidate-pending-96",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": "crucible",
       "proposedCruxId": null,
       "reporterIds": [
@@ -870,8 +956,9 @@
     {
       "id": "detectAsyncNoAwait",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -882,8 +969,9 @@
     {
       "id": "detectBannedPromiseMethods",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -894,8 +982,9 @@
     {
       "id": "detectBareAwait",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -906,8 +995,9 @@
     {
       "id": "detectBareCatch",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "candidate-pending-96",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": "crucible",
       "proposedCruxId": null,
       "reporterIds": [
@@ -918,8 +1008,9 @@
     {
       "id": "detectBreak",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -930,8 +1021,9 @@
     {
       "id": "detectClassDeclaration",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -942,8 +1034,9 @@
     {
       "id": "detectClassExpression",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -954,8 +1047,9 @@
     {
       "id": "detectContinue",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -966,8 +1060,9 @@
     {
       "id": "detectDefaultParams",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -978,8 +1073,9 @@
     {
       "id": "detectDeleteProp",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -990,8 +1086,9 @@
     {
       "id": "detectDoWhile",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1002,8 +1099,9 @@
     {
       "id": "detectEnum",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1014,8 +1112,9 @@
     {
       "id": "detectForEach",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1026,8 +1125,9 @@
     {
       "id": "detectIndexedAssign",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1038,8 +1138,9 @@
     {
       "id": "detectInterface",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1050,8 +1151,9 @@
     {
       "id": "detectLogicalAndExec",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1062,8 +1164,9 @@
     {
       "id": "detectLogicalOrDefault",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1074,8 +1177,9 @@
     {
       "id": "detectMissingReturnType",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "candidate-pending-96",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": "crucible",
       "proposedCruxId": null,
       "reporterIds": [
@@ -1086,8 +1190,9 @@
     {
       "id": "detectNamespace",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "candidate-pending-96",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": "crucible",
       "proposedCruxId": null,
       "reporterIds": [
@@ -1098,8 +1203,9 @@
     {
       "id": "detectNewPromise",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1110,8 +1216,9 @@
     {
       "id": "detectNonNullAssertion",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "candidate-pending-96",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": "crucible",
       "proposedCruxId": null,
       "reporterIds": [
@@ -1122,8 +1229,9 @@
     {
       "id": "detectNullishCoalescing",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1134,8 +1242,9 @@
     {
       "id": "detectOptionalChain",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1146,8 +1255,9 @@
     {
       "id": "detectPop",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1158,8 +1268,9 @@
     {
       "id": "detectPromiseChains",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1170,8 +1281,9 @@
     {
       "id": "detectPropertyAssign",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1182,8 +1294,9 @@
     {
       "id": "detectShift",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1194,8 +1307,9 @@
     {
       "id": "detectSortNoComparator",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1206,8 +1320,9 @@
     {
       "id": "detectSplice",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1218,8 +1333,9 @@
     {
       "id": "detectSwitch",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1230,6 +1346,7 @@
     {
       "id": "detectTaggedTemplateLiterals",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
       "rationale": "Dropped-unreachable: exported detector is not wired in reporter pass registration.",
       "proposedOwner": null,
@@ -1240,8 +1357,9 @@
     {
       "id": "detectTernary",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1252,8 +1370,9 @@
     {
       "id": "detectThisExpression",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1264,8 +1383,9 @@
     {
       "id": "detectTypeAssertion",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
-      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "rationale": "Diagnostic-only evidence: detector inherits the concept disposition of its legacy rule IDs; output compatibility is not preserved.",
       "proposedOwner": null,
       "proposedCruxId": null,
       "reporterIds": [
@@ -1276,6 +1396,7 @@
     {
       "id": "detectUpdateExpressionInExpression",
       "kind": "detector",
+      "sourcePath": "src/rules/**/index.ts",
       "disposition": "dropped",
       "rationale": "Dropped-unreachable: exported detector is not wired in reporter pass registration.",
       "proposedOwner": null,
@@ -1286,44 +1407,902 @@
   ],
   "surfaces": [
     {
-      "id": "reporter-contract",
-      "kind": "reporter-contract",
-      "disposition": "dropped",
-      "rationale": "Dropped: Bedrock text rendering and grounded semantics are replaced by canonical Crux/Crucible/Conform output contracts (#134).",
-      "proposedOwner": null,
-      "proposedCruxId": null
-    },
-    {
-      "id": "cli-contract",
+      "id": "cli:default-report",
       "kind": "cli-contract",
+      "sourcePath": "src/cli/args.ts",
       "disposition": "dropped",
-      "rationale": "Dropped: bedrock CLI flags/globs/output are retired; no command alias or compatibility mode is introduced (#86/#87).",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
-      "id": "config-packages",
-      "kind": "config-contract",
+      "id": "cli:direct-file-or-directory",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
       "disposition": "dropped",
-      "rationale": "Dropped: eslint-config-bedrock identity and generated config are retired in favor of Crucible-owned bundles (#134).",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
-      "id": "workflow-release",
+      "id": "cli:extension:.js",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:extension:.jsx",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:extension:.ts",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:extension:.tsx",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:fix-and-report-composable",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/args.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:fix-mode",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:flag:--fix",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/args.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:flag:--report",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/args.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:glob-question",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:glob-star",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:javascript-parser",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:no-matches-exit-0",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:no-pattern-exit-1",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/index.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:positional-patterns",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/args.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:report-mode",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:result-exit-code",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/index.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli:typescript-parser",
+      "kind": "cli-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock flags, input expansion, parser routing, modes, and exit behavior receive no command or compatibility alias.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "generated-artifact:eslint-config-bedrock.json",
+      "kind": "config-artifact",
+      "sourcePath": "eslint-config-bedrock.json",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock package/config identity is retired in favor of Crucible-owned bundles under #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "generated-artifact:packages/eslint-config-bedrock/index.js",
+      "kind": "config-artifact",
+      "sourcePath": "packages/eslint-config-bedrock/index.js",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock package/config identity is retired in favor of Crucible-owned bundles under #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "generated-artifact:RULES.md",
+      "kind": "config-artifact",
+      "sourcePath": "RULES.md",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock package/config identity is retired in favor of Crucible-owned bundles under #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package-bin:bedrock:bedrock",
+      "kind": "package-bin",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock package/config identity is retired in favor of Crucible-owned bundles under #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package-script:bedrock:bedrock",
+      "kind": "package-script",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package-script:bedrock:build",
+      "kind": "package-script",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package-script:bedrock:check",
+      "kind": "package-script",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package-script:bedrock:ci",
+      "kind": "package-script",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package-script:bedrock:generate",
+      "kind": "package-script",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package-script:bedrock:inventory:check",
+      "kind": "package-script",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package-script:bedrock:inventory:generate",
+      "kind": "package-script",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package-script:bedrock:lint",
+      "kind": "package-script",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package-script:bedrock:release",
+      "kind": "package-script",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package-script:bedrock:test",
+      "kind": "package-script",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package-script:bedrock:test:coverage",
+      "kind": "package-script",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package-script:bedrock:typecheck",
+      "kind": "package-script",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package:bedrock",
+      "kind": "package-identity",
+      "sourcePath": "package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock package/config identity is retired in favor of Crucible-owned bundles under #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "package:eslint-config-bedrock",
+      "kind": "package-identity",
+      "sourcePath": "packages/eslint-config-bedrock/package.json",
+      "disposition": "dropped",
+      "rationale": "Dropped in the clean break: Bedrock package/config identity is retired in favor of Crucible-owned bundles under #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:category-counts",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/format.ts",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:file-summary",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/format.ts",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:grounded-semantics",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/run.ts",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:grounded-summary",
+      "kind": "reporter-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:javascript-parser",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/run.ts",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:typescript-parser",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/run.ts",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:violation-exit-code",
+      "kind": "reporter-contract",
+      "sourcePath": "src/cli/runner.ts",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "reporter:violation-line",
+      "kind": "reporter-contract",
+      "sourcePath": "src/reporter/format.ts",
+      "disposition": "dropped",
+      "rationale": "Diagnostic-only evidence: Bedrock rendering, parser selection, grounding, and exit behavior are retired; canonical output contracts are owned by #134.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "script-file:scripts/check-bedrock-inventory.ts",
+      "kind": "script-file",
+      "sourcePath": "scripts/check-bedrock-inventory.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "script-file:scripts/generate-inventory.ts",
+      "kind": "script-file",
+      "sourcePath": "scripts/generate-inventory.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "script-file:scripts/generate.ts",
+      "kind": "script-file",
+      "sourcePath": "scripts/generate.ts",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "workflow-job:.github/workflows/ci.yml:ci",
+      "kind": "workflow-job",
+      "sourcePath": ".github/workflows/ci.yml",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "workflow-job:.github/workflows/ci.yml:publish-eslint-config",
+      "kind": "workflow-job",
+      "sourcePath": ".github/workflows/ci.yml",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "workflow-job:.github/workflows/release.yml:release",
+      "kind": "workflow-job",
+      "sourcePath": ".github/workflows/release.yml",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "workflow:.github/workflows/ci.yml",
       "kind": "workflow",
+      "sourcePath": ".github/workflows/ci.yml",
       "disposition": "dropped",
-      "rationale": "Dropped: Bedrock-specific release/publish workflow ownership ends during retirement cutover (#135).",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
       "proposedOwner": null,
       "proposedCruxId": null
     },
     {
-      "id": "suppression-surface:none",
-      "kind": "suppression",
-      "disposition": "none",
-      "rationale": "Verified: no Bedrock suppression mechanism exists; no suppression alias or compatibility behavior is required.",
+      "id": "workflow:.github/workflows/release.yml",
+      "kind": "workflow",
+      "sourcePath": ".github/workflows/release.yml",
+      "disposition": "dropped",
+      "rationale": "Dropped with Bedrock repository retirement under #135; this build/release/development surface is not a public compatibility contract.",
       "proposedOwner": null,
       "proposedCruxId": null
+    }
+  ],
+  "suppressionSearch": {
+    "scope": "all git-tracked textual files",
+    "terms": [
+      "disable",
+      "ignore",
+      "suppress"
+    ],
+    "excludedPaths": [
+      "docs/bedrock-consumers.json",
+      "docs/bedrock-disposition.json",
+      "docs/bedrock-freeze.md"
+    ]
+  },
+  "suppressionHits": [
+    {
+      "path": "README.md",
+      "line": 144,
+      "term": "suppress",
+      "text": "each source-derived surface, and rejects unknown suppression or consumer-query results. Permanent",
+      "classification": "narrative"
+    },
+    {
+      "path": "knip.json",
+      "line": 5,
+      "term": "ignore",
+      "text": "\"ignore\": [\"src/__fixtures__/**\"]",
+      "classification": "external-tool-config"
+    },
+    {
+      "path": "src/inventory/build.ts",
+      "line": 247,
+      "term": "suppress",
+      "text": "\"The ledger is diagnostic-only evidence for a clean break. It creates no command, package, rule-ID, suppression, or output compatibility promise.\",",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/build.ts",
+      "line": 282,
+      "term": "suppress",
+      "text": "\"| Suppression search hits / mechanisms | \" +",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/build.ts",
+      "line": 283,
+      "term": "suppress",
+      "text": "doc.denominators.suppressionSearchHits +",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/build.ts",
+      "line": 285,
+      "term": "suppress",
+      "text": "doc.denominators.suppressionMechanisms +",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/build.ts",
+      "line": 393,
+      "term": "suppress",
+      "text": "suppressionSearchHits: facts.suppressionHits.length,",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/build.ts",
+      "line": 394,
+      "term": "suppress",
+      "text": "suppressionMechanisms: 0,",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/build.ts",
+      "line": 413,
+      "term": "suppress",
+      "text": "suppressionSearch: facts.suppressionSearch,",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/build.ts",
+      "line": 414,
+      "term": "suppress",
+      "text": "suppressionHits: facts.suppressionHits,",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 6,
+      "term": "suppress",
+      "text": "import type { FixtureHash, SourceFacts, SuppressionHit, SurfaceFact } from \"./types.js\";",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 371,
+      "term": "suppress",
+      "text": "export function classifySuppressionHit(",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 373,
+      "term": "suppress",
+      "text": "term: SuppressionHit[\"term\"],",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 375,
+      "term": "suppress",
+      "text": "): SuppressionHit[\"classification\"] {",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 379,
+      "term": "ignore",
+      "text": "if (path === \"knip.json\" && term === \"ignore\" && text.includes('\"ignore\"')) {",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 384,
+      "term": "ignore",
+      "text": "term === \"ignore\" &&",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 385,
+      "term": "ignore",
+      "text": "text.includes(\"violation can be ignored\")",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 391,
+      "term": "suppress",
+      "text": "term === \"suppress\" &&",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 392,
+      "term": "suppress",
+      "text": "text.includes(\"Suppress unused-variable lint\")",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 398,
+      "term": "suppress",
+      "text": "term === \"suppress\" &&",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 399,
+      "term": "suppress",
+      "text": "text.includes(\"rejects unknown suppression or consumer-query results\")",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 403,
+      "term": "suppress",
+      "text": "throw new Error(\"Unclassified suppression search hit: \" + path + \": \" + text.trim());",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 406,
+      "term": "suppress",
+      "text": "function collectSuppressionHits(repoRoot: string, paths: string[]): SuppressionHit[] {",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 407,
+      "term": "suppress",
+      "text": "const hits: SuppressionHit[] = [];",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 417,
+      "term": "suppress",
+      "text": "const terms = new Set<SuppressionHit[\"term\"]>();",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 418,
+      "term": "suppress",
+      "text": "for (const match of text.toLowerCase().matchAll(/suppress|ignore|disable/g)) {",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 418,
+      "term": "ignore",
+      "text": "for (const match of text.toLowerCase().matchAll(/suppress|ignore|disable/g)) {",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 418,
+      "term": "disable",
+      "text": "for (const match of text.toLowerCase().matchAll(/suppress|ignore|disable/g)) {",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 419,
+      "term": "suppress",
+      "text": "terms.add(match[0] as SuppressionHit[\"term\"]);",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 427,
+      "term": "suppress",
+      "text": "classification: classifySuppressionHit(path, term, text),",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 478,
+      "term": "suppress",
+      "text": "suppressionSearch: {",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 480,
+      "term": "disable",
+      "text": "terms: [\"disable\", \"ignore\", \"suppress\"],",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 480,
+      "term": "ignore",
+      "text": "terms: [\"disable\", \"ignore\", \"suppress\"],",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 480,
+      "term": "suppress",
+      "text": "terms: [\"disable\", \"ignore\", \"suppress\"],",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/collect.ts",
+      "line": 483,
+      "term": "suppress",
+      "text": "suppressionHits: collectSuppressionHits(repoRoot, paths),",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 7,
+      "term": "suppress",
+      "text": "classifySuppressionHit,",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 36,
+      "term": "suppress",
+      "text": "suppressionSearchHits: 58,",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 37,
+      "term": "suppress",
+      "text": "suppressionMechanisms: 0,",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 142,
+      "term": "suppress",
+      "text": "it(\"rejects unclassified repository-wide suppression drift\", function () {",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 144,
+      "term": "suppress",
+      "text": "classifySuppressionHit(",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 146,
+      "term": "ignore",
+      "text": "\"ignore\",",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 147,
+      "term": "ignore",
+      "text": "'  \"ignore\": [\"src/__fixtures__/**\"]',",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 151,
+      "term": "suppress",
+      "text": "classifySuppressionHit(\"package.json\", \"disable\", '\"disable-bedrock\": true');",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 151,
+      "term": "disable",
+      "text": "classifySuppressionHit(\"package.json\", \"disable\", '\"disable-bedrock\": true');",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.test.ts",
+      "line": 152,
+      "term": "suppress",
+      "text": "}).toThrow(\"Unclassified suppression search hit\");",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/index.ts",
+      "line": 1,
+      "term": "suppress",
+      "text": "export { classifySuppressionHit, collectSourceFacts } from \"./collect.js\";",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/types.ts",
+      "line": 38,
+      "term": "suppress",
+      "text": "export type SuppressionHit = {",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/types.ts",
+      "line": 41,
+      "term": "disable",
+      "text": "term: \"disable\" | \"ignore\" | \"suppress\";",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/types.ts",
+      "line": 41,
+      "term": "ignore",
+      "text": "term: \"disable\" | \"ignore\" | \"suppress\";",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/types.ts",
+      "line": 41,
+      "term": "suppress",
+      "text": "term: \"disable\" | \"ignore\" | \"suppress\";",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/types.ts",
+      "line": 79,
+      "term": "suppress",
+      "text": "suppressionSearch: {",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/types.ts",
+      "line": 84,
+      "term": "suppress",
+      "text": "suppressionHits: SuppressionHit[];",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/types.ts",
+      "line": 139,
+      "term": "suppress",
+      "text": "suppressionSearchHits: number;",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/types.ts",
+      "line": 140,
+      "term": "suppress",
+      "text": "suppressionMechanisms: number;",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/types.ts",
+      "line": 153,
+      "term": "suppress",
+      "text": "suppressionSearch: SourceFacts[\"suppressionSearch\"];",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/inventory/types.ts",
+      "line": 154,
+      "term": "suppress",
+      "text": "suppressionHits: SuppressionHit[];",
+      "classification": "scanner-implementation"
+    },
+    {
+      "path": "src/rules/immutable-object/index.ts",
+      "line": 13,
+      "term": "ignore",
+      "text": "\"obj.foo = x is banned — use const newObj = { ...obj, foo: x } to derive a new object. If this is initial construction, this violation can be ignored.\";",
+      "classification": "narrative"
+    },
+    {
+      "path": "src/testing/fixture-runner.test.ts",
+      "line": 134,
+      "term": "suppress",
+      "text": "// Suppress unused-variable lint — MISMATCHING_PAIRS is kept for documentation",
+      "classification": "narrative"
     }
   ],
   "downstreamSlices": [

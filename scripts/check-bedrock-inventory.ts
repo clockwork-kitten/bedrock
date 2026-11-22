@@ -5,6 +5,7 @@ import {
   buildFreezeDispositionDocument,
   buildFreezeMarkdown,
   collectSourceFacts,
+  assertSourceFingerprint,
 } from "../src/inventory/index.js";
 
 const REPO_ROOT = join(import.meta.dirname, "..");
@@ -25,9 +26,10 @@ const freezeMdPath = join(REPO_ROOT, "docs/bedrock-freeze.md");
 
 const existingDisposition = JSON.parse(read(dispositionPath)) as {
   generatedAt: string;
-  sourceRevision: string;
+  sourceFingerprint: string;
 };
-const sourceFacts = collectSourceFacts(REPO_ROOT, existingDisposition.sourceRevision);
+const sourceFacts = collectSourceFacts(REPO_ROOT);
+assertSourceFingerprint(existingDisposition.sourceFingerprint, sourceFacts.sourceFingerprint);
 const disposition = buildFreezeDispositionDocument(sourceFacts, existingDisposition.generatedAt);
 const consumers = buildConsumerDocument(disposition);
 const markdown = buildFreezeMarkdown(disposition);
