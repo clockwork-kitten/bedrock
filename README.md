@@ -102,6 +102,8 @@ bun run test       # run all tests (182 across 20 test files)
 bun run typecheck  # TypeScript strict check
 bun run build      # compile to dist/
 bun run generate   # regenerate RULES.md and eslint-config-bedrock.json
+bun run inventory:generate # regenerate freeze/disposition ledgers in docs/
+bun run inventory:check    # verify ledgers match current source and denominators
 ```
 
 ## ESLint config
@@ -129,6 +131,16 @@ v1 complete. Planned:
 
 - **v1.5** — publish `eslint-config-bedrock` as a standalone npm package
 - **v2** — transpilation to other languages (Go, Rust, Python); the Bedrock subset is intentionally designed for this
+
+## Freeze inventory (studio-board #91)
+
+Bedrock retirement work tracks a repo-local, reproducible inventory in:
+
+- `docs/bedrock-disposition.json` (authoritative machine-readable ledger)
+- `docs/bedrock-consumers.json` (bounded downstream consumer snapshot)
+- `docs/bedrock-freeze.md` (human summary)
+
+Permanent Crux IDs and owner assignments are explicitly deferred to `clockwork-kitten/studio-board#96`.
 
 ## License
 

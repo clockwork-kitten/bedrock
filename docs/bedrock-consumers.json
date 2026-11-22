@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-22T05:54:18.328Z",
+  "sourceRevision": "f3f93c9f52be3738005a5c018acf031e4e456b7d",
+  "authorityIssue": "clockwork-kitten/studio-board#91",
+  "observedAt": "2026-11-22",
+  "boundedUniverse": "clockwork-kitten org repositories discoverable via authenticated GitHub code search plus npm public registry lookups",
+  "organizationCounts": {
+    "repositories": 21,
+    "private": 15,
+    "public": 6
+  },
+  "repositories": [
+    {
+      "repository": "clockwork-kitten/standards",
+      "classification": "functional-consumer",
+      "disposition": "migrate via studio-board#131",
+      "evidence": "packages/conform/src/code/run.ts wires bedrock command and --fix/--report args; config exposes code.bedrock"
+    },
+    {
+      "repository": "clockwork-kitten/canon",
+      "classification": "reference-only",
+      "disposition": "no cutover issue required",
+      "evidence": "README mention only; no invocation/import/dependency"
+    },
+    {
+      "repository": "clockwork-kitten/incubator",
+      "classification": "reference-only",
+      "disposition": "no cutover issue required",
+      "evidence": "docs mention only; no invocation/import/dependency"
+    },
+    {
+      "repository": "clockwork-kitten/ops",
+      "classification": "reference-only",
+      "disposition": "no cutover issue required",
+      "evidence": "markdown mentions only; no invocation/import/dependency"
+    }
+  ],
+  "npm": {
+    "bedrock": "unrelated third-party package",
+    "eslintConfigBedrock": "404 not found"
+  },
+  "limitations": "Does not prove external/private forks, unindexed blobs, deleted branches, or local clones outside bounded search.",
+  "reproductionCommands": [
+    "gh api --method GET orgs/clockwork-kitten/repos -f per_page=100 --paginate",
+    "gh search code 'bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
+    "gh search code 'eslint-config-bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
+    "gh search code 'code.bedrock' --owner clockwork-kitten --limit 100 --json repository,path,url",
+    "npm view bedrock name version repository dist-tags --json",
+    "npm view eslint-config-bedrock name version repository dist-tags --json"
+  ],
+  "downstreamSlices": [
+    {
+      "id": "studio-board#91",
+      "repository": "clockwork-kitten/bedrock",
+      "size": "M",
+      "status": "implemented-here",
+      "notes": "Commit disposition ledgers + inventory validation and generation."
+    },
+    {
+      "id": "studio-board#96",
+      "repository": "clockwork-kitten/crux",
+      "size": "L",
+      "status": "existing",
+      "notes": "Assign permanent Crux IDs and owners. #91 must not invent final IDs."
+    },
+    {
+      "id": "studio-board#131",
+      "repository": "clockwork-kitten/standards",
+      "size": "M",
+      "status": "existing",
+      "notes": "Remove the only functional Bedrock consumer wiring."
+    },
+    {
+      "id": "studio-board#133",
+      "repository": "clockwork-kitten/crucible",
+      "size": "L",
+      "status": "existing",
+      "notes": "Reimplement approved analyzer/fixer behavior under Crucible ownership."
+    },
+    {
+      "id": "studio-board#134",
+      "repository": "clockwork-kitten/crucible",
+      "size": "M",
+      "status": "existing",
+      "notes": "Migrate Bedrock reporting/config behavior to canonical contracts."
+    },
+    {
+      "id": "studio-board#135",
+      "repository": "clockwork-kitten/bedrock",
+      "size": "S",
+      "status": "existing",
+      "notes": "Final retirement/archive after downstream cutover completes."
+    }
+  ]
+}

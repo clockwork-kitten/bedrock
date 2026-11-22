@@ -1,0 +1,1928 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-22T05:54:18.328Z",
+  "sourceRevision": "f3f93c9f52be3738005a5c018acf031e4e456b7d",
+  "authority": {
+    "issue": "clockwork-kitten/studio-board#91",
+    "requirementsIssue": "clockwork-kitten/studio-board#86",
+    "briefIssue": "clockwork-kitten/studio-board#87",
+    "permanentIdsAssignedBy": "clockwork-kitten/studio-board#96"
+  },
+  "denominators": {
+    "registryRuleIds": 53,
+    "reporterIds": 9,
+    "fixerExports": 16,
+    "detectorExports": 37,
+    "detectorWired": 35,
+    "detectorUnwired": 2,
+    "fixturePairs": 79,
+    "packageScripts": 10,
+    "generatedArtifacts": 3,
+    "workflows": 2,
+    "workflowJobs": 3,
+    "suppressions": 0
+  },
+  "mismatchEvidence": {
+    "declaredAutoFixableRuleIds": [
+      "equality",
+      "no-array-pop",
+      "no-array-push",
+      "no-array-shift",
+      "no-array-unshift",
+      "no-arrow-functions",
+      "no-for-of",
+      "no-increment",
+      "no-shorthand-operators",
+      "no-template-literals",
+      "no-var",
+      "var-to-const"
+    ],
+    "wiredFixerSymbols": [
+      "varToConst",
+      "equalityToStrict",
+      "forOfToIndexed",
+      "forInToIndexed",
+      "whileToFor",
+      "transformForEach",
+      "transformPush",
+      "transformUnshift",
+      "transformSort",
+      "transformSparseArrays",
+      "transformHasOwnProperty",
+      "arrowToFunctionExpression",
+      "transformDefaultParams",
+      "compoundAssignToExplicit",
+      "updateExpressionToExplicit",
+      "rewriteTemplateLiterals"
+    ],
+    "wiredFixerRuleIdsNotDeclaredAutoFixable": [
+      "no-default-parameters",
+      "no-for-each",
+      "no-for-in",
+      "no-has-own-property",
+      "no-mutating-sort",
+      "no-sort-without-comparator",
+      "no-sparse-arrays",
+      "no-while"
+    ],
+    "declaredAutoFixableRuleIdsWithoutWiredFixer": [
+      "no-array-pop",
+      "no-array-shift"
+    ]
+  },
+  "rules": [
+    {
+      "legacyRuleId": "equality",
+      "disposition": "candidate-pending-96",
+      "rationale": "pending clockwork-kitten/studio-board#96",
+      "proposedOwner": "crucible",
+      "proposedCruxId": "crux/code/strict-equality (pending clockwork-kitten/studio-board#96)",
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": true,
+      "fixerSymbols": [
+        "equalityToStrict"
+      ]
+    },
+    {
+      "legacyRuleId": "no-any",
+      "disposition": "candidate-pending-96",
+      "rationale": "pending clockwork-kitten/studio-board#96",
+      "proposedOwner": "crucible",
+      "proposedCruxId": "crux/typing/no-explicit-any (pending clockwork-kitten/studio-board#96)",
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-array-constructor",
+      "disposition": "candidate-pending-96",
+      "rationale": "pending clockwork-kitten/studio-board#96",
+      "proposedOwner": "crucible",
+      "proposedCruxId": "crux/code/no-array-constructor (pending clockwork-kitten/studio-board#96)",
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-array-index-assign",
+      "disposition": "dropped",
+      "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-array-pop",
+      "disposition": "dropped",
+      "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": true,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-array-push",
+      "disposition": "dropped",
+      "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": true,
+      "fixerSymbols": [
+        "transformPush"
+      ]
+    },
+    {
+      "legacyRuleId": "no-array-shift",
+      "disposition": "dropped",
+      "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": true,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-array-splice",
+      "disposition": "dropped",
+      "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-array-unshift",
+      "disposition": "dropped",
+      "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": true,
+      "fixerSymbols": [
+        "transformUnshift"
+      ]
+    },
+    {
+      "legacyRuleId": "no-arrow-functions",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": true,
+      "fixerSymbols": [
+        "arrowToFunctionExpression"
+      ]
+    },
+    {
+      "legacyRuleId": "no-async-without-await",
+      "disposition": "dropped",
+      "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-bare-catch",
+      "disposition": "candidate-pending-96",
+      "rationale": "pending clockwork-kitten/studio-board#96",
+      "proposedOwner": "crucible",
+      "proposedCruxId": "crux/typing/use-unknown-in-catch-callback-variable (pending clockwork-kitten/studio-board#96)",
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-break",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-classes",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-continue",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-default-parameters",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": [
+        "transformDefaultParams"
+      ]
+    },
+    {
+      "legacyRuleId": "no-delete",
+      "disposition": "dropped",
+      "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-do-while",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-enum",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-for-each",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": [
+        "transformForEach"
+      ]
+    },
+    {
+      "legacyRuleId": "no-for-in",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": [
+        "forInToIndexed"
+      ]
+    },
+    {
+      "legacyRuleId": "no-for-of",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": true,
+      "fixerSymbols": [
+        "forOfToIndexed"
+      ]
+    },
+    {
+      "legacyRuleId": "no-general-destructuring",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-has-own-property",
+      "disposition": "candidate-pending-96",
+      "rationale": "pending clockwork-kitten/studio-board#96",
+      "proposedOwner": "crucible",
+      "proposedCruxId": "crux/code/prefer-object-has-own (pending clockwork-kitten/studio-board#96)",
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": [
+        "transformHasOwnProperty"
+      ]
+    },
+    {
+      "legacyRuleId": "no-increment",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": true,
+      "fixerSymbols": [
+        "updateExpressionToExplicit"
+      ]
+    },
+    {
+      "legacyRuleId": "no-interface",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-labeled-statements",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-logical-and-execution",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-logical-or-default",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-mutating-sort",
+      "disposition": "candidate-pending-96",
+      "rationale": "pending clockwork-kitten/studio-board#96",
+      "proposedOwner": "crucible",
+      "proposedCruxId": "crux/code/prefer-to-sorted (pending clockwork-kitten/studio-board#96)",
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": [
+        "transformSort"
+      ]
+    },
+    {
+      "legacyRuleId": "no-namespace",
+      "disposition": "candidate-pending-96",
+      "rationale": "pending clockwork-kitten/studio-board#96",
+      "proposedOwner": "crucible",
+      "proposedCruxId": "crux/typing/no-namespace (pending clockwork-kitten/studio-board#96)",
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-new-promise",
+      "disposition": "dropped",
+      "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-non-null-assertion",
+      "disposition": "candidate-pending-96",
+      "rationale": "pending clockwork-kitten/studio-board#96",
+      "proposedOwner": "crucible",
+      "proposedCruxId": "crux/typing/no-non-null-assertion (pending clockwork-kitten/studio-board#96)",
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-nullish-coalescing",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-optional-chaining",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-promise-any",
+      "disposition": "dropped",
+      "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-promise-race",
+      "disposition": "dropped",
+      "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-promise-then",
+      "disposition": "dropped",
+      "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-property-assign",
+      "disposition": "dropped",
+      "rationale": "Dropped: mutation rewrite behavior is context-sensitive and can be semantics-changing or unsafe.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-shorthand-operators",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": true,
+      "fixerSymbols": [
+        "compoundAssignToExplicit"
+      ]
+    },
+    {
+      "legacyRuleId": "no-sort-without-comparator",
+      "disposition": "dropped",
+      "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": [
+        "transformSort"
+      ]
+    },
+    {
+      "legacyRuleId": "no-sparse-arrays",
+      "disposition": "candidate-pending-96",
+      "rationale": "pending clockwork-kitten/studio-board#96",
+      "proposedOwner": "crucible",
+      "proposedCruxId": "crux/code/no-sparse-arrays (pending clockwork-kitten/studio-board#96)",
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": [
+        "transformSparseArrays"
+      ]
+    },
+    {
+      "legacyRuleId": "no-spread-args",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-switch",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-template-literals",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": true,
+      "fixerSymbols": [
+        "rewriteTemplateLiterals"
+      ]
+    },
+    {
+      "legacyRuleId": "no-ternary",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-this",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-type-assertion",
+      "disposition": "dropped",
+      "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-unhandled-rejection",
+      "disposition": "dropped",
+      "rationale": "Dropped: policy is overbroad/context-sensitive and not retained in MVP ownership transfer.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "no-var",
+      "disposition": "candidate-pending-96",
+      "rationale": "pending clockwork-kitten/studio-board#96",
+      "proposedOwner": "crucible",
+      "proposedCruxId": "crux/code/no-var (pending clockwork-kitten/studio-board#96)",
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": true,
+      "fixerSymbols": [
+        "varToConst"
+      ]
+    },
+    {
+      "legacyRuleId": "no-while",
+      "disposition": "dropped",
+      "rationale": "Dropped: maximalist syntax normalization conflicts with modern JS/TS defaults and current Standards.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": [
+        "whileToFor"
+      ]
+    },
+    {
+      "legacyRuleId": "require-return-type",
+      "disposition": "candidate-pending-96",
+      "rationale": "pending clockwork-kitten/studio-board#96",
+      "proposedOwner": "crucible",
+      "proposedCruxId": "crux/typing/explicit-function-return-type (pending clockwork-kitten/studio-board#96)",
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": false,
+      "fixerSymbols": []
+    },
+    {
+      "legacyRuleId": "var-to-const",
+      "disposition": "candidate-pending-96",
+      "rationale": "pending clockwork-kitten/studio-board#96",
+      "proposedOwner": "crucible",
+      "proposedCruxId": "crux/code/prefer-const (pending clockwork-kitten/studio-board#96)",
+      "authorityIssue": "clockwork-kitten/studio-board#91",
+      "declaredAutoFixable": true,
+      "fixerSymbols": [
+        "varToConst"
+      ]
+    }
+  ],
+  "reporterIds": [
+    {
+      "id": "async-await",
+      "kind": "reporter-id",
+      "disposition": "dropped",
+      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "immutable-array",
+      "kind": "reporter-id",
+      "disposition": "dropped",
+      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "immutable-object",
+      "kind": "reporter-id",
+      "disposition": "dropped",
+      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "loops",
+      "kind": "reporter-id",
+      "disposition": "dropped",
+      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "no-arrow-functions",
+      "kind": "reporter-id",
+      "disposition": "dropped",
+      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "no-classes",
+      "kind": "reporter-id",
+      "disposition": "dropped",
+      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "no-shortcircuit-control",
+      "kind": "reporter-id",
+      "disposition": "dropped",
+      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "promise-rules",
+      "kind": "reporter-id",
+      "disposition": "dropped",
+      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "typescript-strict",
+      "kind": "reporter-id",
+      "disposition": "dropped",
+      "rationale": "Dropped: coarse Bedrock reporter IDs are not preserved as aliases in MVP clean break.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    }
+  ],
+  "fixers": [
+    {
+      "id": "arrowToFunctionExpression",
+      "kind": "fixer",
+      "disposition": "dropped",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "compoundAssignToExplicit",
+      "kind": "fixer",
+      "disposition": "dropped",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "equalityToStrict",
+      "kind": "fixer",
+      "disposition": "candidate-pending-96",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": "crucible",
+      "proposedCruxId": null
+    },
+    {
+      "id": "forInToIndexed",
+      "kind": "fixer",
+      "disposition": "dropped",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "forOfToIndexed",
+      "kind": "fixer",
+      "disposition": "dropped",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "rewriteTemplateLiterals",
+      "kind": "fixer",
+      "disposition": "dropped",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "transformDefaultParams",
+      "kind": "fixer",
+      "disposition": "dropped",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "transformForEach",
+      "kind": "fixer",
+      "disposition": "dropped",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "transformHasOwnProperty",
+      "kind": "fixer",
+      "disposition": "candidate-pending-96",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": "crucible",
+      "proposedCruxId": null
+    },
+    {
+      "id": "transformPush",
+      "kind": "fixer",
+      "disposition": "dropped",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "transformSort",
+      "kind": "fixer",
+      "disposition": "candidate-pending-96",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": "crucible",
+      "proposedCruxId": null
+    },
+    {
+      "id": "transformSparseArrays",
+      "kind": "fixer",
+      "disposition": "candidate-pending-96",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": "crucible",
+      "proposedCruxId": null
+    },
+    {
+      "id": "transformUnshift",
+      "kind": "fixer",
+      "disposition": "dropped",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "updateExpressionToExplicit",
+      "kind": "fixer",
+      "disposition": "dropped",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "varToConst",
+      "kind": "fixer",
+      "disposition": "candidate-pending-96",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": "crucible",
+      "proposedCruxId": null
+    },
+    {
+      "id": "whileToFor",
+      "kind": "fixer",
+      "disposition": "dropped",
+      "rationale": "Bedrock AST fixer is retired; approved behaviors are reimplemented under Crucible ownership (#133).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    }
+  ],
+  "detectors": [
+    {
+      "id": "detectAnyType",
+      "kind": "detector",
+      "disposition": "candidate-pending-96",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": "crucible",
+      "proposedCruxId": null,
+      "reporterIds": [
+        "typescript-strict"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectArrayConstructor",
+      "kind": "detector",
+      "disposition": "candidate-pending-96",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": "crucible",
+      "proposedCruxId": null,
+      "reporterIds": [
+        "immutable-array"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectAsyncNoAwait",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "no-arrow-functions"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectBannedPromiseMethods",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "promise-rules"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectBareAwait",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "promise-rules"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectBareCatch",
+      "kind": "detector",
+      "disposition": "candidate-pending-96",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": "crucible",
+      "proposedCruxId": null,
+      "reporterIds": [
+        "typescript-strict"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectBreak",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "loops"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectClassDeclaration",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "no-classes"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectClassExpression",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "no-classes"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectContinue",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "loops"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectDefaultParams",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "no-arrow-functions"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectDeleteProp",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "immutable-object"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectDoWhile",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "loops"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectEnum",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "typescript-strict"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectForEach",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "loops"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectIndexedAssign",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "immutable-array"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectInterface",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "typescript-strict"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectLogicalAndExec",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "no-shortcircuit-control"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectLogicalOrDefault",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "no-shortcircuit-control"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectMissingReturnType",
+      "kind": "detector",
+      "disposition": "candidate-pending-96",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": "crucible",
+      "proposedCruxId": null,
+      "reporterIds": [
+        "typescript-strict"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectNamespace",
+      "kind": "detector",
+      "disposition": "candidate-pending-96",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": "crucible",
+      "proposedCruxId": null,
+      "reporterIds": [
+        "typescript-strict"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectNewPromise",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "promise-rules"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectNonNullAssertion",
+      "kind": "detector",
+      "disposition": "candidate-pending-96",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": "crucible",
+      "proposedCruxId": null,
+      "reporterIds": [
+        "typescript-strict"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectNullishCoalescing",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "no-shortcircuit-control"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectOptionalChain",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "no-shortcircuit-control"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectPop",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "immutable-array"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectPromiseChains",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "async-await"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectPropertyAssign",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "immutable-object"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectShift",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "immutable-array"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectSortNoComparator",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "immutable-array"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectSplice",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "immutable-array"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectSwitch",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "no-shortcircuit-control"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectTaggedTemplateLiterals",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Dropped-unreachable: exported detector is not wired in reporter pass registration.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [],
+      "wiredInReporter": false
+    },
+    {
+      "id": "detectTernary",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "no-shortcircuit-control"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectThisExpression",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "no-classes"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectTypeAssertion",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Detector inherits disposition of mapped legacy rule IDs.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [
+        "typescript-strict"
+      ],
+      "wiredInReporter": true
+    },
+    {
+      "id": "detectUpdateExpressionInExpression",
+      "kind": "detector",
+      "disposition": "dropped",
+      "rationale": "Dropped-unreachable: exported detector is not wired in reporter pass registration.",
+      "proposedOwner": null,
+      "proposedCruxId": null,
+      "reporterIds": [],
+      "wiredInReporter": false
+    }
+  ],
+  "surfaces": [
+    {
+      "id": "reporter-contract",
+      "kind": "reporter-contract",
+      "disposition": "dropped",
+      "rationale": "Dropped: Bedrock text rendering and grounded semantics are replaced by canonical Crux/Crucible/Conform output contracts (#134).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "cli-contract",
+      "kind": "cli-contract",
+      "disposition": "dropped",
+      "rationale": "Dropped: bedrock CLI flags/globs/output are retired; no command alias or compatibility mode is introduced (#86/#87).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "config-packages",
+      "kind": "config-contract",
+      "disposition": "dropped",
+      "rationale": "Dropped: eslint-config-bedrock identity and generated config are retired in favor of Crucible-owned bundles (#134).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "workflow-release",
+      "kind": "workflow",
+      "disposition": "dropped",
+      "rationale": "Dropped: Bedrock-specific release/publish workflow ownership ends during retirement cutover (#135).",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    },
+    {
+      "id": "suppression-surface:none",
+      "kind": "suppression",
+      "disposition": "none",
+      "rationale": "Verified: no Bedrock suppression mechanism exists; no suppression alias or compatibility behavior is required.",
+      "proposedOwner": null,
+      "proposedCruxId": null
+    }
+  ],
+  "downstreamSlices": [
+    {
+      "id": "studio-board#91",
+      "repository": "clockwork-kitten/bedrock",
+      "size": "M",
+      "status": "implemented-here",
+      "notes": "Commit disposition ledgers + inventory validation and generation."
+    },
+    {
+      "id": "studio-board#96",
+      "repository": "clockwork-kitten/crux",
+      "size": "L",
+      "status": "existing",
+      "notes": "Assign permanent Crux IDs and owners. #91 must not invent final IDs."
+    },
+    {
+      "id": "studio-board#131",
+      "repository": "clockwork-kitten/standards",
+      "size": "M",
+      "status": "existing",
+      "notes": "Remove the only functional Bedrock consumer wiring."
+    },
+    {
+      "id": "studio-board#133",
+      "repository": "clockwork-kitten/crucible",
+      "size": "L",
+      "status": "existing",
+      "notes": "Reimplement approved analyzer/fixer behavior under Crucible ownership."
+    },
+    {
+      "id": "studio-board#134",
+      "repository": "clockwork-kitten/crucible",
+      "size": "M",
+      "status": "existing",
+      "notes": "Migrate Bedrock reporting/config behavior to canonical contracts."
+    },
+    {
+      "id": "studio-board#135",
+      "repository": "clockwork-kitten/bedrock",
+      "size": "S",
+      "status": "existing",
+      "notes": "Final retirement/archive after downstream cutover completes."
+    }
+  ],
+  "fixtureHashes": [
+    {
+      "fixtureId": "async-await/catch-chain.ts",
+      "inputPath": "src/__fixtures__/async-await/catch-chain.input.ts",
+      "outputPath": "src/__fixtures__/async-await/catch-chain.output.ts",
+      "inputSha256": "18ba40b3fd36119f99e54f959cdf300d27dd8ba9e80193bf86da16e4c1a266ac",
+      "outputSha256": "18ba40b3fd36119f99e54f959cdf300d27dd8ba9e80193bf86da16e4c1a266ac"
+    },
+    {
+      "fixtureId": "async-await/clean.ts",
+      "inputPath": "src/__fixtures__/async-await/clean.input.ts",
+      "outputPath": "src/__fixtures__/async-await/clean.output.ts",
+      "inputSha256": "557d99b7a6f07ccea5fa98eaaf39efc398cb2f9e0fa877e9f9f9bf153cc52e52",
+      "outputSha256": "557d99b7a6f07ccea5fa98eaaf39efc398cb2f9e0fa877e9f9f9bf153cc52e52"
+    },
+    {
+      "fixtureId": "async-await/finally-chain.ts",
+      "inputPath": "src/__fixtures__/async-await/finally-chain.input.ts",
+      "outputPath": "src/__fixtures__/async-await/finally-chain.output.ts",
+      "inputSha256": "547686d9fdd7b725b8e029774819933fd27b32b0ffe761303563ea55ad43c9c8",
+      "outputSha256": "547686d9fdd7b725b8e029774819933fd27b32b0ffe761303563ea55ad43c9c8"
+    },
+    {
+      "fixtureId": "async-await/then-chain.ts",
+      "inputPath": "src/__fixtures__/async-await/then-chain.input.ts",
+      "outputPath": "src/__fixtures__/async-await/then-chain.output.ts",
+      "inputSha256": "9a6a2867aab0cea4305c83357f8cf49d7b6e694d40aeb169d14616aeabfebd5f",
+      "outputSha256": "9a6a2867aab0cea4305c83357f8cf49d7b6e694d40aeb169d14616aeabfebd5f"
+    },
+    {
+      "fixtureId": "equality/loose-eq.ts",
+      "inputPath": "src/__fixtures__/equality/loose-eq.input.ts",
+      "outputPath": "src/__fixtures__/equality/loose-eq.output.ts",
+      "inputSha256": "1286fed31622be7a279fa11cea3682303da415c697d9a7bc7edcac6ff2cc0736",
+      "outputSha256": "f2a8633b5b3b37a90f61c04be40870e2258c63ccebad8eba3b9cba88ba428335"
+    },
+    {
+      "fixtureId": "equality/loose-neq.ts",
+      "inputPath": "src/__fixtures__/equality/loose-neq.input.ts",
+      "outputPath": "src/__fixtures__/equality/loose-neq.output.ts",
+      "inputSha256": "24e2a50e3219ae7bb2b3c9a9529ffa8ae212e24c3ed6c08f42f6ada5d6a834df",
+      "outputSha256": "c27283232815d1bb3a9a0c9053c31c147689e6b08ad020459a88708970b1e800"
+    },
+    {
+      "fixtureId": "equality/strict-already.ts",
+      "inputPath": "src/__fixtures__/equality/strict-already.input.ts",
+      "outputPath": "src/__fixtures__/equality/strict-already.output.ts",
+      "inputSha256": "83a1590f4e2cf1f6fba973a1f28fdba25ecb37d9a0bbc83626d57285a475ddba",
+      "outputSha256": "83a1590f4e2cf1f6fba973a1f28fdba25ecb37d9a0bbc83626d57285a475ddba"
+    },
+    {
+      "fixtureId": "immutable-array/array-constructor.ts",
+      "inputPath": "src/__fixtures__/immutable-array/array-constructor.input.ts",
+      "outputPath": "src/__fixtures__/immutable-array/array-constructor.output.ts",
+      "inputSha256": "db321296c98b03c0e5e7d4e2188fa53eb3912f7688e083097c987ee3c45f22ac",
+      "outputSha256": "db321296c98b03c0e5e7d4e2188fa53eb3912f7688e083097c987ee3c45f22ac"
+    },
+    {
+      "fixtureId": "immutable-array/indexed-assign.ts",
+      "inputPath": "src/__fixtures__/immutable-array/indexed-assign.input.ts",
+      "outputPath": "src/__fixtures__/immutable-array/indexed-assign.output.ts",
+      "inputSha256": "4809a871a42e9dc50d6fa0d9a960fb5d3a4ecfc49055aba3aac75d7ff0a39ca6",
+      "outputSha256": "4809a871a42e9dc50d6fa0d9a960fb5d3a4ecfc49055aba3aac75d7ff0a39ca6"
+    },
+    {
+      "fixtureId": "immutable-array/pop.ts",
+      "inputPath": "src/__fixtures__/immutable-array/pop.input.ts",
+      "outputPath": "src/__fixtures__/immutable-array/pop.output.ts",
+      "inputSha256": "f51bd7797a1d9496eabe992c396c9523390f30fdd7d68d79cb5f391434e367da",
+      "outputSha256": "f51bd7797a1d9496eabe992c396c9523390f30fdd7d68d79cb5f391434e367da"
+    },
+    {
+      "fixtureId": "immutable-array/push.ts",
+      "inputPath": "src/__fixtures__/immutable-array/push.input.ts",
+      "outputPath": "src/__fixtures__/immutable-array/push.output.ts",
+      "inputSha256": "92fa68e7c634b06c619cbf6445802456649c9a8bfa9b0b656a4403f1632d6aad",
+      "outputSha256": "0c564e9152dafdc812e0026c2598109adec842f5367b8dd186d7dc33b5f18440"
+    },
+    {
+      "fixtureId": "immutable-array/shift.ts",
+      "inputPath": "src/__fixtures__/immutable-array/shift.input.ts",
+      "outputPath": "src/__fixtures__/immutable-array/shift.output.ts",
+      "inputSha256": "380b8fb5fb30cd0c4c558f10b1e2b6893667dadbf9ee7f08a6ed8bb2e42b0c97",
+      "outputSha256": "380b8fb5fb30cd0c4c558f10b1e2b6893667dadbf9ee7f08a6ed8bb2e42b0c97"
+    },
+    {
+      "fixtureId": "immutable-array/sort-no-comparator.ts",
+      "inputPath": "src/__fixtures__/immutable-array/sort-no-comparator.input.ts",
+      "outputPath": "src/__fixtures__/immutable-array/sort-no-comparator.output.ts",
+      "inputSha256": "926b26eb661f356d659a158df60b4d2e984dbbb8f8f8119a4a385725168cd7f0",
+      "outputSha256": "926b26eb661f356d659a158df60b4d2e984dbbb8f8f8119a4a385725168cd7f0"
+    },
+    {
+      "fixtureId": "immutable-array/sort-with-comparator.ts",
+      "inputPath": "src/__fixtures__/immutable-array/sort-with-comparator.input.ts",
+      "outputPath": "src/__fixtures__/immutable-array/sort-with-comparator.output.ts",
+      "inputSha256": "18c40f7aee3e2aabf62a482430ccd5f31169c51558c47a8a75791b770b8cebe7",
+      "outputSha256": "05ff74dfe1b90ccd1567947be750370f8bb6b45ddc7b5311dc759df380ff92b7"
+    },
+    {
+      "fixtureId": "immutable-array/sparse-array.ts",
+      "inputPath": "src/__fixtures__/immutable-array/sparse-array.input.ts",
+      "outputPath": "src/__fixtures__/immutable-array/sparse-array.output.ts",
+      "inputSha256": "8e9e80fa9b7385ce40bec81349736394b2f6aefd0c2095fb6c8e35d5a4b5e801",
+      "outputSha256": "5ee04be67505349bda6380aba2a54601f9f3070711f031651c38a86f636d07cd"
+    },
+    {
+      "fixtureId": "immutable-array/splice.ts",
+      "inputPath": "src/__fixtures__/immutable-array/splice.input.ts",
+      "outputPath": "src/__fixtures__/immutable-array/splice.output.ts",
+      "inputSha256": "3ac8a9c4134e293ef6f2b6f85873fff2b12f6e1f7863091be5497ddf3689b9b9",
+      "outputSha256": "3ac8a9c4134e293ef6f2b6f85873fff2b12f6e1f7863091be5497ddf3689b9b9"
+    },
+    {
+      "fixtureId": "immutable-array/unshift.ts",
+      "inputPath": "src/__fixtures__/immutable-array/unshift.input.ts",
+      "outputPath": "src/__fixtures__/immutable-array/unshift.output.ts",
+      "inputSha256": "691923e40dcc12bfd6d3215bfbf6e289c0d602dbea788ed7798bca50f6fb654c",
+      "outputSha256": "2775c955c8f3f97574e01bc62796f4093833041460747b80d7fef54dbd368532"
+    },
+    {
+      "fixtureId": "immutable-object/delete-prop.ts",
+      "inputPath": "src/__fixtures__/immutable-object/delete-prop.input.ts",
+      "outputPath": "src/__fixtures__/immutable-object/delete-prop.output.ts",
+      "inputSha256": "01b2fc952021c01b204636a258ef4c68fd20d785383ccb0019e0d413aa007694",
+      "outputSha256": "01b2fc952021c01b204636a258ef4c68fd20d785383ccb0019e0d413aa007694"
+    },
+    {
+      "fixtureId": "immutable-object/has-own-property.ts",
+      "inputPath": "src/__fixtures__/immutable-object/has-own-property.input.ts",
+      "outputPath": "src/__fixtures__/immutable-object/has-own-property.output.ts",
+      "inputSha256": "088660a956c17cc3b760a88e965c4a8f10ce554630a5cb31758dc1a7f27a751f",
+      "outputSha256": "e02a0189aad3231200479748f720b27616cb03c5d7359d6a3dedff1bd12276a4"
+    },
+    {
+      "fixtureId": "immutable-object/property-assign.ts",
+      "inputPath": "src/__fixtures__/immutable-object/property-assign.input.ts",
+      "outputPath": "src/__fixtures__/immutable-object/property-assign.output.ts",
+      "inputSha256": "e13d4dbc20fe8cf8239d9f624602ab17052e6edc9a36d98e75cf3b55e0abf131",
+      "outputSha256": "e13d4dbc20fe8cf8239d9f624602ab17052e6edc9a36d98e75cf3b55e0abf131"
+    },
+    {
+      "fixtureId": "loops/break.ts",
+      "inputPath": "src/__fixtures__/loops/break.input.ts",
+      "outputPath": "src/__fixtures__/loops/break.output.ts",
+      "inputSha256": "23e5af9d6f8dca864c1b1823b02f037e4fa85cc671fc8d68850350208daaf3a0",
+      "outputSha256": "23e5af9d6f8dca864c1b1823b02f037e4fa85cc671fc8d68850350208daaf3a0"
+    },
+    {
+      "fixtureId": "loops/continue.ts",
+      "inputPath": "src/__fixtures__/loops/continue.input.ts",
+      "outputPath": "src/__fixtures__/loops/continue.output.ts",
+      "inputSha256": "c5d85ae8fc19deb3ea3564acbaaffab570d0086bdb9476d87caf9c9be9db316f",
+      "outputSha256": "c5d85ae8fc19deb3ea3564acbaaffab570d0086bdb9476d87caf9c9be9db316f"
+    },
+    {
+      "fixtureId": "loops/do-while.ts",
+      "inputPath": "src/__fixtures__/loops/do-while.input.ts",
+      "outputPath": "src/__fixtures__/loops/do-while.output.ts",
+      "inputSha256": "876944b6265b999c27f3c5fa82774afc83bf9c2459b5f804e0de0c52b2a56d3e",
+      "outputSha256": "876944b6265b999c27f3c5fa82774afc83bf9c2459b5f804e0de0c52b2a56d3e"
+    },
+    {
+      "fixtureId": "loops/for-in.ts",
+      "inputPath": "src/__fixtures__/loops/for-in.input.ts",
+      "outputPath": "src/__fixtures__/loops/for-in.output.ts",
+      "inputSha256": "212dfefa06d7d06ed4a0362c67e1afff8e9ce72c9f85a47c9ab9dc03c6311af2",
+      "outputSha256": "12a26f9393e7b93ac5bf17312838c396ccd0fbdbb3dee922a6b3009b7aa4adb3"
+    },
+    {
+      "fixtureId": "loops/for-of.ts",
+      "inputPath": "src/__fixtures__/loops/for-of.input.ts",
+      "outputPath": "src/__fixtures__/loops/for-of.output.ts",
+      "inputSha256": "ef8e4ad1bb069e86c1e7a8c375e085b17259cd4c5c26079599fa9507937437dc",
+      "outputSha256": "6ae07402267c2836cbd09bf0b83feabc00e4ce43c939881032f240be196b0d88"
+    },
+    {
+      "fixtureId": "loops/foreach-index-transform.ts",
+      "inputPath": "src/__fixtures__/loops/foreach-index-transform.input.ts",
+      "outputPath": "src/__fixtures__/loops/foreach-index-transform.output.ts",
+      "inputSha256": "3a2cbd9b38e75970fab29ce6e21b6d13d0145d197ac4224eec6e85577ec0494d",
+      "outputSha256": "fa28384052f36206e6b22202da7fad6409a872034aaeb046571a8071c756f515"
+    },
+    {
+      "fixtureId": "loops/foreach-multi.ts",
+      "inputPath": "src/__fixtures__/loops/foreach-multi.input.ts",
+      "outputPath": "src/__fixtures__/loops/foreach-multi.output.ts",
+      "inputSha256": "3b19798c4281065ef46966b30d990553ef93cc51525c32c8765722e590c8d2c0",
+      "outputSha256": "88aced847a00f7044c24e52bd1356703d86916cb3ef2d5cfbf301bd072382416"
+    },
+    {
+      "fixtureId": "loops/foreach-transform.ts",
+      "inputPath": "src/__fixtures__/loops/foreach-transform.input.ts",
+      "outputPath": "src/__fixtures__/loops/foreach-transform.output.ts",
+      "inputSha256": "27b0d1e51fd0d7fef3f251647d3136a5d98412d1dae3ca7f9a7e70e4ea02b7c1",
+      "outputSha256": "6ae07402267c2836cbd09bf0b83feabc00e4ce43c939881032f240be196b0d88"
+    },
+    {
+      "fixtureId": "loops/foreach.ts",
+      "inputPath": "src/__fixtures__/loops/foreach.input.ts",
+      "outputPath": "src/__fixtures__/loops/foreach.output.ts",
+      "inputSha256": "27b0d1e51fd0d7fef3f251647d3136a5d98412d1dae3ca7f9a7e70e4ea02b7c1",
+      "outputSha256": "27b0d1e51fd0d7fef3f251647d3136a5d98412d1dae3ca7f9a7e70e4ea02b7c1"
+    },
+    {
+      "fixtureId": "loops/map-filter-ok.ts",
+      "inputPath": "src/__fixtures__/loops/map-filter-ok.input.ts",
+      "outputPath": "src/__fixtures__/loops/map-filter-ok.output.ts",
+      "inputSha256": "7dbeb70f9e0802a6caae0a0986b48afd44687174cb969a22b497813c919d7240",
+      "outputSha256": "7dbeb70f9e0802a6caae0a0986b48afd44687174cb969a22b497813c919d7240"
+    },
+    {
+      "fixtureId": "loops/while.ts",
+      "inputPath": "src/__fixtures__/loops/while.input.ts",
+      "outputPath": "src/__fixtures__/loops/while.output.ts",
+      "inputSha256": "7f368622b8ba1f858c861f9f64a3fa66cc751731caa2e66f5869cf162a68bee6",
+      "outputSha256": "fe954c8f618efd89747941386f0d180796eccb50a5d909034d0e1e6dcd79b546"
+    },
+    {
+      "fixtureId": "no-arrow-functions/arrow-block-body.ts",
+      "inputPath": "src/__fixtures__/no-arrow-functions/arrow-block-body.input.ts",
+      "outputPath": "src/__fixtures__/no-arrow-functions/arrow-block-body.output.ts",
+      "inputSha256": "965104073a7bba5190c491ac8c24b1e06dcf04f910d1f2325f507745a128a8a5",
+      "outputSha256": "d20337e42735d008e540691ce5b974d3d781183e5471062aa6cb94afef750823"
+    },
+    {
+      "fixtureId": "no-arrow-functions/arrow-expression-body.ts",
+      "inputPath": "src/__fixtures__/no-arrow-functions/arrow-expression-body.input.ts",
+      "outputPath": "src/__fixtures__/no-arrow-functions/arrow-expression-body.output.ts",
+      "inputSha256": "858000de5f8d71a6ff696cfc657eb554e1f548347c315f8ac8dad885fba06eb7",
+      "outputSha256": "558e8cd6151f264ea67a077ce260c7bcae3d6e9a6974d82354b667f7fde76296"
+    },
+    {
+      "fixtureId": "no-arrow-functions/async-arrow.ts",
+      "inputPath": "src/__fixtures__/no-arrow-functions/async-arrow.input.ts",
+      "outputPath": "src/__fixtures__/no-arrow-functions/async-arrow.output.ts",
+      "inputSha256": "8ab58b05da81012c6c7a79a1f834e72f4b633cc4ccabe0707d3858c21ee38150",
+      "outputSha256": "7cc3bb7823c3bbc47c587c1b71d42591985620ddf82e27267b0b31c2be2c16e3"
+    },
+    {
+      "fixtureId": "no-arrow-functions/async-no-await.ts",
+      "inputPath": "src/__fixtures__/no-arrow-functions/async-no-await.input.ts",
+      "outputPath": "src/__fixtures__/no-arrow-functions/async-no-await.output.ts",
+      "inputSha256": "562a6ec23621c9ae34ecc272cd920f144ec50879a00baefa88f9c5eb52e8fc48",
+      "outputSha256": "562a6ec23621c9ae34ecc272cd920f144ec50879a00baefa88f9c5eb52e8fc48"
+    },
+    {
+      "fixtureId": "no-arrow-functions/default-param-transform.ts",
+      "inputPath": "src/__fixtures__/no-arrow-functions/default-param-transform.input.ts",
+      "outputPath": "src/__fixtures__/no-arrow-functions/default-param-transform.output.ts",
+      "inputSha256": "4da38e1807ad4601b9838184b258082bd82c3b9b52405365a56cb53a6bf09f49",
+      "outputSha256": "0f530bf662e01c7d387062163fc20bcae0138b440141441cc2b7f678b3df487e"
+    },
+    {
+      "fixtureId": "no-arrow-functions/default-param.ts",
+      "inputPath": "src/__fixtures__/no-arrow-functions/default-param.input.ts",
+      "outputPath": "src/__fixtures__/no-arrow-functions/default-param.output.ts",
+      "inputSha256": "4da38e1807ad4601b9838184b258082bd82c3b9b52405365a56cb53a6bf09f49",
+      "outputSha256": "4da38e1807ad4601b9838184b258082bd82c3b9b52405365a56cb53a6bf09f49"
+    },
+    {
+      "fixtureId": "no-arrow-functions/inline-callback.ts",
+      "inputPath": "src/__fixtures__/no-arrow-functions/inline-callback.input.ts",
+      "outputPath": "src/__fixtures__/no-arrow-functions/inline-callback.output.ts",
+      "inputSha256": "0d9bed05eeb1e717147f39441df72ddf121413b6c4b6f34e2c15dc4f764a5192",
+      "outputSha256": "77680541d408dc6ce6eeda4480986b3f563aeddf88d9b2145f4dc321acc80757"
+    },
+    {
+      "fixtureId": "no-arrow-functions/named-arrow.ts",
+      "inputPath": "src/__fixtures__/no-arrow-functions/named-arrow.input.ts",
+      "outputPath": "src/__fixtures__/no-arrow-functions/named-arrow.output.ts",
+      "inputSha256": "d1d599256aaef93c2514da40f95ff44bf5fe990134edec912eccbeecd0dcc42a",
+      "outputSha256": "54988e37bc9accccc8d400e08c83dd39b45ff884b17e820fb5af2e0304c49f74"
+    },
+    {
+      "fixtureId": "no-classes/class-declaration.ts",
+      "inputPath": "src/__fixtures__/no-classes/class-declaration.input.ts",
+      "outputPath": "src/__fixtures__/no-classes/class-declaration.output.ts",
+      "inputSha256": "78b26c922acf01b360dd77885090cb6f6f837f6bd90f039e46b11d368d95766d",
+      "outputSha256": "78b26c922acf01b360dd77885090cb6f6f837f6bd90f039e46b11d368d95766d"
+    },
+    {
+      "fixtureId": "no-classes/class-expression.ts",
+      "inputPath": "src/__fixtures__/no-classes/class-expression.input.ts",
+      "outputPath": "src/__fixtures__/no-classes/class-expression.output.ts",
+      "inputSha256": "1f4689d0443434935e68da1584903fa648762ad23987a5a60d1dd1c6d9dd374a",
+      "outputSha256": "1f4689d0443434935e68da1584903fa648762ad23987a5a60d1dd1c6d9dd374a"
+    },
+    {
+      "fixtureId": "no-classes/this-expression.ts",
+      "inputPath": "src/__fixtures__/no-classes/this-expression.input.ts",
+      "outputPath": "src/__fixtures__/no-classes/this-expression.output.ts",
+      "inputSha256": "706af06c3474afa6b2faef827c6c4d4109c644ec769268ddc7e4a48b683e3eed",
+      "outputSha256": "706af06c3474afa6b2faef827c6c4d4109c644ec769268ddc7e4a48b683e3eed"
+    },
+    {
+      "fixtureId": "no-shortcircuit-control/logical-and-exec.ts",
+      "inputPath": "src/__fixtures__/no-shortcircuit-control/logical-and-exec.input.ts",
+      "outputPath": "src/__fixtures__/no-shortcircuit-control/logical-and-exec.output.ts",
+      "inputSha256": "a41da21571f7e5581d155bc8173a9e91345f2b378bd999543df058fe5f3d62d2",
+      "outputSha256": "a41da21571f7e5581d155bc8173a9e91345f2b378bd999543df058fe5f3d62d2"
+    },
+    {
+      "fixtureId": "no-shortcircuit-control/logical-or-default.ts",
+      "inputPath": "src/__fixtures__/no-shortcircuit-control/logical-or-default.input.ts",
+      "outputPath": "src/__fixtures__/no-shortcircuit-control/logical-or-default.output.ts",
+      "inputSha256": "ec3b2a8683dd6221e5ce58e24c10730e097ae34efb2338e660a8043f8083abcf",
+      "outputSha256": "ec3b2a8683dd6221e5ce58e24c10730e097ae34efb2338e660a8043f8083abcf"
+    },
+    {
+      "fixtureId": "no-shortcircuit-control/nullish-coalescing.ts",
+      "inputPath": "src/__fixtures__/no-shortcircuit-control/nullish-coalescing.input.ts",
+      "outputPath": "src/__fixtures__/no-shortcircuit-control/nullish-coalescing.output.ts",
+      "inputSha256": "4bff6f6529b8071e5ad75a269c9301bed0c3dc020fe3efca4534f6bfc553bf2a",
+      "outputSha256": "4bff6f6529b8071e5ad75a269c9301bed0c3dc020fe3efca4534f6bfc553bf2a"
+    },
+    {
+      "fixtureId": "no-shortcircuit-control/optional-chain.ts",
+      "inputPath": "src/__fixtures__/no-shortcircuit-control/optional-chain.input.ts",
+      "outputPath": "src/__fixtures__/no-shortcircuit-control/optional-chain.output.ts",
+      "inputSha256": "538fcedb6f0aafb47f7a37383208bff73bf2d9e8b75a7c27cc2d45b2c784135b",
+      "outputSha256": "538fcedb6f0aafb47f7a37383208bff73bf2d9e8b75a7c27cc2d45b2c784135b"
+    },
+    {
+      "fixtureId": "no-shortcircuit-control/switch.ts",
+      "inputPath": "src/__fixtures__/no-shortcircuit-control/switch.input.ts",
+      "outputPath": "src/__fixtures__/no-shortcircuit-control/switch.output.ts",
+      "inputSha256": "ffdac95045703c46767b6ba1a044a5415068c975792f88d4f9132cc034fc3e4e",
+      "outputSha256": "ffdac95045703c46767b6ba1a044a5415068c975792f88d4f9132cc034fc3e4e"
+    },
+    {
+      "fixtureId": "no-shortcircuit-control/ternary.ts",
+      "inputPath": "src/__fixtures__/no-shortcircuit-control/ternary.input.ts",
+      "outputPath": "src/__fixtures__/no-shortcircuit-control/ternary.output.ts",
+      "inputSha256": "6ef834b6bc107a04903bf9f983d2064a6f03b948c91f4c9bb263bc97edd8f576",
+      "outputSha256": "6ef834b6bc107a04903bf9f983d2064a6f03b948c91f4c9bb263bc97edd8f576"
+    },
+    {
+      "fixtureId": "no-shorthand-operators/decrement.ts",
+      "inputPath": "src/__fixtures__/no-shorthand-operators/decrement.input.ts",
+      "outputPath": "src/__fixtures__/no-shorthand-operators/decrement.output.ts",
+      "inputSha256": "57f3db5e9f5e0c6d24aa492d8d6753d3ee4dd7286a803d7e1e51dd375d9c6088",
+      "outputSha256": "beb457ee36fc09e8fed7aa22cc041c71e01daac71d01edc1ebe36fa6192743a3"
+    },
+    {
+      "fixtureId": "no-shorthand-operators/divide-assign.ts",
+      "inputPath": "src/__fixtures__/no-shorthand-operators/divide-assign.input.ts",
+      "outputPath": "src/__fixtures__/no-shorthand-operators/divide-assign.output.ts",
+      "inputSha256": "a0f70f70f6c3686d42add948b6ec15db17f043a4474ef545396e51d376d507a3",
+      "outputSha256": "aa03e0a2238454d7ce1e74dacd01b7b0bc28b6b20c0bde70eda387bc725f0946"
+    },
+    {
+      "fixtureId": "no-shorthand-operators/increment.ts",
+      "inputPath": "src/__fixtures__/no-shorthand-operators/increment.input.ts",
+      "outputPath": "src/__fixtures__/no-shorthand-operators/increment.output.ts",
+      "inputSha256": "8a1a3a74d35e81d0210d689b2d9da5d26f84b61bcc7dc346f3227e772abe29a6",
+      "outputSha256": "9490eceb92f54585f9389e0d46045c530f812763d01deed3807e2564ceff1be5"
+    },
+    {
+      "fixtureId": "no-shorthand-operators/minus-assign.ts",
+      "inputPath": "src/__fixtures__/no-shorthand-operators/minus-assign.input.ts",
+      "outputPath": "src/__fixtures__/no-shorthand-operators/minus-assign.output.ts",
+      "inputSha256": "0fc2f9b009c1f8b9c9d3b0c08911028369a159acb3156027fa7f681475ce51aa",
+      "outputSha256": "d678df8ad170abf035c4ef83dce52e45ef1b3fa325145f4d0369fb8ddef1d0e3"
+    },
+    {
+      "fixtureId": "no-shorthand-operators/multiply-assign.ts",
+      "inputPath": "src/__fixtures__/no-shorthand-operators/multiply-assign.input.ts",
+      "outputPath": "src/__fixtures__/no-shorthand-operators/multiply-assign.output.ts",
+      "inputSha256": "52d2ed3ab596a5f2d5b83d471d6dca49de482cb2a5fcbeace87259ca2691dd78",
+      "outputSha256": "9257a73b4e4f5d47b4ada8864a867c5de0ea213e7e62a188769e232fe8b1efe0"
+    },
+    {
+      "fixtureId": "no-shorthand-operators/plus-assign.ts",
+      "inputPath": "src/__fixtures__/no-shorthand-operators/plus-assign.input.ts",
+      "outputPath": "src/__fixtures__/no-shorthand-operators/plus-assign.output.ts",
+      "inputSha256": "24afe13d9ded65a3f3740344e00415884391928bb7e3af589aeaed143ab43142",
+      "outputSha256": "47fe9d73adaa4da0e49f06b2b76caae1d881bca2b14de0c947619d30619135bf"
+    },
+    {
+      "fixtureId": "no-shorthand-operators/prefix-increment.ts",
+      "inputPath": "src/__fixtures__/no-shorthand-operators/prefix-increment.input.ts",
+      "outputPath": "src/__fixtures__/no-shorthand-operators/prefix-increment.output.ts",
+      "inputSha256": "de90e05e9f88db1e63494f5ec11d512fae672430ce899a7f7d17dbedeef56fc8",
+      "outputSha256": "9490eceb92f54585f9389e0d46045c530f812763d01deed3807e2564ceff1be5"
+    },
+    {
+      "fixtureId": "no-template-literals/multiple-interpolations.ts",
+      "inputPath": "src/__fixtures__/no-template-literals/multiple-interpolations.input.ts",
+      "outputPath": "src/__fixtures__/no-template-literals/multiple-interpolations.output.ts",
+      "inputSha256": "0d64173b990f961866b82a594021653aa70d967d6587c56cc5e2c9ef198b4fd1",
+      "outputSha256": "5ee6d4cb1fa515fdb10fa98da134a1cc3722b49c1ed043828fcc729f65175d90"
+    },
+    {
+      "fixtureId": "no-template-literals/no-interpolation.ts",
+      "inputPath": "src/__fixtures__/no-template-literals/no-interpolation.input.ts",
+      "outputPath": "src/__fixtures__/no-template-literals/no-interpolation.output.ts",
+      "inputSha256": "d50ff1c572a8e4049bf9908dcd33935c8550680c49d37a8355e8d57a345ac595",
+      "outputSha256": "e40488528887d42758bbbebc1563e392f0e7b30b01731dd0bf2dd398a2e92f95"
+    },
+    {
+      "fixtureId": "no-template-literals/simple-interpolation.ts",
+      "inputPath": "src/__fixtures__/no-template-literals/simple-interpolation.input.ts",
+      "outputPath": "src/__fixtures__/no-template-literals/simple-interpolation.output.ts",
+      "inputSha256": "02b5c6f674cca05ebcd8cedeee19e282a5c445900e9b504b083415a825e8153d",
+      "outputSha256": "981aecc89ecd3105f21c769961834ca6a956d368e8c363b9b3cc58d6d40ca863"
+    },
+    {
+      "fixtureId": "no-template-literals/tagged-template.ts",
+      "inputPath": "src/__fixtures__/no-template-literals/tagged-template.input.ts",
+      "outputPath": "src/__fixtures__/no-template-literals/tagged-template.output.ts",
+      "inputSha256": "0dbb5b91594df3409abed38dcd6a4a5073510d070a8335efee2388d424e3f547",
+      "outputSha256": "0dbb5b91594df3409abed38dcd6a4a5073510d070a8335efee2388d424e3f547"
+    },
+    {
+      "fixtureId": "promise-rules/await-in-trycatch-ok.ts",
+      "inputPath": "src/__fixtures__/promise-rules/await-in-trycatch-ok.input.ts",
+      "outputPath": "src/__fixtures__/promise-rules/await-in-trycatch-ok.output.ts",
+      "inputSha256": "a6c4e8e6b70e6b0f5b22cab85fa3922d003610d8b6c482cc3545368107c3363c",
+      "outputSha256": "a6c4e8e6b70e6b0f5b22cab85fa3922d003610d8b6c482cc3545368107c3363c"
+    },
+    {
+      "fixtureId": "promise-rules/bare-await.ts",
+      "inputPath": "src/__fixtures__/promise-rules/bare-await.input.ts",
+      "outputPath": "src/__fixtures__/promise-rules/bare-await.output.ts",
+      "inputSha256": "e5bc74538660635cf9eb7e26b82f94530758954446e1241473f07401646cb1ff",
+      "outputSha256": "e5bc74538660635cf9eb7e26b82f94530758954446e1241473f07401646cb1ff"
+    },
+    {
+      "fixtureId": "promise-rules/new-promise.ts",
+      "inputPath": "src/__fixtures__/promise-rules/new-promise.input.ts",
+      "outputPath": "src/__fixtures__/promise-rules/new-promise.output.ts",
+      "inputSha256": "8201dea9c37568ae7b907b5f4d9fecfb75d391097d8ee60a4eaf87fa91bf2f4a",
+      "outputSha256": "8201dea9c37568ae7b907b5f4d9fecfb75d391097d8ee60a4eaf87fa91bf2f4a"
+    },
+    {
+      "fixtureId": "promise-rules/promise-all-ok.ts",
+      "inputPath": "src/__fixtures__/promise-rules/promise-all-ok.input.ts",
+      "outputPath": "src/__fixtures__/promise-rules/promise-all-ok.output.ts",
+      "inputSha256": "51c2604f30964029085bb2e59996b74c7967effe05d94264076eeffba806466d",
+      "outputSha256": "51c2604f30964029085bb2e59996b74c7967effe05d94264076eeffba806466d"
+    },
+    {
+      "fixtureId": "promise-rules/promise-allsettled-ok.ts",
+      "inputPath": "src/__fixtures__/promise-rules/promise-allsettled-ok.input.ts",
+      "outputPath": "src/__fixtures__/promise-rules/promise-allsettled-ok.output.ts",
+      "inputSha256": "9a34161f66f0e51b213d7c2a1a35240bfd9efb32893c074ac9c4859688f9668f",
+      "outputSha256": "9a34161f66f0e51b213d7c2a1a35240bfd9efb32893c074ac9c4859688f9668f"
+    },
+    {
+      "fixtureId": "promise-rules/promise-any.ts",
+      "inputPath": "src/__fixtures__/promise-rules/promise-any.input.ts",
+      "outputPath": "src/__fixtures__/promise-rules/promise-any.output.ts",
+      "inputSha256": "acd4adef5a14d2830c59b49912079a2d9b0768d5beb3e6109ebb15407491a40f",
+      "outputSha256": "acd4adef5a14d2830c59b49912079a2d9b0768d5beb3e6109ebb15407491a40f"
+    },
+    {
+      "fixtureId": "promise-rules/promise-race.ts",
+      "inputPath": "src/__fixtures__/promise-rules/promise-race.input.ts",
+      "outputPath": "src/__fixtures__/promise-rules/promise-race.output.ts",
+      "inputSha256": "167984116bb2e0d09514daaa70b10946a750d5d9a1b977c80fd11811b4fc9f75",
+      "outputSha256": "167984116bb2e0d09514daaa70b10946a750d5d9a1b977c80fd11811b4fc9f75"
+    },
+    {
+      "fixtureId": "typescript-strict/any-type.ts",
+      "inputPath": "src/__fixtures__/typescript-strict/any-type.input.ts",
+      "outputPath": "src/__fixtures__/typescript-strict/any-type.output.ts",
+      "inputSha256": "d10ed7c1df248c472cdee1f53a3c100f4bdd482c184f0eb8b17755e346c59253",
+      "outputSha256": "d10ed7c1df248c472cdee1f53a3c100f4bdd482c184f0eb8b17755e346c59253"
+    },
+    {
+      "fixtureId": "typescript-strict/bare-catch.ts",
+      "inputPath": "src/__fixtures__/typescript-strict/bare-catch.input.ts",
+      "outputPath": "src/__fixtures__/typescript-strict/bare-catch.output.ts",
+      "inputSha256": "ebef7ee54f9909b935734d1634ab88ff672abac7e8371092b01bb5c1334fae54",
+      "outputSha256": "ebef7ee54f9909b935734d1634ab88ff672abac7e8371092b01bb5c1334fae54"
+    },
+    {
+      "fixtureId": "typescript-strict/enum.ts",
+      "inputPath": "src/__fixtures__/typescript-strict/enum.input.ts",
+      "outputPath": "src/__fixtures__/typescript-strict/enum.output.ts",
+      "inputSha256": "bf7529a7846bfd2e735d4970b8a6f2318d57655e763a2f550c0b17d94aafc3af",
+      "outputSha256": "bf7529a7846bfd2e735d4970b8a6f2318d57655e763a2f550c0b17d94aafc3af"
+    },
+    {
+      "fixtureId": "typescript-strict/interface.ts",
+      "inputPath": "src/__fixtures__/typescript-strict/interface.input.ts",
+      "outputPath": "src/__fixtures__/typescript-strict/interface.output.ts",
+      "inputSha256": "1e6ea8b9a2411d72a31ccb45dd663fd9a6f6c34febc871d3c722ff9cc9ce0a43",
+      "outputSha256": "1e6ea8b9a2411d72a31ccb45dd663fd9a6f6c34febc871d3c722ff9cc9ce0a43"
+    },
+    {
+      "fixtureId": "typescript-strict/missing-return-type.ts",
+      "inputPath": "src/__fixtures__/typescript-strict/missing-return-type.input.ts",
+      "outputPath": "src/__fixtures__/typescript-strict/missing-return-type.output.ts",
+      "inputSha256": "39441a0f0f37ba8f1a5ef3bf717953d53469cfd7a8450a8a2221959a67905497",
+      "outputSha256": "39441a0f0f37ba8f1a5ef3bf717953d53469cfd7a8450a8a2221959a67905497"
+    },
+    {
+      "fixtureId": "typescript-strict/namespace.ts",
+      "inputPath": "src/__fixtures__/typescript-strict/namespace.input.ts",
+      "outputPath": "src/__fixtures__/typescript-strict/namespace.output.ts",
+      "inputSha256": "0a283bddd27e58b0fa936aaf6d76b9ebd4bdb33f6e4534f5b87603adf22a50ed",
+      "outputSha256": "0a283bddd27e58b0fa936aaf6d76b9ebd4bdb33f6e4534f5b87603adf22a50ed"
+    },
+    {
+      "fixtureId": "typescript-strict/non-null-assertion.ts",
+      "inputPath": "src/__fixtures__/typescript-strict/non-null-assertion.input.ts",
+      "outputPath": "src/__fixtures__/typescript-strict/non-null-assertion.output.ts",
+      "inputSha256": "bbc84c0223743bd3d04f4379d68292392d46189e03d64b07a2962ab3b2a88e99",
+      "outputSha256": "bbc84c0223743bd3d04f4379d68292392d46189e03d64b07a2962ab3b2a88e99"
+    },
+    {
+      "fixtureId": "typescript-strict/type-assertion.ts",
+      "inputPath": "src/__fixtures__/typescript-strict/type-assertion.input.ts",
+      "outputPath": "src/__fixtures__/typescript-strict/type-assertion.output.ts",
+      "inputSha256": "1451d9e0e193024ad738e7d82f20dec2b4e63c33c6aa26292e397a2134b72331",
+      "outputSha256": "1451d9e0e193024ad738e7d82f20dec2b4e63c33c6aa26292e397a2134b72331"
+    },
+    {
+      "fixtureId": "var-to-const/let-not-reassigned.ts",
+      "inputPath": "src/__fixtures__/var-to-const/let-not-reassigned.input.ts",
+      "outputPath": "src/__fixtures__/var-to-const/let-not-reassigned.output.ts",
+      "inputSha256": "5b8209acc448a1d62f83b6fcba6fd35a8c10196feb4c09f723e11f49e5984553",
+      "outputSha256": "0a6bca76f22d6582a2b6a8d606f5723234e16a6557e8f1b9820b571134d4b908"
+    },
+    {
+      "fixtureId": "var-to-const/let-reassigned.ts",
+      "inputPath": "src/__fixtures__/var-to-const/let-reassigned.input.ts",
+      "outputPath": "src/__fixtures__/var-to-const/let-reassigned.output.ts",
+      "inputSha256": "d88d10a0e8cc38d28b0181351ace1615491be70e90c8123ed80a477bd8796203",
+      "outputSha256": "d88d10a0e8cc38d28b0181351ace1615491be70e90c8123ed80a477bd8796203"
+    },
+    {
+      "fixtureId": "var-to-const/multi-declarator-mixed.ts",
+      "inputPath": "src/__fixtures__/var-to-const/multi-declarator-mixed.input.ts",
+      "outputPath": "src/__fixtures__/var-to-const/multi-declarator-mixed.output.ts",
+      "inputSha256": "70acdf2a8b31e626ab9af2856e72ea87163f7f2e702cf0b389d7cfe01192df91",
+      "outputSha256": "70acdf2a8b31e626ab9af2856e72ea87163f7f2e702cf0b389d7cfe01192df91"
+    },
+    {
+      "fixtureId": "var-to-const/var-basic.ts",
+      "inputPath": "src/__fixtures__/var-to-const/var-basic.input.ts",
+      "outputPath": "src/__fixtures__/var-to-const/var-basic.output.ts",
+      "inputSha256": "7b91a7e30682af79bd47d777d3e21407ad992c605fd593dec1a90b2c3bc1e5d9",
+      "outputSha256": "0a6bca76f22d6582a2b6a8d606f5723234e16a6557e8f1b9820b571134d4b908"
+    },
+    {
+      "fixtureId": "var-to-const/var-reassigned.ts",
+      "inputPath": "src/__fixtures__/var-to-const/var-reassigned.input.ts",
+      "outputPath": "src/__fixtures__/var-to-const/var-reassigned.output.ts",
+      "inputSha256": "12b2497800a11e6f151b1b3f9018d27e2e75a792d148960c694653c5e47913ba",
+      "outputSha256": "d88d10a0e8cc38d28b0181351ace1615491be70e90c8123ed80a477bd8796203"
+    }
+  ]
+}
