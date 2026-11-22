@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-22T07:20:56.025Z",
-  "sourceFingerprint": "sha256:187f7350171a0955e7b8d1f4e93ed1037e60fcee2be997462dc73ab36d14da37",
+  "generatedAt": "2026-11-22T07:22:07.736Z",
+  "sourceFingerprint": "sha256:064780af448b18b1de5e9c0c2b8c90b2775729d47fdbee04db220f4aae0af481",
   "authority": {
     "issue": "clockwork-kitten/studio-board#91",
     "requirementsIssue": "clockwork-kitten/studio-board#86",
